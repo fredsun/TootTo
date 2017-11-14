@@ -16,6 +16,9 @@
         android:layout_height="56dp"
         android:layout_gravity="center|bottom|end"
         android:id="@+id/main_tab"
+        app:layout_behavior="org.tootto.behavior.BottomBehavior"
+        android:background="@color/navigation_bottom"
+        app:tabIndicatorColor="@android:color/transparent"
         />
 
 </android.support.design.widget.CoordinatorLayout>

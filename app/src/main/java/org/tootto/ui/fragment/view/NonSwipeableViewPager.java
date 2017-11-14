@@ -3,8 +3,10 @@ package org.tootto.ui.fragment.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 /**
@@ -13,7 +15,10 @@ import android.view.MotionEvent;
 
 public class NonSwipeableViewPager extends ViewPager {
 
-    private boolean noScroll = true;
+    private boolean noScroll = false;
+    private boolean intercept;
+    int xBefore = -1;
+    int yBefore = -1;
     public NonSwipeableViewPager(@NonNull Context context) {
         super(context);
     }
@@ -29,13 +34,13 @@ public class NonSwipeableViewPager extends ViewPager {
     //默认返回true消费事件
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return noScroll || super.onInterceptTouchEvent(ev);
+        return noScroll ;
     }
 
     //默认返回true消费事件
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        return noScroll || super.onTouchEvent(ev);
+        return noScroll ;
     }
 
     //去除切换效果

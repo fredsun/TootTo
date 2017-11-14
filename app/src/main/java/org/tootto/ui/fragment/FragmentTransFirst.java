@@ -38,4 +38,9 @@ public class FragmentTransFirst extends Fragment {
 
         return fragmentTransFirst;
     }
+
+    public void transFragment(){
+        getChildFragmentManager().beginTransaction().hide(fragmentFirst).show(fragmentFirstDetail).commit();
+
+    }
 }

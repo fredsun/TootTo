@@ -1,6 +1,7 @@
 package org.tootto;
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,15 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import org.tootto.behavior.BottomBehavior;
 import org.tootto.ui.fragment.FragmentTransFirst;
 import org.tootto.ui.fragment.view.NonSwipeableViewPager;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomBehavior.onCanScrollCallback {
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     TabLayout mainTab;
     NonSwipeableViewPager mainPager;
+    boolean canScroll = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,5 +66,36 @@ public class MainActivity extends AppCompatActivity {
 
         mainTab = findViewById(R.id.main_tab);
         mainTab.setupWithViewPager(mainPager);
+        mainTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0 ){
+                    canScroll = true;
+                }else {
+                    canScroll = false;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        BottomBehavior bottomBehavior = (BottomBehavior)((CoordinatorLayout.LayoutParams) mainTab.getLayoutParams()).getBehavior();
+        bottomBehavior.setOnCanScrollCallback(this);
+    }
+
+    public void bringViewPagerToFront(){
+        mainPager.bringToFront();
+    }
+
+    @Override
+    public boolean callbackCanScroll() {
+        return canScroll;
     }
 }
