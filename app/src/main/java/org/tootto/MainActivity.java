@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import org.tootto.behavior.BottomBehavior;
@@ -17,6 +19,7 @@ import org.tootto.ui.fragment.view.NonSwipeableViewPager;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements BottomBehavior.onCanScrollCallback {
+    String tag = "MainActivity";
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     TabLayout mainTab;
     NonSwipeableViewPager mainPager;
@@ -91,7 +94,8 @@ public class MainActivity extends AppCompatActivity implements BottomBehavior.on
     }
 
     public void bringViewPagerToFront(){
-        mainPager.bringToFront();
+//        mainPager.bringToFront();//和知乎不同
+        mainTab.setVisibility(View.GONE);
     }
 
     @Override
