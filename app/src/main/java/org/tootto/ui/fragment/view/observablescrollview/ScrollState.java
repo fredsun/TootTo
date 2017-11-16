@@ -35,4 +35,5 @@ public enum ScrollState {
      * Widget is scrolled down by swiping it up.
      */
     DOWN,
+
 }
