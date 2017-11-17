@@ -103,25 +103,103 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
                 "                \"        android:layout_marginTop=\\\"@dimen/activity_vertical_margin\\\"\\n\" +\n" +
                 "                \"        android:text=\\\"@string/lipsum\\\" />\\n\" +\n" +
                 "                \"\\n\" +\n" +
-                "                \"</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>");
+                "                \"</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>\"<!--\\n\" +\n" +
+                "                \"  Copyright 2014 Soichiro Kashima\\n\" +\n" +
+                "                \"  Licensed under the Apache License, Version 2.0 (the \\\"License\\\");\\n\" +\n" +
+                "                \"  you may not use this file except in compliance with the License.\\n\" +\n" +
+                "                \"  You may obtain a copy of the License at\\n\" +\n" +
+                "                \"      http://www.apache.org/licenses/LICENSE-2.0\\n\" +\n" +
+                "                \"  Unless required by applicable law or agreed to in writing, software\\n\" +\n" +
+                "                \"  distributed under the License is distributed on an \\\"AS IS\\\" BASIS,\\n\" +\n" +
+                "                \"  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\\n\" +\n" +
+                "                \"  See the License for the specific language governing permissions and\\n\" +\n" +
+                "                \"  limitations under the License.\\n\" +\n" +
+                "                \"-->\\n\" +\n" +
+                "                \"<com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android=\\\"http://schemas.android.com/apk/res/android\\\"\\n\" +\n" +
+                "                \"    android:id=\\\"@+id/scroll\\\"\\n\" +\n" +
+                "                \"    android:layout_width=\\\"match_parent\\\"\\n\" +\n" +
+                "                \"    android:layout_height=\\\"match_parent\\\"\\n\" +\n" +
+                "                \"    android:fillViewport=\\\"true\\\">\\n\" +\n" +
+                "                \"\\n\" +\n" +
+                "                \"    <TextView\\n\" +\n" +
+                "                \"        android:layout_width=\\\"match_parent\\\"\\n\" +\n" +
+                "                \"        android:layout_height=\\\"wrap_content\\\"\\n\" +\n" +
+                "                \"        android:layout_marginBottom=\\\"@dimen/activity_vertical_margin\\\"\\n\" +\n" +
+                "                \"        android:layout_marginLeft=\\\"@dimen/activity_horizontal_margin\\\"\\n\" +\n" +
+                "                \"        android:layout_marginRight=\\\"@dimen/activity_horizontal_margin\\\"\\n\" +\n" +
+                "                \"        android:layout_marginTop=\\\"@dimen/activity_vertical_margin\\\"\\n\" +\n" +
+                "                \"        android:text=\\\"@string/lipsum\\\" />\\n\" +\n" +
+                "                \"\\n\" +\n" +
+                "                \"</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>\" +\n" +
+                "                \"<!--\\n\" +\n" +
+                "                \"\\\" +\\n\" +\n" +
+                "                \"                \\\"  Copyright 2014 Soichiro Kashima\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  Licensed under the Apache License, Version 2.0 (the \\\\\\\"License\\\\\\\");\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  you may not use this file except in compliance with the License.\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  You may obtain a copy of the License at\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"      http://www.apache.org/licenses/LICENSE-2.0\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  Unless required by applicable law or agreed to in writing, software\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  distributed under the License is distributed on an \\\\\\\"AS IS\\\\\\\" BASIS,\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  See the License for the specific language governing permissions and\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"  limitations under the License.\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"-->\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"<com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android=\\\\\\\"http://schemas.android.com/apk/res/android\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"    android:id=\\\\\\\"@+id/scroll\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"    android:layout_width=\\\\\\\"match_parent\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"    android:layout_height=\\\\\\\"match_parent\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"    android:fillViewport=\\\\\\\"true\\\\\\\">\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"    <TextView\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"        android:layout_width=\\\\\\\"match_parent\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"        android:layout_height=\\\\\\\"wrap_content\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"        android:layout_marginBottom=\\\\\\\"@dimen/activity_vertical_margin\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"        android:layout_marginLeft=\\\\\\\"@dimen/activity_horizontal_margin\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"        android:layout_marginRight=\\\\\\\"@dimen/activity_horizontal_margin\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"        android:layout_marginTop=\\\\\\\"@dimen/activity_vertical_margin\\\\\\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"        android:text=\\\\\\\"@string/lipsum\\\\\\\" />\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"\\\\n\\\" +\\n\" +\n" +
+                "                \"                \\\"</com.github.ksoichiro.android.observablescrollview.ObservableScrollView>\"");
 
 //        tvDetailContent.setMovementMethod(ScrollingMovementMethod.getInstance());
         scrollHome = view.findViewById(R.id.observable_scroll_text);
         scrollHome.setScrollViewCallbacks(this);
 
         tvDetailBottom = view.findViewById(R.id.tv_detail_bottom);
-        ViewTreeObserver observer = tvDetailContent.getViewTreeObserver();
-        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override public void onGlobalLayout(){
-                //避免重复监听
-                tvDetailContent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
-                Log.i(tag,"---tvheight"+tvDetailContent.getMeasuredHeight());//获文本高度
-                //获取高度后要进行的操作就在这里执行，
-                //在外面可能onGlobalLayout还没有执行而获取不到height
-
+        tvDetailContent.post(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(tag, "height"+tvDetailContent.getWidth());
             }
         });
+//        ViewTreeObserver observer = tvDetailContent.getViewTreeObserver();
+//        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                Log.i(tag,":::tvheight"+tvDetailContent.getHeight());//获文本高度
+//                Log.i(tag,":::tvheight"+tvDetailContent.getMeasuredHeight());//获文本高度
+//                return true;
+//            }
+//        });
+//        observer.addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
+//            @Override
+//            public void onDraw() {
+//                Log.i(tag, "===tvheight"+tvDetailContent.getHeight()+"");
+//                Log.i(tag, "===tvheight"+tvDetailContent.getMeasuredHeight()+"");
+//            }
+//        });
+//        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override public void onGlobalLayout(){
+//                //避免重复监听
+//                tvDetailContent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//
+//                Log.i(tag,"---tvheight"+tvDetailContent.getHeight());//获文本高度
+//                Log.i(tag,"---tvheight"+tvDetailContent.getMeasuredHeight());//获文本高度
+//                //获取高度后要进行的操作就在这里执行，
+//                //在外面可能onGlobalLayout还没有执行而获取不到height
+//
+//            }
+//        });
         return view;
     }
 
@@ -143,26 +221,26 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
         if(Math.abs(b - oldB)> 20 && b > oldB && isBottomHide == false) {
             mBottomAnim.hide();
             isBottomHide = true;
-            Log.i(tag, "hide");
-
         }
 
+        //速度快的上滑
         if (Math.abs(b - oldB)> 20 && b < oldB && isBottomHide == true){
             mBottomAnim.show();
             isBottomHide = false;
-            Log.i(tag, "show");
-
         }
 
 
-
-//        Log.i(tag, scrollHome.canScrollVertically(1)+"1");
-//        Log.i(tag, scrollHome.canScrollVertically(-1)+"-1");
+        //如果不能下拉或者上滑(到底/顶)
+        if (!scrollHome.canScrollVertically(1) || !scrollHome.canScrollVertically(-1)){
+            if (isBottomHide){
+                mBottomAnim.show();
+                isBottomHide = false;
+            }
+        }
     }
 
     @Override
     public void onDownMotionEvent() {
-
         if (!isAnimInit){
             mBottomAnim = new BottomBehaviorAnim(tvDetailBottom);
             isAnimInit = true;
@@ -173,7 +251,5 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
 
     }
-
-
 
 }
