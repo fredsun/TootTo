@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -39,7 +38,6 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
 
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        Log.i(tag, "name"+ dependency.getClass().getName());
         return super.layoutDependsOn(parent, child, dependency);
     }
 
@@ -52,7 +50,6 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
             isInit = false;
         }
 
-        Log.i(tag, "name"+ directTargetChild.getClass().getName());
 
 //        //RecyclerView的高度超过4000才值得启动behavior
 //        if ((((RecyclerView)directTargetChild).computeVerticalScrollRange())>4000){
@@ -72,7 +69,6 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
                 if (!isHide) {
                     mBottomAnim.hide();
                     isHide = true;
-                    Log.i(tag, "hide");
                 }
 
             }
@@ -81,7 +77,6 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
                 if (isHide) {
                     mBottomAnim.show();
                     isHide = false;
-                    Log.i(tag, "show");
                 }
             }
 
@@ -90,7 +85,6 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
                 if (isHide) {
                     mBottomAnim.show();
                     isHide = false;
-                    Log.i(tag, "bottom show");
                 }
             }
 
@@ -99,7 +93,6 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
                 if (isHide) {
                     mBottomAnim.show();
                     isHide = false;
-                    Log.i(tag, "bottom show");
                 }
             }
         }
