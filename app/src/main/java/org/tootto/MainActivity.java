@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.tootto.behavior.BottomBehavior;
+import org.tootto.ui.fragment.FragmentSecond;
 import org.tootto.ui.fragment.FragmentTransFirst;
 import org.tootto.ui.fragment.view.NonSwipeableViewPager;
 
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements BottomBehavior.on
         setContentView(R.layout.activity_main);
 
         fragmentList.add(FragmentTransFirst.newInstance());
-        fragmentList.add(FragmentTransFirst.newInstance());
+        fragmentList.add(FragmentSecond.newInstance());
         fragmentList.add(FragmentTransFirst.newInstance());
         fragmentList.add(FragmentTransFirst.newInstance());
 
