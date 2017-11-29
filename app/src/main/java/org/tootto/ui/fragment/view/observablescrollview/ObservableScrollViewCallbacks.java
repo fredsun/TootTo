@@ -32,6 +32,12 @@ public interface ObservableScrollViewCallbacks {
      */
     void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging);
 
+    /*
+    * @Description: 把View.onScrollChange的参数传递过来, ListView/RecyclerView中a,b,oldA,oldB恒为0
+    * @author: fred
+    * @date: 2017/11/29
+    * @attention:
+    */
     void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging, int a, int b, int oldA, int oldB);
 
     /**
