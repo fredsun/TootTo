@@ -264,6 +264,7 @@ public class ObservableScrollView extends ScrollView implements Scrollable {
         }
     }
 
+    //原基础上添加的回调, ListView/RecyclerView无法使用, onScrollChanged 返回恒为0
     private void dispatchOnScrollChanged(int scrollY, boolean firstScroll, boolean dragging, int a, int b, int oldA, int oldB) {
         if (mCallbacks != null) {
             mCallbacks.onScrollChanged(scrollY, firstScroll, dragging);
