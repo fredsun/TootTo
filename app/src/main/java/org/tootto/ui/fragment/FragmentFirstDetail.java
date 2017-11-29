@@ -164,6 +164,11 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
 //        tvDetailContent.setMovementMethod(ScrollingMovementMethod.getInstance());
         scrollHome = view.findViewById(R.id.observable_scroll_text);
         scrollHome.setScrollViewCallbacks(this);
+        Fragment parentFragment = getParentFragment();
+        scrollHome.setTouchInterceptionViewGroup((ViewGroup) parentFragment.getView().findViewById(R.id.content));
+        if (parentFragment instanceof ObservableScrollViewCallbacks) {
+            scrollHome.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentFragment);
+        }
 
         tvDetailBottom = view.findViewById(R.id.tv_detail_bottom);
         tvDetailContent.post(new Runnable() {
@@ -172,34 +177,6 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
                 Log.i(tag, "height"+tvDetailContent.getWidth());
             }
         });
-//        ViewTreeObserver observer = tvDetailContent.getViewTreeObserver();
-//        observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                Log.i(tag,":::tvheight"+tvDetailContent.getHeight());//获文本高度
-//                Log.i(tag,":::tvheight"+tvDetailContent.getMeasuredHeight());//获文本高度
-//                return true;
-//            }
-//        });
-//        observer.addOnDrawListener(new ViewTreeObserver.OnDrawListener() {
-//            @Override
-//            public void onDraw() {
-//                Log.i(tag, "===tvheight"+tvDetailContent.getHeight()+"");
-//                Log.i(tag, "===tvheight"+tvDetailContent.getMeasuredHeight()+"");
-//            }
-//        });
-//        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override public void onGlobalLayout(){
-//                //避免重复监听
-//                tvDetailContent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//
-//                Log.i(tag,"---tvheight"+tvDetailContent.getHeight());//获文本高度
-//                Log.i(tag,"---tvheight"+tvDetailContent.getMeasuredHeight());//获文本高度
-//                //获取高度后要进行的操作就在这里执行，
-//                //在外面可能onGlobalLayout还没有执行而获取不到height
-//
-//            }
-//        });
         return view;
     }
 
@@ -215,6 +192,12 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
 
     }
 
+    /*
+    * @Description: ObservableScrollView的回调
+    * @author: fred
+    * @date: 2017/11/29
+    * @attention: 和github上的比添加了int a,b,oldA,oldB变量, 传递前一次的touch距离, ListView/RecyclerView无法使用, 这四个参数恒为0.
+    */
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging, int a, int b, int oldA, int oldB) {
         //速度快的下拉

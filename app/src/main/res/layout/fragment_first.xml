@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
+
+    <org.tootto.ui.fragment.view.observablescrollview.FrameInterceptLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerview_first_fragment"/>
+        android:id="@+id/intercept_layout">
 
+        <org.tootto.ui.fragment.view.observablescrollview.ObservableRecyclerView
+            android:id="@+id/recyclerview_first_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </org.tootto.ui.fragment.view.observablescrollview.FrameInterceptLayout>
+    <include
+        android:id="@+id/detail_toolbar"
+        layout="@layout/toolbar_fragment" />
 </FrameLayout>
