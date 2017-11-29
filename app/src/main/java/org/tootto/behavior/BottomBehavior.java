@@ -3,8 +3,12 @@ package org.tootto.behavior;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.VelocityTrackerCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,7 +27,7 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
     private boolean isHide;
     protected BottomBehaviorAnim mBottomAnim;
     private boolean isInit = true;
-
+    int dyConsumedTotal;
 
     public BottomBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -63,41 +67,24 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
-        if (mOnCanScrollCallback.callbackCanScroll()) {
-            if (dyConsumed > 0 && Math.abs(dyConsumed) > 80) {
-                //快速下拉, 隐藏
-                if (!isHide) {
-                    mBottomAnim.hide();
-                    isHide = true;
-                }
-
+        Log.i(tag, "dyConsumed"+dyConsumed);
+        dyConsumedTotal+=dyConsumed;
+        Log.i(tag, "dyConsumedTotal"+dyConsumedTotal);
+        if (Math.abs(dyConsumedTotal) > 100)
+        {
+            if (dyConsumed <0 && isHide) {
+                mBottomAnim.show();
+                isHide = false;
             }
-            if (dyConsumed < 0 && Math.abs(dyConsumed) > 80) {
-                //快速上拉, 显示
-                if (isHide) {
-                    mBottomAnim.show();
-                    isHide = false;
-                }
-            }
-
-            if (!target.canScrollVertically(1)) {
-                //如果不能下拉了
-                if (isHide) {
-                    mBottomAnim.show();
-                    isHide = false;
-                }
-            }
-
-            if (!target.canScrollVertically(-1)) {
-                //如果不能上滑了
-                if (isHide) {
-                    mBottomAnim.show();
-                    isHide = false;
-                }
+            if (dyConsumed >0 &&!isHide) {
+                mBottomAnim.hide();
+                isHide = true;
             }
         }
+        if (Math.abs(dyConsumed)<10){
+            dyConsumedTotal = 0;
+        }
     }
-    
 
     public interface onCanScrollCallback{
         boolean callbackCanScroll();
