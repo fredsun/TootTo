@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tootto.ui.fragment.view.observablescrollview;
+package org.tootto.ui.view.observablescrollview;
 
 import android.view.ViewGroup;
 

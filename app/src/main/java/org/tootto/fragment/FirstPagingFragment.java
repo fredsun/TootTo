@@ -1,4 +1,4 @@
-package org.tootto.ui.fragment;
+package org.tootto.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,17 +14,16 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
-import org.tootto.MainActivity;
 import org.tootto.R;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.backinterface.FragmentBackHandler;
 import org.tootto.listener.RecyclerViewClickListener;
-import org.tootto.ui.fragment.view.observablescrollview.FrameInterceptLayout;
-import org.tootto.ui.fragment.view.observablescrollview.ObservableRecyclerView;
-import org.tootto.ui.fragment.view.observablescrollview.ObservableScrollViewCallbacks;
-import org.tootto.ui.fragment.view.observablescrollview.ScrollState;
+import org.tootto.ui.view.observablescrollview.FrameInterceptLayout;
+import org.tootto.ui.view.observablescrollview.ObservableRecyclerView;
+import org.tootto.ui.view.observablescrollview.ObservableScrollViewCallbacks;
+import org.tootto.ui.view.observablescrollview.ScrollState;
 
 import java.util.ArrayList;
 
@@ -34,7 +33,7 @@ import io.reactivex.disposables.Disposable;
  * Created by fred on 2017/11/13.
  */
 
-public class FragmentFirst extends RxFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler {
+public class FirstPagingFragment extends RxFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler {
     ObservableRecyclerView recyclerFirstFragment;
     ArrayList<String> mList = new ArrayList<>();
     FirstFragmentAdapter mAdapter;
@@ -44,7 +43,7 @@ public class FragmentFirst extends RxFragment implements ObservableScrollViewCal
     boolean isAnimInit = false;
     boolean isTitleHide = false;
     Toolbar toolbarTitle;
-    String tag = "FragmentFirst";
+    String tag = "FirstPagingFragment";
     private Disposable subscribe_auto;
 //    int mTotalScrollY;
     int mScrollY;
@@ -79,8 +78,8 @@ public class FragmentFirst extends RxFragment implements ObservableScrollViewCal
         recyclerFirstFragment.addOnItemTouchListener(new RecyclerViewClickListener(getContext(), recyclerFirstFragment, new RecyclerViewClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (getParentFragment() instanceof FragmentTransFirst){
-                    ((FragmentTransFirst) getParentFragment()).showDetailFragment();
+                if (getParentFragment() instanceof FirstTransFragment){
+                    ((FirstTransFragment) getParentFragment()).showDetailFragment();
                 }
             }
 
@@ -99,9 +98,9 @@ public class FragmentFirst extends RxFragment implements ObservableScrollViewCal
 
 
 
-    public static FragmentFirst newInstance(){
-        FragmentFirst FragmentFirst = new FragmentFirst();
-        return FragmentFirst;
+    public static FirstPagingFragment newInstance(){
+        FirstPagingFragment FirstPagingFragment = new FirstPagingFragment();
+        return FirstPagingFragment;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.tootto.ui.fragment;
+package org.tootto.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,32 +18,32 @@ import org.tootto.backinterface.FragmentBackHandler;
  * Created by fred on 2017/11/13.
  */
 
-public class FragmentTransFirst extends Fragment implements FragmentBackHandler {
-    private FragmentFirst fragmentFirst;
-    private FragmentFirstDetail fragmentFirstDetail;
+public class FirstTransFragment extends Fragment implements FragmentBackHandler {
+    private FirstPagingFragment firstPagingFragment;
+    private FirstDetailFragment firstDetailFragment;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trans_first, container, false);
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        fragmentFirst = FragmentFirst.newInstance();
-        fragmentFirstDetail = FragmentFirstDetail.newInstance();
-        fragmentTransaction.add(R.id.content, fragmentFirst,"fragmentFirst" );
-        fragmentTransaction.add(R.id.content, fragmentFirstDetail,"fragmentFirstDetail" );
-        fragmentTransaction.show(fragmentFirst).hide(fragmentFirstDetail).commit();
+        firstPagingFragment = FirstPagingFragment.newInstance();
+        firstDetailFragment = FirstDetailFragment.newInstance();
+        fragmentTransaction.add(R.id.content, firstPagingFragment,"firstPagingFragment" );
+        fragmentTransaction.add(R.id.content, firstDetailFragment,"firstDetailFragment" );
+        fragmentTransaction.show(firstPagingFragment).hide(firstDetailFragment).commit();
 
         return view;
     }
 
-    public static FragmentTransFirst newInstance(){
-        FragmentTransFirst fragmentTransFirst = new FragmentTransFirst();
+    public static FirstTransFragment newInstance(){
+        FirstTransFragment firstTransFragment = new FirstTransFragment();
 
-        return fragmentTransFirst;
+        return firstTransFragment;
     }
 
     public void transFragment(){
-        getChildFragmentManager().beginTransaction().hide(fragmentFirst).show(fragmentFirstDetail).commit();
+        getChildFragmentManager().beginTransaction().hide(firstPagingFragment).show(firstDetailFragment).commit();
 
     }
 
@@ -57,15 +57,15 @@ public class FragmentTransFirst extends Fragment implements FragmentBackHandler 
     * @attention:
     */
     public void showDetailFragment(){
-        fragmentFirst.showToolBar();
+        firstPagingFragment.showToolBar();
         if (getActivity() instanceof MainActivity){
             ((MainActivity) getActivity()).bringViewPagerToFront();
         }
-        if (null == fragmentFirstDetail){
-            fragmentFirstDetail = fragmentFirstDetail.newInstance();
-            getChildFragmentManager().beginTransaction().add(R.id.content, fragmentFirstDetail,"fragmentFirstDetail" ).commit();
+        if (null == firstDetailFragment){
+            firstDetailFragment = firstDetailFragment.newInstance();
+            getChildFragmentManager().beginTransaction().add(R.id.content, firstDetailFragment,"firstDetailFragment" ).commit();
         }
-        getChildFragmentManager().beginTransaction().hide(fragmentFirst).show(fragmentFirstDetail).commit();
+        getChildFragmentManager().beginTransaction().hide(firstPagingFragment).show(firstDetailFragment).commit();
     }
 
     /*
@@ -80,9 +80,9 @@ public class FragmentTransFirst extends Fragment implements FragmentBackHandler 
         if (getActivity() instanceof MainActivity){
             ((MainActivity) getActivity()).bringViewPagerToBack();
         }
-//        getChildFragmentManager().beginTransaction().hide(fragmentFirstDetail).show(fragmentFirst).commit();
-        getChildFragmentManager().beginTransaction().remove(fragmentFirstDetail).show(fragmentFirst).commit();
-        fragmentFirstDetail = null;
+//        getChildFragmentManager().beginTransaction().hide(firstDetailFragment).show(firstPagingFragment).commit();
+        getChildFragmentManager().beginTransaction().remove(firstDetailFragment).show(firstPagingFragment).commit();
+        firstDetailFragment = null;
     }
 
     @Override

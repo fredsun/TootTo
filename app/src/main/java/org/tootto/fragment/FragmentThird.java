@@ -1,4 +1,4 @@
-package org.tootto.ui.fragment;
+package org.tootto.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,16 +13,16 @@ import org.tootto.R;
  * Created by fred on 2017/11/13.
  */
 
-public class FragmentFourth extends Fragment {
+public class FragmentThird extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fourth, container, false);
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
         return view;
     }
 
-    public static FragmentFourth newInstance(){
-        FragmentFourth FragmentFourth = new FragmentFourth();
-        return FragmentFourth;
+    public static FragmentThird newInstance(){
+        FragmentThird fragmentThird = new FragmentThird();
+        return fragmentThird;
     }
 }

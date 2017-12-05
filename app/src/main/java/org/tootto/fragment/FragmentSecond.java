@@ -1,4 +1,4 @@
-package org.tootto.ui.fragment;
+package org.tootto.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

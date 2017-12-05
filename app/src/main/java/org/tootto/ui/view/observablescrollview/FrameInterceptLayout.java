@@ -1,4 +1,4 @@
-package org.tootto.ui.fragment.view.observablescrollview;
+package org.tootto.ui.view.observablescrollview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

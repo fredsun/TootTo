@@ -1,4 +1,4 @@
-package org.tootto.ui.fragment;
+package org.tootto.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,12 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 
@@ -19,9 +17,9 @@ import org.tootto.R;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.anim.BottomBehaviorAnim;
 import org.tootto.backinterface.FragmentBackHandler;
-import org.tootto.ui.fragment.view.observablescrollview.ObservableScrollView;
-import org.tootto.ui.fragment.view.observablescrollview.ObservableScrollViewCallbacks;
-import org.tootto.ui.fragment.view.observablescrollview.ScrollState;
+import org.tootto.ui.view.observablescrollview.ObservableScrollView;
+import org.tootto.ui.view.observablescrollview.ObservableScrollViewCallbacks;
+import org.tootto.ui.view.observablescrollview.ScrollState;
 
 import java.util.ArrayList;
 
@@ -29,12 +27,12 @@ import java.util.ArrayList;
  * Created by fred on 2017/11/13.
  */
 
-public class FragmentFirstDetail extends Fragment implements ObservableScrollViewCallbacks, FragmentBackHandler {
+public class FirstDetailFragment extends Fragment implements ObservableScrollViewCallbacks, FragmentBackHandler {
     RecyclerView recyclerFirstFragment;
     ArrayList<String> mList = new ArrayList<>();
     FirstFragmentAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
-    String tag = "FragmentFirstDetail";
+    String tag = "FirstDetailFragment";
     protected BottomBehaviorAnim mBottomAnim;
     TextView tvDetailBottom;
     boolean isBottomHide = false;
@@ -181,9 +179,9 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
         return view;
     }
 
-    public static FragmentFirstDetail newInstance(){
-        FragmentFirstDetail fragmentFirstDetail = new FragmentFirstDetail();
-        return fragmentFirstDetail;
+    public static FirstDetailFragment newInstance(){
+        FirstDetailFragment firstDetailFragment = new FirstDetailFragment();
+        return firstDetailFragment;
     }
 
 
@@ -238,8 +236,8 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
 
     @Override
     public boolean onBackPressed() {
-        if (getParentFragment() instanceof FragmentTransFirst){
-            ((FragmentTransFirst) getParentFragment()).showListFragment();
+        if (getParentFragment() instanceof FirstTransFragment){
+            ((FirstTransFragment) getParentFragment()).showListFragment();
         }
         return true;
     }

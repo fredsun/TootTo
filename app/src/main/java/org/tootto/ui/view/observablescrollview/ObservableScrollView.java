@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package org.tootto.ui.fragment.view.observablescrollview;
+package org.tootto.ui.view.observablescrollview;
 
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;

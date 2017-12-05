@@ -1,4 +1,4 @@
-package org.tootto.ui.fragment.view;
+package org.tootto.ui.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

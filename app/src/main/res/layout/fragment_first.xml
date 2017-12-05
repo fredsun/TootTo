@@ -3,18 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.tootto.ui.fragment.view.observablescrollview.FrameInterceptLayout
+    <org.tootto.ui.view.observablescrollview.FrameInterceptLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/intercept_layout">
 
-        <org.tootto.ui.fragment.view.observablescrollview.ObservableRecyclerView
+        <org.tootto.ui.view.observablescrollview.ObservableRecyclerView
             android:id="@+id/recyclerview_first_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
 
-    </org.tootto.ui.fragment.view.observablescrollview.FrameInterceptLayout>
+    </org.tootto.ui.view.observablescrollview.FrameInterceptLayout>
     <include
         android:id="@+id/detail_toolbar"
         layout="@layout/toolbar_fragment" />

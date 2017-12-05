@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/navigation_bottom">
 
-    <org.tootto.ui.fragment.view.observablescrollview.ObservableScrollView
+    <org.tootto.ui.view.observablescrollview.ObservableScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/observable_scroll_text">
@@ -15,7 +15,7 @@
             android:id="@+id/tv_detail_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </org.tootto.ui.fragment.view.observablescrollview.ObservableScrollView>
+    </org.tootto.ui.view.observablescrollview.ObservableScrollView>
 
     <TextView
         android:id="@+id/tv_detail_bottom"

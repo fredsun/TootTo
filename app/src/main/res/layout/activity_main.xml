@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="org.tootto.MainActivity">
 
-    <org.tootto.ui.fragment.view.NonSwipeableViewPager
+    <org.tootto.ui.view.NonSwipeableViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_pager"/>

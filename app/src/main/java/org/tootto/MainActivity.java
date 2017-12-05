@@ -5,18 +5,15 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.behavior.BottomBehavior;
-import org.tootto.ui.fragment.FragmentSecond;
-import org.tootto.ui.fragment.FragmentTransFirst;
-import org.tootto.ui.fragment.view.NonSwipeableViewPager;
+import org.tootto.fragment.FragmentSecond;
+import org.tootto.fragment.FirstTransFragment;
+import org.tootto.ui.view.NonSwipeableViewPager;
 
 import java.util.ArrayList;
 
@@ -33,10 +30,10 @@ public class MainActivity extends AppCompatActivity implements BottomBehavior.on
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentList.add(FragmentTransFirst.newInstance());
+        fragmentList.add(FirstTransFragment.newInstance());
         fragmentList.add(FragmentSecond.newInstance());
-        fragmentList.add(FragmentTransFirst.newInstance());
-        fragmentList.add(FragmentTransFirst.newInstance());
+        fragmentList.add(FirstTransFragment.newInstance());
+        fragmentList.add(FirstTransFragment.newInstance());
 
 
         mainPager = findViewById(R.id.main_pager);
