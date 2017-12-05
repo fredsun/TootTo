@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.tootto.R;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.anim.BottomBehaviorAnim;
+import org.tootto.backinterface.FragmentBackHandler;
 import org.tootto.ui.fragment.view.observablescrollview.ObservableScrollView;
 import org.tootto.ui.fragment.view.observablescrollview.ObservableScrollViewCallbacks;
 import org.tootto.ui.fragment.view.observablescrollview.ScrollState;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  * Created by fred on 2017/11/13.
  */
 
-public class FragmentFirstDetail extends Fragment implements ObservableScrollViewCallbacks {
+public class FragmentFirstDetail extends Fragment implements ObservableScrollViewCallbacks, FragmentBackHandler {
     RecyclerView recyclerFirstFragment;
     ArrayList<String> mList = new ArrayList<>();
     FirstFragmentAdapter mAdapter;
@@ -233,6 +234,14 @@ public class FragmentFirstDetail extends Fragment implements ObservableScrollVie
     @Override
     public void onUpOrCancelMotionEvent(ScrollState scrollState) {
 
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (getParentFragment() instanceof FragmentTransFirst){
+            ((FragmentTransFirst) getParentFragment()).showListFragment();
+        }
+        return true;
     }
 
 }

@@ -89,5 +89,12 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
     public interface onCanScrollCallback{
         boolean callbackCanScroll();
     }
+
+    public void showBottom(){
+        if (isHide){
+            mBottomAnim.show();
+            isHide = false;
+        }
+    }
     
 }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.behavior.BottomBehavior;
 import org.tootto.ui.fragment.FragmentSecond;
 import org.tootto.ui.fragment.FragmentTransFirst;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements BottomBehavior.on
     TabLayout mainTab;
     NonSwipeableViewPager mainPager;
     boolean canScroll = true;
+    private BottomBehavior mBottomBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,17 +92,29 @@ public class MainActivity extends AppCompatActivity implements BottomBehavior.on
 
             }
         });
-        BottomBehavior bottomBehavior = (BottomBehavior)((CoordinatorLayout.LayoutParams) mainTab.getLayoutParams()).getBehavior();
-        bottomBehavior.setOnCanScrollCallback(this);
+        mBottomBehavior = (BottomBehavior)((CoordinatorLayout.LayoutParams) mainTab.getLayoutParams()).getBehavior();
+        mBottomBehavior.setOnCanScrollCallback(this);
     }
 
     public void bringViewPagerToFront(){
-//        mainPager.bringToFront();//和知乎不同
         mainTab.setVisibility(View.GONE);
+        mBottomBehavior.showBottom();
+    }
+
+    public void bringViewPagerToBack(){
+        mainTab.setVisibility(View.VISIBLE);
     }
 
     @Override
     public boolean callbackCanScroll() {
         return canScroll;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!BackHandlerHelper.handleBackPress(this)) {
+            super.onBackPressed();
+        }
+
     }
 }

@@ -18,6 +18,8 @@ import org.tootto.MainActivity;
 import org.tootto.R;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
+import org.tootto.backinterface.BackHandlerHelper;
+import org.tootto.backinterface.FragmentBackHandler;
 import org.tootto.listener.RecyclerViewClickListener;
 import org.tootto.ui.fragment.view.observablescrollview.FrameInterceptLayout;
 import org.tootto.ui.fragment.view.observablescrollview.ObservableRecyclerView;
@@ -32,7 +34,7 @@ import io.reactivex.disposables.Disposable;
  * Created by fred on 2017/11/13.
  */
 
-public class FragmentFirst extends RxFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener {
+public class FragmentFirst extends RxFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler {
     ObservableRecyclerView recyclerFirstFragment;
     ArrayList<String> mList = new ArrayList<>();
     FirstFragmentAdapter mAdapter;
@@ -78,10 +80,7 @@ public class FragmentFirst extends RxFragment implements ObservableScrollViewCal
             @Override
             public void onItemClick(View view, int position) {
                 if (getParentFragment() instanceof FragmentTransFirst){
-                    ((FragmentTransFirst) getParentFragment()).transFragment();
-                }
-                if (getActivity() instanceof MainActivity){
-                    ((MainActivity) getActivity()).bringViewPagerToFront();
+                    ((FragmentTransFirst) getParentFragment()).showDetailFragment();
                 }
             }
 
@@ -152,149 +151,17 @@ public class FragmentFirst extends RxFragment implements ObservableScrollViewCal
                 isTitleHide = true;
             }
         }
-
-//        if (Math.abs(offsetY) > 80){
-//            if (isTitleHide && offsetY >0){
-//                Log.i(tag, "-1"+!recyclerFirstFragment.canScrollVertically(-1) );
-//                Log.i(tag, "1"+!recyclerFirstFragment.canScrollVertically(1) );
-//                Log.i(tag, "scrollShow");
-//                mTitleAnim.show();
-//                isTitleHide = false;
-//            }
-//
-//            if (!isTitleHide && offsetY <0){
-//                Log.i(tag, "-1"+!recyclerFirstFragment.canScrollVertically(-1) );
-//                Log.i(tag, "1"+!recyclerFirstFragment.canScrollVertically(1) );
-//                Log.i(tag, "scrollHide");
-//                mTitleAnim.hide();
-//                isTitleHide = true;
-//            }
-//
-//        }
     }
 
+    @Override
+    public boolean onBackPressed() {
+        return BackHandlerHelper.handleBackPress(this);
+    }
 
-
-//    @Override
-//    public boolean f(MotionEvent ev, boolean moving, float diffX, float diffY) {
-////        Log.i(tag, "diffX"+diffX);
-//        Log.i(tag, "diffY"+diffY);
-//        if (!mScrolled && mSlop < Math.abs(diffX) && Math.abs(diffY) < Math.abs(diffX)) {
-//            // Horizontal scroll is maybe handled by ViewPager
-//            return false;
-//        }
-//
-//        Scrollable scrollable = getCurrentScrollable();
-//        if (scrollable == null) {
-//            mScrolled = false;
-//            return false;
-//        }
-//
-//        // If interceptionLayout can move, it should intercept.
-//        // And once it begins to move, horizontal scroll shouldn't work any longer.
-//        int toolbarHeight = toolbarTitle.getHeight();
-//        int translationY = (int) intercept_layout.getTranslationY();
-//        boolean scrollingUp = 0 < diffY;
-//        boolean scrollingDown = diffY < 0;
-//        if (scrollingUp) {
-//            if (translationY < 0) {
-//                mScrolled = true;
-//                return true;
-//            }
-//        } else if (scrollingDown) {
-//            if (-toolbarHeight < translationY) {
-//                mScrolled = true;
-//                return true;
-//            }
-//        }
-//        mScrolled = false;
-//        return false;
-//    }
-//
-//    @Override
-//    public void onDownMotionEvent(MotionEvent ev) {
-//    }
-//
-//    @Override
-//    public void onMoveMotionEvent(MotionEvent ev, float diffX, float diffY) {
-//        float translationY = ScrollUtils.getFloat(intercept_layout.getTranslationY() + diffY, -toolbarTitle.getHeight(), 0);
-//        intercept_layout.setTranslationY(translationY);
-//        Log.i(tag,"translationY: "+translationY);
-//        if (translationY < 0) {
-//            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) intercept_layout.getLayoutParams();
-//            lp.height = (int) (-translationY + getScreenHeight());
-//            intercept_layout.requestLayout();
-//        }
-//    }
-//
-//    @Override
-//    public void onUpOrCancelMotionEvent(MotionEvent ev) {
-//        mScrolled = false;
-//        Log.i(tag, "changeToolBar");
-//    }
-//
-//    protected int getScreenHeight() {
-//        return getActivity().findViewById(android.R.id.content).getHeight();
-//    }
-//
-//    private Scrollable getCurrentScrollable() {
-//        Fragment fragment = this;
-//        if (fragment == null) {
-//            return null;
-//        }
-//        View view = fragment.getView();
-//        if (view == null) {
-//            return null;
-//        }
-//        return (Scrollable) view.findViewById(R.id.recyclerview_first_fragment);
-//    }
-
-//    @Override
-//    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-//        mScrollY = scrollY;
-////        Log.i(tag, "scrollY"+scrollY);
-//
-//
-//
-//    }
-//
-//    @Override
-//    public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging, int a, int b, int oldA, int oldB) {
-//
-//    }
-//
-//    @Override
-//    public void onDownMotionEvent() {
-//        if (!isAnimInit){
-//            mTitleAnim = new TitleBehaviorAnim(toolbarTitle);
-//            isAnimInit = true;
-//        }
-////        //每隔300ms
-////        subscribe_auto = Observable.interval( 300, TimeUnit.MILLISECONDS)
-////                .compose(this.<Long>bindToLifecycle())
-////                .observeOn(Schedulers.computation())
-////                .subscribe(new Consumer<Long>() {
-////                    @Override
-////                    public void accept(Long aLong) throws Exception {
-////                        Log.i(tag,"mscroll"+(mScrollY));
-////                        Log.i(tag,"mScrollYRecord"+(mScrollYRecord));
-////                        Log.i(tag,"mscroll - mscrollBefore"+(mScrollY - mScrollYRecord));
-////                        if ((mScrollY - mScrollYRecord)>30){
-////                            isFastScroll = true;
-//////                            Log.i(tag, "isFastScroll"+isFastScroll);
-////                        }
-////                        mScrollYRecord = mScrollY;
-////
-////                    }
-////                });
-//    }
-//
-//    @Override
-//    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-////        subscribe_auto.dispose();
-//        isFastScroll = false;
-//    }
-
-
-
+    public void showToolBar(){
+        if (isTitleHide){
+            mTitleAnim.show();
+            isTitleHide = false;
+        }
+    }
 }
