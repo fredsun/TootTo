@@ -44,20 +44,12 @@ public class FirstPagingFragment extends RxFragment implements ObservableScrollV
     boolean isTitleHide = false;
     Toolbar toolbarTitle;
     String tag = "FirstPagingFragment";
-    private Disposable subscribe_auto;
-//    int mTotalScrollY;
-    int mScrollY;
-    boolean isFastScroll;
-    private boolean mScrolled;
     private int mSlop;
-
-
     FrameInterceptLayout intercept_layout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Fragment parentFragment = getParentFragment();
         View view = inflater.inflate(R.layout.fragment_first, container, false);
         for (int i = 0; i < 30; i++){
             mList.add("i");
