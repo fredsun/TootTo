@@ -25,8 +25,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.android.support:design:27.0.0'
-    //CoordinatorLayout,TabLayout
+    compile 'com.android.support:design:27.0.0'//CoordinatorLayout,TabLayout
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
     compile 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
