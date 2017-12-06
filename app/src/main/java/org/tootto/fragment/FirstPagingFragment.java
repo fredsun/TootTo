@@ -22,7 +22,6 @@ import org.tootto.R;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
 import org.tootto.api.GetRequest_Interface;
-import org.tootto.api.HttpLogger;
 import org.tootto.api.RetrofitManager;
 import org.tootto.api.Translation;
 import org.tootto.backinterface.BackHandlerHelper;

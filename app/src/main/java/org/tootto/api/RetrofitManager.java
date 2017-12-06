@@ -33,9 +33,6 @@ public class RetrofitManager {
      * @return 所有apiService
      */
     public GetRequest_Interface getApiService() {
-        //        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLogger());
-//        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        builder.addNetworkInterceptor(logInterceptor);//retrofit 的 builder设置okhttp内核
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://fy.iciba.com/") // 设置 网络请求 Url
                 .client(okhttpclient())
