@@ -12,11 +12,19 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 import org.tootto.R;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
+import org.tootto.api.GetRequest_Interface;
+import org.tootto.api.HttpLogger;
+import org.tootto.api.RetrofitManager;
+import org.tootto.api.Translation;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.backinterface.FragmentBackHandler;
 import org.tootto.listener.RecyclerViewClickListener;
@@ -27,7 +35,19 @@ import org.tootto.ui.view.observablescrollview.ScrollState;
 
 import java.util.ArrayList;
 
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.operators.flowable.FlowableOnBackpressureDrop;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by fred on 2017/11/13.
@@ -46,6 +66,7 @@ public class FirstPagingFragment extends RxFragment implements ObservableScrollV
     String tag = "FirstPagingFragment";
     private int mSlop;
     FrameInterceptLayout intercept_layout;
+    private OkHttpClient.Builder builder;
 
     @Nullable
     @Override
@@ -88,7 +109,11 @@ public class FirstPagingFragment extends RxFragment implements ObservableScrollV
         return view;
     }
 
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        request();
+    }
 
     public static FirstPagingFragment newInstance(){
         FirstPagingFragment FirstPagingFragment = new FirstPagingFragment();
@@ -154,5 +179,50 @@ public class FirstPagingFragment extends RxFragment implements ObservableScrollV
             mTitleAnim.show();
             isTitleHide = false;
         }
+    }
+
+    public void request() {
+
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://fy.iciba.com/") // 设置 网络请求 Url
+//                .addConverterFactory(GsonConverterFactory.create()) //设置使用Gson解析(记得加入依赖)
+//                .build();
+//
+//
+//        // 步骤5:创建 网络请求接口 的实例
+//        GetRequest_Interface request = retrofit.create(GetRequest_Interface.class);
+//
+//        //对 发送请求 进行封装
+//        Call<Translation> call = request.getCall();
+//
+//        //步骤6:发送网络请求(异步)
+//        call.enqueue(new Callback<Translation>() {
+//            //请求成功时回调
+//            @Override
+//            public void onResponse(Call<Translation> call, Response<Translation> response) {
+//                // 步骤7：处理返回的数据结果
+//                response.body().show();
+//            }
+//
+//            //请求失败时回调
+//            @Override
+//            public void onFailure(Call<Translation> call, Throwable throwable) {
+//                System.out.println("连接失败");
+//            }
+//        });
+
+
+        RetrofitManager.getInstance().getApiService().getCall().enqueue(new Callback<Translation>() {
+            @Override
+            public void onResponse(Call<Translation> call, Response<Translation> response) {
+                response.body().show();
+            }
+
+            @Override
+            public void onFailure(Call<Translation> call, Throwable t) {
+                System.out.println("连接失败");
+            }
+        });
+
     }
 }
