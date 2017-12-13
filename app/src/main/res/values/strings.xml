@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TootTo</string>
+    <string name="preferences_file_key" translatable="false">org.tootto.PREFERENCES</string>
+    <string name="mastodon_instance">Mastodon站点</string>
+    <string name="login">登陆</string>
+    <string name="oauth_scheme">oauth2redirect</string>
+    <string name="oauth_host">org.tootto</string>
+    <string name="error_no_web_browser_found">无法找到浏览器</string>
+    <string name="error_invalid_domain">站点错误</string>
+    <string name="error_failed_app_registration">站点认证失败</string>
+    <string name="app_website" translatable="false">https://github.com/sunxlfred/TootTo</string>
+
 </resources>
