@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.tootto.MainActivity">
+    tools:context="org.tootto.activity.MainActivity">
 
     <org.tootto.ui.view.NonSwipeableViewPager
         android:layout_width="match_parent"

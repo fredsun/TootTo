@@ -1,4 +1,4 @@
-package org.tootto;
+package org.tootto.activity;
 
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import org.tootto.R;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.behavior.BottomBehavior;
 import org.tootto.fragment.FragmentSecond;

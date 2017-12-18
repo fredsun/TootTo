@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.tootto.MainActivity;
+import org.tootto.activity.MainActivity;
 import org.tootto.R;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.backinterface.FragmentBackHandler;
