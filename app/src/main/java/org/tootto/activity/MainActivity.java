@@ -1,5 +1,7 @@
 package org.tootto.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
@@ -7,24 +9,31 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import org.tootto.R;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.behavior.BottomBehavior;
+import org.tootto.entity.Account;
 import org.tootto.fragment.FragmentSecond;
 import org.tootto.fragment.FirstTransFragment;
 import org.tootto.ui.view.NonSwipeableViewPager;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements BottomBehavior.onCanScrollCallback {
-    String tag = "MainActivity";
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class MainActivity extends BaseActivity implements BottomBehavior.onCanScrollCallback {
+    String TAG = "MainActivity";
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     TabLayout mainTab;
     NonSwipeableViewPager mainPager;
     boolean canScroll = true;
     private BottomBehavior mBottomBehavior;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements BottomBehavior.on
         fragmentList.add(FirstTransFragment.newInstance());
         fragmentList.add(FirstTransFragment.newInstance());
 
+        getUserAvatar();
 
         mainPager = findViewById(R.id.main_pager);
         mainPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -92,6 +102,26 @@ public class MainActivity extends AppCompatActivity implements BottomBehavior.on
         });
         mBottomBehavior = (BottomBehavior)((CoordinatorLayout.LayoutParams) mainTab.getLayoutParams()).getBehavior();
         mBottomBehavior.setOnCanScrollCallback(this);
+    }
+
+    private void getUserAvatar() {
+        preferences = getSharedPreferences(
+                getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
+        Log.i(TAG, preferences.getString("domain", null));
+        Log.i(TAG, preferences.getString("accessToken", null));
+        mastodonApi.accountVerifyCredentials().enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                Log.i(TAG, response.isSuccessful()+"");
+                Log.i(TAG, response.body().id+"");
+                Log.i(TAG, response.body().username+"");
+            }
+
+            @Override
+            public void onFailure(Call<Account> call, Throwable throwable) {
+                Log.i(TAG, "fail"+throwable);
+            }
+        });
     }
 
     public void bringViewPagerToFront(){
