@@ -15,12 +15,15 @@
 
 package org.tootto.network;
 
+import org.tootto.entity.AccessToken;
+import org.tootto.entity.Account;
 import org.tootto.entity.AppCredentials;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 
@@ -34,6 +37,17 @@ public interface MastodonApi {
             @Field("scopes") String scopes,
             @Field("website") String website);
 
+    @FormUrlEncoded
+    @POST("oauth/token")
+    Call<AccessToken> fetchOAuthToken(
+            @Field("client_id") String clientId,
+            @Field("client_secret") String clientSecret,
+            @Field("redirect_uri") String redirectUri,
+            @Field("code") String code,
+            @Field("grant_type") String grantType
+    );
 
+    @GET("api/v1/accounts/verify_credentials")
+    Call<Account> accountVerifyCredentials();
 
 }
