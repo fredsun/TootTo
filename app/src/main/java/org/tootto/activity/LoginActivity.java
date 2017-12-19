@@ -1,5 +1,6 @@
 package org.tootto.activity;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,8 +14,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.tootto.R;
+import org.tootto.entity.AccessToken;
 import org.tootto.entity.AppCredentials;
 import org.tootto.network.MastodonApi;
 import org.tootto.util.JsonUtil;
@@ -70,10 +73,70 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
+        String redirectUri = getOauthRedirectUri();
+        preferences = getSharedPreferences(
+                getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
         Intent intent = getIntent();
-        if (null != intent){
-            Log.i(TAG, "scehme" + intent.getScheme());
+        Uri uri = intent.getData();
+        if (null != uri && uri.toString().startsWith(redirectUri)){
+            String code = uri.getQueryParameter("code");
+            String error = uri.getQueryParameter("error");
+            if (code != null){
+                domain = preferences.getString("domain", null);
+                clientId = preferences.getString("clientId", null);
+                clientSecret = preferences.getString("clientSecret", null);
+                setLoading(true);
+                Callback<AccessToken> callback = new Callback<AccessToken>() {
+                    @Override
+                    public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                        Log.i(TAG, response.isSuccessful()+"");
+                        if (response.isSuccessful()){
+                            saveToken(response.body().accessToken);
+                        }else {
+                            Toast.makeText(LoginActivity.this, R.string.error_retrieving_oauth_token, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AccessToken> call, Throwable t) {
+                        Toast.makeText(LoginActivity.this, R.string.error_retrieving_oauth_token, Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "onFailure");
+                    }
+                };
+
+                getApiFor(domain).fetchOAuthToken(clientId,
+                        clientSecret,
+                        redirectUri,
+                        code,
+                        "authorization_code")
+                        .enqueue(callback);
+
+            }
         }
+    }
+
+    private void saveToken(String accessToken) {
+        boolean committed = preferences.edit()
+                .putString("domain", domain)
+                .putString("accessToken", accessToken)
+                .commit();
+        if (!committed) {
+            setLoading(false);
+            editInstanceName.setError(getString(R.string.error_retrieving_oauth_token));
+            return;
+        }
+
+        //TODO Notification
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    private void setLoading(boolean b) {
+
+
     }
 
     /**
@@ -97,7 +160,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                        @NonNull Response<AppCredentials> response) {
                     if (!response.isSuccessful()) {
                         editInstanceName.setError(getString(R.string.error_failed_app_registration));
-                        Log.e(TAG, "站点认证失败" + response.message());
+                        Log.e(TAG, R.string.error_failed_app_registration + response.message());
                         return;
                     }
                     AppCredentials credentials = response.body();
@@ -113,7 +176,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onFailure(@NonNull Call<AppCredentials> call, @NonNull Throwable t) {
                     editInstanceName.setError(getString(R.string.error_failed_app_registration));
-                    Log.e(TAG, Log.getStackTraceString(t));
                 }
             };
 
@@ -134,6 +196,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         outState.putString("clientId", clientId);
         outState.putString("clientSecret", clientSecret);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (domain != null) {
+            preferences.edit()
+                    .putString("domain", domain)
+                    .putString("clientId", clientId)
+                    .putString("clientSecret", clientSecret)
+                    .apply();
+        }
     }
 
     /**
@@ -183,12 +257,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String url = "https://" + domain + endpoint + "?" + toQueryString(parameters);
         Uri uri = Uri.parse(url);
 
-            Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
-            if (viewIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(viewIntent);
-            } else {
-                editText.setError(getString(R.string.error_no_web_browser_found));
-            }
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
+        if (viewIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(viewIntent);
+        } else {
+            editText.setError(getString(R.string.error_no_web_browser_found));
+        }
+
+        //TODO WebView
     }
 
     /**
@@ -248,7 +324,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mMessage.append(message.concat("\n"));
             // 请求或者响应结束，打印整条日志
             if (message.startsWith("<-- END HTTP")) {
-                LogUtil.d(mMessage.toString());
+                LogUtil.i(mMessage.toString());
             }
         }
     }
