@@ -1,14 +1,18 @@
 package org.tootto.activity;
 
 import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +24,7 @@ import org.tootto.R;
 import org.tootto.entity.AccessToken;
 import org.tootto.entity.AppCredentials;
 import org.tootto.network.MastodonApi;
+import org.tootto.util.CustomTabsHelper;
 import org.tootto.util.JsonUtil;
 import org.tootto.util.LogUtil;
 
@@ -257,14 +262,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String url = "https://" + domain + endpoint + "?" + toQueryString(parameters);
         Uri uri = Uri.parse(url);
 
-        Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
-        if (viewIntent.resolveActivity(getPackageManager()) != null) {
-            startActivity(viewIntent);
-        } else {
-            editText.setError(getString(R.string.error_no_web_browser_found));
+        if (!openInCustomTab(uri, this)) {
+            Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
+            if (viewIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(viewIntent);
+            } else {
+                editText.setError(getString(R.string.error_no_web_browser_found));
+            }
         }
 
+
         //TODO WebView
+    }
+
+    private static boolean openInCustomTab(Uri uri, Context context) {
+        boolean lightTheme = PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean("lightTheme", false);
+        int toolbarColorRes;
+        if (lightTheme) {
+            toolbarColorRes = R.color.custom_tab_toolbar_light;
+        } else {
+            toolbarColorRes = R.color.custom_tab_toolbar_dark;
+        }
+        int toolbarColor = ContextCompat.getColor(context, toolbarColorRes);
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(toolbarColor);
+        CustomTabsIntent customTabsIntent = builder.build();
+        try {
+            String packageName = CustomTabsHelper.getPackageNameToUse(context);
+            /* If we cant find a package name, it means theres no browser that supports
+             * Chrome Custom Tabs installed. So, we fallback to the webview */
+            if (packageName == null) {
+                return false;
+            } else {
+                customTabsIntent.intent.setPackage(packageName);
+                customTabsIntent.launchUrl(context, uri);
+            }
+        } catch (ActivityNotFoundException e) {
+            Log.w("URLSpan", "Activity was not found for intent, " + customTabsIntent.toString());
+            return false;
+        }
+        return true;
     }
 
     /**

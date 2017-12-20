@@ -42,4 +42,5 @@ dependencies {
     compile 'com.orhanobut:logger:2.1.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.android.support:customtabs:27.0.0'
 }
