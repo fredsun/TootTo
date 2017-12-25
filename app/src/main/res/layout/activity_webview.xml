@@ -15,9 +15,10 @@
 
     <ProgressBar
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="10dp"
         android:id="@+id/oauth_progress"
-        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/oauth_progress_drawable"/>
 
     <WebView
         android:layout_width="match_parent"
