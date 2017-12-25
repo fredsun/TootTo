@@ -3,6 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorShineWhite">#FFFFFF</color>
     <color name="navigation_bottom">#ffffff</color>
     <color name="custom_tab_toolbar_light">#ffffff</color>
     <color name="custom_tab_toolbar_dark">#313543</color>

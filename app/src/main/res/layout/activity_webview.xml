@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="浏览器"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorShineWhite"
+        android:id="@+id/oauth_prompt_text"
+        />
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:id="@+id/oauth_progress"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/oauth_web"/>
+
+</LinearLayout>

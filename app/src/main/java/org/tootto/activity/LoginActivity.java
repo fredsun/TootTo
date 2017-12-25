@@ -263,12 +263,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Uri uri = Uri.parse(url);
 
         if (!openInCustomTab(uri, this)) {
-            Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
-            if (viewIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(viewIntent);
-            } else {
-                editText.setError(getString(R.string.error_no_web_browser_found));
-            }
+//            Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
+//            if (viewIntent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(viewIntent);
+//            } else {
+//                editText.setError(getString(R.string.error_no_web_browser_found));
+//            }
+            Intent urlIntent = new Intent(LoginActivity.this, OauthWebViewActivity.class);
+            urlIntent.putExtra("oauthUrl", url);
+            startActivity(urlIntent);
         }
 
 
