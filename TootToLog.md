@@ -61,17 +61,20 @@ https://mao.daizhige.org/oauth/authorize
     * access_token
 * 第4和之后的请求: 把 access_token 塞进请求header, Authorization: Bearer <access_token>
 
-oauth2redirect://org.tootto/?code=675871eed63bfc49e0bd42778533a87dfe9adca09140cc50c5f0682289e507e8
 
-oauth2redirect://org.tootto/?error=access_denied&error_description=%E7%94%A8%E6%88%B7%E6%88%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8B%92%E7%BB%9D%E4%BA%86%E8%AF%B7%E6%B1%82
+11. 添加OAuthWebView页面
+原因: 完善OAuth需要打开url的需求, 针对没有安装Chrome的用户用webview取代系统浏览器(系统浏览器无法有效控制关闭, 且无法控制cookie的残留, 导致重复登陆)
+细节:
+    1. webview添加加载条. 继承 WebChromeClient[参考](http://blog.csdn.net/qq_20785431/article/details/51599073)
+    2. webview中progressbar的ui修改[参考](https://www.jianshu.com/p/63af8ea97aae) 
 
-11. 优化login页面, 在选中edittext后, 登陆按钮能显示在软键盘之上.
+12. 优化login页面, 在选中edittext后, 登陆按钮能显示在软键盘之上.
 思路:
     1. ScollView包着LinearLayout, 当EditText被放在页面底部时软键盘不会遮挡(adjustResize无法解决), 同时edittext的setError可以正常随着软键盘的弹出而滚动.
     2. ScrollView添加fillViewport, 充满整个布局
     2. ~~清单里添加 adjustResize.~~
 
-12. 修复bug: LoginActivity 打开MainActivity, 再finish()后, 此时按下back依然会回调LoginActivity.
+13. 修复bug: LoginActivity 打开MainActivity, 再finish()后, 此时按下back依然会回调LoginActivity.
     解决: 原计划通过CLEAR_TOP. 但无效, 查询后确认.[参考](https://www.cnblogs.com/supermanChao/p/6007671.html), CLEAR_TOP的使用前提是原Activity已经存在, 才会清掉其上面的activity. 后选用NEW_TASK|CLEAR_TASK
 
 * TODO 知乎自杀干预页面.
