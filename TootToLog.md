@@ -81,6 +81,10 @@ https://mao.daizhige.org/oauth/authorize
 13. 修复bug: LoginActivity 打开MainActivity, 再finish()后, 此时按下back依然会回调LoginActivity.
     解决: 原计划通过CLEAR_TOP. 但无效, 查询后确认.[参考](https://www.cnblogs.com/supermanChao/p/6007671.html), CLEAR_TOP的使用前提是原Activity已经存在, 才会清掉其上面的activity. 后选用NEW_TASK|CLEAR_TASK
 
+14. LoginActivity的软键盘修改右下角imeOptions为GO, 并添加监听, 和登陆按钮点击结果一样.
+    [inputType](http://blog.csdn.net/qq_16064871/article/details/44701727)
+    [imeOptions](https://www.jianshu.com/p/6ad48686e6fd)
+
 * TODO 知乎自杀干预页面.
 //stolen from http://www.jianshu.com/p/2f1ce7d0d64c
 * TODO 优化webview error页, 自己写error HTML, 在onReceivedError时读取.[参考](http://stackoverflow.org.cn/front/ask/view?ask_id=33638)
