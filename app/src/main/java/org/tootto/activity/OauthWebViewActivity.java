@@ -1,7 +1,6 @@
 package org.tootto.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,7 +33,7 @@ public class OauthWebViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        setContentView(R.layout.activity_oauth_webview);
         Intent intent = getIntent();
         String url = intent.getStringExtra("oauthUrl");
 //        String url = "https://mao.daizhige.org/oauth/authorize?scope=read%20write%20follow&response_type=code&client_id=52b57339ec66c009961d6d5f983d44c5d75c3a9af5d3dd745fa0bf554f52f4f3&redirect_uri=oauth2redirect%3A%2F%2Forg.tootto%2F";
