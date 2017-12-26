@@ -61,6 +61,19 @@ https://mao.daizhige.org/oauth/authorize
     * access_token
 * 第4和之后的请求: 把 access_token 塞进请求header, Authorization: Bearer <access_token>
 
+oauth2redirect://org.tootto/?code=675871eed63bfc49e0bd42778533a87dfe9adca09140cc50c5f0682289e507e8
 
+oauth2redirect://org.tootto/?error=access_denied&error_description=%E7%94%A8%E6%88%B7%E6%88%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8B%92%E7%BB%9D%E4%BA%86%E8%AF%B7%E6%B1%82
+
+11. 优化login页面, 在选中edittext后, 登陆按钮能显示在软键盘之上.
+思路:
+    1. ScollView包着LinearLayout, 当EditText被放在页面底部时软键盘不会遮挡(adjustResize无法解决), 同时edittext的setError可以正常随着软键盘的弹出而滚动.
+    2. 清单里添加 adjustResize.
+但是无法立刻实现.
+12. 修复bug: LoginActivity 打开MainActivity, 再finish()后, 此时按下back依然会回调LoginActivity.
+    解决: 原计划通过CLEAR_TOP. 但无效, 查询后确认.[参考](https://www.cnblogs.com/supermanChao/p/6007671.html), CLEAR_TOP的使用前提是原Activity已经存在, 才会清掉其上面的activity. 后选用NEW_TASK|CLEAR_TASK
 
 * TODO 知乎自杀干预页面.
+//stolen from http://www.jianshu.com/p/2f1ce7d0d64c
+* TODO 优化webview error页, 自己写error HTML, 在onReceivedError时读取.[参考](http://stackoverflow.org.cn/front/ask/view?ask_id=33638)
+* TODO webview进度条添加动画, 防止过快加载[参考](https://juejin.im/post/597734f76fb9a06bb874c208)
