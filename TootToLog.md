@@ -68,8 +68,9 @@ oauth2redirect://org.tootto/?error=access_denied&error_description=%E7%94%A8%E6%
 11. 优化login页面, 在选中edittext后, 登陆按钮能显示在软键盘之上.
 思路:
     1. ScollView包着LinearLayout, 当EditText被放在页面底部时软键盘不会遮挡(adjustResize无法解决), 同时edittext的setError可以正常随着软键盘的弹出而滚动.
-    2. 清单里添加 adjustResize.
-但是无法立刻实现.
+    2. ScrollView添加fillViewport, 充满整个布局
+    2. ~~清单里添加 adjustResize.~~
+
 12. 修复bug: LoginActivity 打开MainActivity, 再finish()后, 此时按下back依然会回调LoginActivity.
     解决: 原计划通过CLEAR_TOP. 但无效, 查询后确认.[参考](https://www.cnblogs.com/supermanChao/p/6007671.html), CLEAR_TOP的使用前提是原Activity已经存在, 才会清掉其上面的activity. 后选用NEW_TASK|CLEAR_TASK
 
