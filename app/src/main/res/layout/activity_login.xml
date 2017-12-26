@@ -21,14 +21,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/login_input_layout"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/edit_instance_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                >
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/edit_instance_name"
