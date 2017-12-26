@@ -15,10 +15,13 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.tootto.R;
@@ -45,7 +48,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by fred on 2017/12/8.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {
     private static final String TAG = "LoginActivity";
     TextInputEditText editInstanceName;
     Button btnLogin;
@@ -65,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginInputLayout = findViewById(R.id.login_input_layout);
         loginLoadingLayout = findViewById(R.id.login_loading_layout);
         editInstanceName = findViewById(R.id.edit_instance_name);
+        editInstanceName.setOnEditorActionListener(this);
         btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
         if (savedInstanceState != null) {
@@ -155,12 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    /**
-     * 验证站点, 验证成功调用账号验证
-     * @param view
-     */
-    @Override
-    public void onClick(View view) {
+    public void VerifyDomain(){
         domain = validateDomain(editInstanceName.getText().toString());
         String prefClientId = preferences.getString(domain + "/client_id", null);
         String prefClientSecret = preferences.getString(domain + "/client_secret", null);
@@ -204,6 +203,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 editInstanceName.setError(getString(R.string.error_invalid_domain));
             }
         }
+    }
+    /**
+     * 验证站点, 验证成功调用账号验证
+     * @param view
+     */
+    @Override
+    public void onClick(View view) {
+        VerifyDomain();
     }
 
     @Override
@@ -273,7 +280,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String url = "https://" + domain + endpoint + "?" + toQueryString(parameters);
         Uri uri = Uri.parse(url);
 
-        if (!openInCustomTab(uri, this)) {
+//        if (!openInCustomTab(uri, this)) {
 //            Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
 //            if (viewIntent.resolveActivity(getPackageManager()) != null) {
 //                startActivity(viewIntent);
@@ -283,7 +290,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent urlIntent = new Intent(LoginActivity.this, OauthWebViewActivity.class);
             urlIntent.putExtra("oauthUrl", url);
             startActivity(urlIntent);
-        }
+//        }
 
 
         //TODO WebView
@@ -357,6 +364,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     .build();
         }
         return mOkHttpClient;
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_GO){
+            VerifyDomain();
+        }
+        return false;
     }
 
     private class HttpLogger implements HttpLoggingInterceptor.Logger {
