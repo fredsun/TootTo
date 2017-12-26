@@ -1,34 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/mastodon_started"
-        android:layout_marginTop="60dp"/>
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"
-        android:id="@+id/edit_instance_layout">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/mastodon_started" />
 
-        <android.support.design.widget.TextInputEditText
-            android:layout_width="200dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/mastodon_instance"
-            android:id="@+id/edit_instance_name"/>
-    </android.support.design.widget.TextInputLayout>
+            android:id="@+id/login_input_layout"
+            android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_login"
-        android:text="@string/login"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/edit_instance_layout"/>
 
-</RelativeLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edit_instance_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edit_instance_name"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/mastodon_instance" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="center_horizontal"
+                android:text="@string/login" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/login_loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorShineWhite"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:visibility="gone"
+            >
+
+            <ProgressBar
+                android:id="@+id/login_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/login_loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_progress"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="登陆中" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

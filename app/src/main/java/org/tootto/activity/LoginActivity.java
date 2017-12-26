@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.tootto.R;
@@ -54,11 +55,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private SharedPreferences preferences;
     String OAUTH_SCOPES = "read write follow";
     private OkHttpClient mOkHttpClient;
+    LinearLayout loginInputLayout;
+    LinearLayout loginLoadingLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        loginInputLayout = findViewById(R.id.login_input_layout);
+        loginLoadingLayout = findViewById(R.id.login_loading_layout);
         editInstanceName = findViewById(R.id.edit_instance_name);
         btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
@@ -134,14 +139,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //TODO Notification
 
         Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
 
 
     private void setLoading(boolean b) {
-
-
+        if (b){
+            loginInputLayout.setVisibility(View.GONE);
+            loginLoadingLayout.setVisibility(View.VISIBLE);
+        }else {
+            loginInputLayout.setVisibility(View.VISIBLE);
+            loginLoadingLayout.setVisibility(View.GONE);
+        }
     }
 
     /**
