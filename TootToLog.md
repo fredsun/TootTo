@@ -85,6 +85,14 @@ https://mao.daizhige.org/oauth/authorize
     [inputType](http://blog.csdn.net/qq_16064871/article/details/44701727)
     [imeOptions](https://www.jianshu.com/p/6ad48686e6fd)
 
+15. 优化: LoginActivity的EditText失去焦点:
+    方案: 外部view抢到焦点[参考](http://www.cnblogs.com/yejiurui/archive/2013/01/02/2841945.html)
+    ```
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    ```
+
+
 * TODO 知乎自杀干预页面.
 //stolen from http://www.jianshu.com/p/2f1ce7d0d64c
 * TODO 优化webview error页, 自己写error HTML, 在onReceivedError时读取.[参考](http://stackoverflow.org.cn/front/ask/view?ask_id=33638)
