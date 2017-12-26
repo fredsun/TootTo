@@ -63,10 +63,14 @@ https://mao.daizhige.org/oauth/authorize
 
 
 11. 添加OAuthWebView页面
-原因: 完善OAuth需要打开url的需求, 针对没有安装Chrome的用户用webview取代系统浏览器(系统浏览器无法有效控制关闭, 且无法控制cookie的残留, 导致重复登陆)
+原因: 完善OAuth需要打开url的需求,
+    1. 有 Chrome 的用户, 使用CUstomTabs打开url.
+    2. 没有安装 Chrome 的用户用 webview 取代系统浏览器(系统浏览器无法有效控制关闭, 且无法控制cookie的残留, 导致重复登陆)
 细节:
     1. webview添加加载条. 继承 WebChromeClient[参考](http://blog.csdn.net/qq_20785431/article/details/51599073)
-    2. webview中progressbar的ui修改[参考](https://www.jianshu.com/p/63af8ea97aae) 
+    2. webview中progressbar的ui修改[参考](https://www.jianshu.com/p/63af8ea97aae)
+    3. Chrome的CustomTabs[参考](https://github.com/GoogleChrome/custom-tabs-client)
+    4. HTML.fromHtml(Spanned);已经被N弃用, 需要使用HTML.fromHtml(Spanned, TO_HTML_PARAGRAPH_LINES_CONSECUTIVE);[参考](https://stackoverflow.com/questions/37904739/html-fromhtml-deprecated-in-android-n)
 
 12. 优化login页面, 在选中edittext后, 登陆按钮能显示在软键盘之上.
 思路:
@@ -81,3 +85,4 @@ https://mao.daizhige.org/oauth/authorize
 //stolen from http://www.jianshu.com/p/2f1ce7d0d64c
 * TODO 优化webview error页, 自己写error HTML, 在onReceivedError时读取.[参考](http://stackoverflow.org.cn/front/ask/view?ask_id=33638)
 * TODO webview进度条添加动画, 防止过快加载[参考](https://juejin.im/post/597734f76fb9a06bb874c208)
+* TODO read TO_HTML_PARAGRAPH_LINES_CONSECUTIVE
