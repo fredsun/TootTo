@@ -280,7 +280,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String url = "https://" + domain + endpoint + "?" + toQueryString(parameters);
         Uri uri = Uri.parse(url);
 
-//        if (!openInCustomTab(uri, this)) {
+        if (!openInCustomTab(uri, this)) {
 //            Intent viewIntent = new Intent(Intent.ACTION_VIEW, uri);
 //            if (viewIntent.resolveActivity(getPackageManager()) != null) {
 //                startActivity(viewIntent);
@@ -290,7 +290,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent urlIntent = new Intent(LoginActivity.this, OauthWebViewActivity.class);
             urlIntent.putExtra("oauthUrl", url);
             startActivity(urlIntent);
-//        }
+        }
 
 
         //TODO WebView
