@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ic_favourite" type="drawable">@drawable/ic_favorite_black_24dp</item>
+    <item name="ic_draft" type="drawable">@drawable/ic_description_black_24dp</item>
+    <item name="ic_filter" type="drawable">@drawable/ic_visibility_off_black_24dp</item>
+    <item name="ic_settings" type="drawable">@drawable/ic_settings_black_24dp</item>
+</resources>
