@@ -3,23 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/na_group_normal">
+    <group android:id="@+id/nav_group_normal">
         <item
-            android:id="@+id/na_my_favourite"
+            android:id="@+id/nav_my_favourite"
             android:icon="@drawable/ic_favourite"
             android:title="我的赞"/>
         <item
-            android:id="@+id/na_my_draft"
+            android:id="@+id/nav_my_draft"
             android:icon="@drawable/ic_draft"
             android:title="我的草稿"/>
         <item
-            android:id="@+id/na_my_filter"
+            android:id="@+id/nav_my_filter"
             android:icon="@drawable/ic_filter"
             android:title="过滤"/>
     </group>
-    <group android:id="@+id/na_group_setting">
+    <group android:id="@+id/nav_group_setting">
         <item
-            android:id="@+id/na_setting"
+            android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings"
             android:title="设置"/>
     </group>
