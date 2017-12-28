@@ -2,15 +2,21 @@ package org.tootto.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import org.tootto.R;
 import org.tootto.backinterface.BackHandlerHelper;
@@ -26,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends BaseActivity implements BottomBehavior.onCanScrollCallback {
+public class MainActivity extends BaseActivity implements BottomBehavior.onCanScrollCallback, NavigationView.OnNavigationItemSelectedListener {
     String TAG = "MainActivity";
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     TabLayout mainTab;
@@ -34,12 +40,14 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
     boolean canScroll = true;
     private BottomBehavior mBottomBehavior;
     private SharedPreferences preferences;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        navigationView = findViewById(R.id.navigation_view);
         fragmentList.add(FirstTransFragment.newInstance());
         fragmentList.add(FragmentSecond.newInstance());
         fragmentList.add(FirstTransFragment.newInstance());
@@ -102,6 +110,7 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         });
         mBottomBehavior = (BottomBehavior)((CoordinatorLayout.LayoutParams) mainTab.getLayoutParams()).getBehavior();
         mBottomBehavior.setOnCanScrollCallback(this);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void getUserAvatar() {
@@ -140,9 +149,36 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
 
     @Override
     public void onBackPressed() {
-        if (!BackHandlerHelper.handleBackPress(this)) {
-            super.onBackPressed();
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else {
+            if (!BackHandlerHelper.handleBackPress(this)) {
+                super.onBackPressed();
+            }
         }
-
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.nav_my_favourite:
+                Toast.makeText(MainActivity.this, "click favourite", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_my_draft:
+                Toast.makeText(MainActivity.this, "click draft", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_my_filter:
+                Toast.makeText(MainActivity.this, "click filter", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_setting:
+                Toast.makeText(MainActivity.this, "click setting", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
+    }
+
 }
