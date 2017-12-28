@@ -67,9 +67,7 @@ public class BottomBehavior extends CoordinatorLayout.Behavior<View> {
     @Override
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
-        Log.i(tag, "dyConsumed"+dyConsumed);
         dyConsumedTotal+=dyConsumed;
-        Log.i(tag, "dyConsumedTotal"+dyConsumedTotal);
         if (Math.abs(dyConsumedTotal) > 100)
         {
             if (dyConsumed <0 && isHide) {
