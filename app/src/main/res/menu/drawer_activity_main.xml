@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:id="@+id/nav_group_normal">
+    <group
+        android:id="@+id/nav_group_normal">
         <item
             android:id="@+id/nav_my_favourite"
             android:icon="@drawable/ic_favourite"
