@@ -91,6 +91,31 @@ https://mao.daizhige.org/oauth/authorize
     android:focusable="true"
     android:focusableInTouchMode="true"
     ```
+16. 添加抽屉
+
+抽屉内容
+头像
+id
+@id
+
+我的赞
+草稿
+过滤
+个人设置
+导航(本站/提醒/公共时间线/联合时间线)
+
+* 抽屉预览无默认toolbar
+在根menu里添加
+```
+xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+```
+* 抽屉限制死了从左往右的打开方式. layout_gravity设置为left.
+* 抽屉的宽度要小于320dp
+* 抽屉需要选中效果
+  1. group 添加 checkableBehavior = single
+  2. onNavigationItemSelected 返回true
+  3. 可能直接item.setChecked(true)也行
 
 
 * TODO 知乎自杀干预页面.
@@ -99,3 +124,5 @@ https://mao.daizhige.org/oauth/authorize
 * TODO webview进度条添加动画, 防止过快加载[参考](https://juejin.im/post/597734f76fb9a06bb874c208)
 * TODO read TO_HTML_PARAGRAPH_LINES_CONSECUTIVE
 * TODO webview sign_out的错误页面
+* TODO 设置后期进阶: 固定头img的抽屉[参考](https://github.com/mikepenz/MaterialDrawer/blob/develop/app/src/main/java/com/mikepenz/materialdrawer/app/PersistentDrawerActivity.java)
+* aloha2018
