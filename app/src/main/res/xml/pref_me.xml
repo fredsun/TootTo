@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="关于"/>
+    <Preference android:title="TootTo"
+        android:summary="1.0.0"/>
+    <Preference android:title="开发者"
+        android:summary="FredSun"/>
+    <PreferenceCategory android:title="特别感谢"/>
+    <Preference android:title="TODO name"
+        android:summary="TODO duty"/>
+</PreferenceScreen>
