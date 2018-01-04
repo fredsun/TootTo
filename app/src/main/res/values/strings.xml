@@ -10,5 +10,5 @@
     <string name="error_failed_app_registration">站点认证失败</string>
     <string name="error_retrieving_oauth_token">获取Token失败</string>
     <string name="app_website" translatable="false">https://github.com/sunxlfred/TootTo</string>
-
+    <string name="pref_ringtone_silent">Silent</string>
 </resources>

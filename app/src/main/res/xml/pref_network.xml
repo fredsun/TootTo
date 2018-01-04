@@ -2,6 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference android:title="节省流量"
         android:key="save_data"
-        android:summary="在使用收费网络时，禁用媒体预览" />
+        android:summary="在使用收费网络时，禁用媒体预览"
+        android:defaultValue="false"
+        />
+    <EditTextPreference android:title="testtitle"
+        android:key="test_key"
+        android:summary="testsummary"
+        />
 
 </PreferenceScreen>
