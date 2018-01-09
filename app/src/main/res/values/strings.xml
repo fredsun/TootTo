@@ -11,4 +11,5 @@
     <string name="error_retrieving_oauth_token">获取Token失败</string>
     <string name="app_website" translatable="false">https://github.com/sunxlfred/TootTo</string>
     <string name="pref_ringtone_silent">Silent</string>
+    <string name="restart_confirm_title">保存修改</string>
 </resources>
