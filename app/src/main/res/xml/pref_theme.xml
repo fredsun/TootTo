@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference android:title="设置主题"
+        android:key="set_theme"
+        android:summary="test_theme"
+        >
+        <extra
+            android:name="extra_should_restart"
+            android:value="true"/>
+    </EditTextPreference>
+</PreferenceScreen>
