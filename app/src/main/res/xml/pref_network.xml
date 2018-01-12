@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="network">
     <SwitchPreference android:title="节省流量"
         android:key="save_data"
         android:summary="在使用收费网络时，禁用媒体预览"
@@ -9,5 +10,9 @@
         android:key="test_key"
         android:summary="testsummary"
         />
+    <Preference android:title="testP"
+        android:key="testKey"
+        android:fragment="org.tootto.fragment.PrefInnerFragment"/>
+
 
 </PreferenceScreen>
