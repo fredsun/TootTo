@@ -36,6 +36,7 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".activity.SetActivity"/>
         <activity android:name=".activity.OauthWebViewActivity"/>
 
     </application>
