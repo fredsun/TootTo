@@ -1,6 +1,7 @@
 package org.tootto.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -172,7 +173,8 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
                 Toast.makeText(MainActivity.this, "click filter", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_setting:
-                Toast.makeText(MainActivity.this, "click setting", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
                 break;
         }
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);

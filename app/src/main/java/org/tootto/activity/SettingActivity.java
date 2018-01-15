@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
@@ -40,10 +41,11 @@ import java.util.Set;
  * Created by fred on 2018/1/4.
  */
 
-public class SetActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, AdapterView.OnItemClickListener, SettingDetailFragment.FragmentSPChangeListener {
+public class SettingActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, AdapterView.OnItemClickListener, SettingDetailFragment.FragmentSPChangeListener {
     ListView listView;
+    SlidingPaneLayout slidingPanel;
     EntriesAdapter mEntriesAdapter;
-    static final String TAG = "SetActivity";
+    static final String TAG = "SettingActivity";
     boolean mShouldRestart = false;
 
     @Override
@@ -51,6 +53,8 @@ public class SetActivity extends AppCompatActivity implements PreferenceFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         listView = findViewById(R.id.category_list);
+        slidingPanel = findViewById(R.id.sliding_panel);
+        slidingPanel.setSliderFadeColor(0);
         mEntriesAdapter = new EntriesAdapter(this);
         initEntries();
         listView.setAdapter(mEntriesAdapter);
