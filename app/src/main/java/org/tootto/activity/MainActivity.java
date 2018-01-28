@@ -109,6 +109,7 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
 
             }
         });
+        mainPager.setOffscreenPageLimit(4);
         mBottomBehavior = (BottomBehavior)((CoordinatorLayout.LayoutParams) mainTab.getLayoutParams()).getBehavior();
         mBottomBehavior.setOnCanScrollCallback(this);
         navigationView.setNavigationItemSelectedListener(this);
