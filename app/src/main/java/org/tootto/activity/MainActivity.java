@@ -177,6 +177,20 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.nav_log_out:
+                preferences = getSharedPreferences(
+                        getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
+                boolean commitResult = preferences.edit().clear().commit();
+                if (commitResult){
+                    Toast.makeText(MainActivity.this, R.string.success_account_log_out, Toast.LENGTH_SHORT).show();
+                    Intent logOutIntent = new Intent(MainActivity.this, SplashActivity.class);
+                    startActivity(logOutIntent);
+                }else {
+                    Toast.makeText(MainActivity.this, R.string.error_account_log_out, Toast.LENGTH_SHORT).show();
+                }
+
+                break;
         }
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
