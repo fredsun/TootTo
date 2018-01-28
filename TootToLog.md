@@ -63,6 +63,7 @@ https://mao.daizhige.org/oauth/authorize
 
 
 11. 添加OAuthWebView页面
+设计: 仿Tusky
 原因: 完善OAuth需要打开url的需求,
     1. 有 Chrome 的用户, 使用CUstomTabs打开url.
     2. 没有安装 Chrome 的用户用 webview 取代系统浏览器(系统浏览器无法有效控制关闭, 且无法控制cookie的残留, 导致重复登陆)
@@ -102,6 +103,8 @@ id
 草稿
 过滤
 个人设置
+退出
+
 导航(本站/提醒/公共时间线/联合时间线)
 
 * 抽屉预览无默认toolbar
@@ -118,6 +121,32 @@ xmlns:tools="http://schemas.android.com/tools"
   3. 可能直接item.setChecked(true)也行
 
 
+
+17. Preference设置
+* 原则:
+  1. 修改即保存, 不在最后推出时还问是否保存(自18.1.9微博,微信,twiter,ins)
+* 设计: 仿Twidere,半打开的Fragment展示详细Preference
+* 布局: SlidingPaneLayout包着两个Framelayout,左侧填入listview仿造设置页, 右侧通过marginStart保持左侧空隙
+* 合上pane
+![](https://raw.githubusercontent.com/sunxlfred/RES/78cd72720f41e478f83563bc9e4566795dcdeec4/preferenceClosePane.png)
+* 打开pane
+![](https://raw.githubusercontent.com/sunxlfred/RES/78cd72720f41e478f83563bc9e4566795dcdeec4/preferenceOpenPane.png)
+* 选项
+  * 网络
+  * 主题
+  * 关于
+
+18. 退出选项添加 DialogFragment 确认
+创建通用可编辑的 DialogFragment 进行确认
+
+
+
+
+
+
+
+
+
 * TODO 知乎自杀干预页面.
 //stolen from http://www.jianshu.com/p/2f1ce7d0d64c
 * TODO 优化webview error页, 自己写error HTML, 在onReceivedError时读取.[参考](http://stackoverflow.org.cn/front/ask/view?ask_id=33638)
@@ -126,3 +155,5 @@ xmlns:tools="http://schemas.android.com/tools"
 * TODO webview sign_out的错误页面
 * TODO 设置后期进阶: 固定头img的抽屉[参考](https://github.com/mikepenz/MaterialDrawer/blob/develop/app/src/main/java/com/mikepenz/materialdrawer/app/PersistentDrawerActivity.java)
 * aloha2018
+* feature: 查看他人时间段的推文
+* feature: 翻译!!!
