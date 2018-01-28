@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
@@ -23,6 +24,7 @@ import org.tootto.R;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.behavior.BottomBehavior;
 import org.tootto.entity.Account;
+import org.tootto.fragment.EditDialogFragment;
 import org.tootto.fragment.FragmentSecond;
 import org.tootto.fragment.FirstTransFragment;
 import org.tootto.ui.view.NonSwipeableViewPager;
@@ -33,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends BaseActivity implements BottomBehavior.onCanScrollCallback, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements BottomBehavior.onCanScrollCallback, NavigationView.OnNavigationItemSelectedListener,EditDialogFragment.EditDialogListener {
     String TAG = "MainActivity";
     private ArrayList<Fragment> fragmentList = new ArrayList<>();
     TabLayout mainTab;
@@ -179,16 +181,10 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
                 break;
 
             case R.id.nav_log_out:
-                preferences = getSharedPreferences(
-                        getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
-                boolean commitResult = preferences.edit().clear().commit();
-                if (commitResult){
-                    Toast.makeText(MainActivity.this, R.string.success_account_log_out, Toast.LENGTH_SHORT).show();
-                    Intent logOutIntent = new Intent(MainActivity.this, SplashActivity.class);
-                    startActivity(logOutIntent);
-                }else {
-                    Toast.makeText(MainActivity.this, R.string.error_account_log_out, Toast.LENGTH_SHORT).show();
-                }
+
+                EditDialogFragment editDialogFragment = EditDialogFragment.newInstance("确认退出?");
+                editDialogFragment.show(getSupportFragmentManager(), "logOutConfirmDialog");
+
 
                 break;
         }
@@ -198,4 +194,23 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         return false;
     }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        preferences = getSharedPreferences(
+                getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
+        boolean commitResult = preferences.edit().clear().commit();
+        if (commitResult){
+            Toast.makeText(MainActivity.this, R.string.success_account_log_out, Toast.LENGTH_SHORT).show();
+            Intent logOutIntent = new Intent(MainActivity.this, SplashActivity.class);
+            startActivity(logOutIntent);
+            finish();
+        }else {
+            Toast.makeText(MainActivity.this, R.string.error_account_log_out, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        Toast.makeText(MainActivity.this, R.string.cancel, Toast.LENGTH_SHORT).show();
+    }
 }
