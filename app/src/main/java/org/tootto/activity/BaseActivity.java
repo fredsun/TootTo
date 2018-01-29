@@ -10,6 +10,7 @@ import android.text.Spanned;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jaeger.library.StatusBarUtil;
 
 import org.tootto.BuildConfig;
 import org.tootto.R;
@@ -33,11 +34,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Dispatcher mastodonApiDispatcher;
 
     @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        setStatusBar();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         redirectIfNotLoggedIn();
         createMastodonApi();
+    }
 
+    protected void setStatusBar() {
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorShineWhite));
     }
 
     @Override

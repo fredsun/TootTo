@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.jaeger.library.StatusBarUtil;
+
 import org.tootto.R;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.behavior.BottomBehavior;
@@ -44,6 +46,8 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
     private BottomBehavior mBottomBehavior;
     private SharedPreferences preferences;
     private NavigationView navigationView;
+    private int mStatusBarColor;
+    private int mAlpha = StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,5 +216,11 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         Toast.makeText(MainActivity.this, R.string.cancel, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void setStatusBar() {
+        mStatusBarColor = getResources().getColor(R.color.colorPrimary);
+        StatusBarUtil.setColorForDrawerLayout(this, (DrawerLayout) findViewById(R.id.drawer_layout), mStatusBarColor, mAlpha);
     }
 }
