@@ -30,6 +30,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
+        android:background="@color/background_window_light"
         android:id="@+id/navigation_view"
         android:layout_width="300dp"
         android:layout_height="match_parent"
