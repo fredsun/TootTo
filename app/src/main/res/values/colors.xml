@@ -12,4 +12,5 @@
     <color name="text_gray">#ffb1b1b1</color>
     <color name="background_window_dark">#ff212b30</color>
     <color name="background_window_light">#fff2f4f7</color>
+    <color name="foreground_window_light">#80000000</color>
 </resources>
