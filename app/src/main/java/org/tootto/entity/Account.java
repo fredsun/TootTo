@@ -27,10 +27,10 @@ public class Account implements Parcelable {
     public String id;
 
     @SerializedName("username")
-    public String localUsername;
+    public String username;
 
     @SerializedName("acct")
-    public String username;
+    public String acct;
 
     @SerializedName("display_name")
     public String displayName;
@@ -72,7 +72,7 @@ public class Account implements Parcelable {
 
     public String getDisplayName() {
         if (displayName.length() == 0) {
-            return localUsername;
+            return username;
         }
         return displayName;
     }
@@ -85,8 +85,8 @@ public class Account implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
-        dest.writeString(localUsername);
         dest.writeString(username);
+        dest.writeString(acct);
         dest.writeString(displayName);
         dest.writeString(HtmlUtils.toHtml(note));
         dest.writeString(url);
@@ -102,8 +102,8 @@ public class Account implements Parcelable {
 
     protected Account(Parcel in) {
         id = in.readString();
-        localUsername = in.readString();
         username = in.readString();
+        acct = in.readString();
         displayName = in.readString();
         note = HtmlUtils.fromHtml(in.readString());
         url = in.readString();
