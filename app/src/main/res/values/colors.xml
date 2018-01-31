@@ -7,6 +7,9 @@
     <color name="navigation_bottom">#ffffff</color>
     <color name="custom_tab_toolbar_light">#ffffff</color>
     <color name="custom_tab_toolbar_dark">#313543</color>
-    <color name="textWhite">#FFFFFF</color>
-    <color name="textBlack">#000000</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_black">#000000</color>
+    <color name="text_gray">#ffb1b1b1</color>
+    <color name="background_window_dark">#ff212b30</color>
+    <color name="background_window_light">#fff2f4f7</color>
 </resources>
