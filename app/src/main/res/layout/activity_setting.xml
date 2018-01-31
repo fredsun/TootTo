@@ -6,7 +6,8 @@
     <FrameLayout
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:background="@color/background_window_light">
         <ListView
             android:id="@+id/category_list"
             android:layout_width="match_parent"
@@ -23,7 +24,7 @@
         android:layout_marginStart="48dp"
         android:elevation="5dp"
         android:layout_gravity="end"
-        android:background="@color/colorShineWhite"
+        android:background="@color/background_window_light"
         />
 
 
