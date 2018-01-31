@@ -3,6 +3,7 @@ package org.tootto.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,13 +14,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.GenericTransitionOptions;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.jaeger.library.StatusBarUtil;
 
 import org.tootto.R;
@@ -29,6 +35,7 @@ import org.tootto.entity.Account;
 import org.tootto.fragment.EditDialogFragment;
 import org.tootto.fragment.FragmentSecond;
 import org.tootto.fragment.FirstTransFragment;
+import org.tootto.ui.view.GlideRoundTransform;
 import org.tootto.ui.view.NonSwipeableViewPager;
 
 import java.util.ArrayList;
@@ -48,6 +55,10 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
     private NavigationView navigationView;
     private int mStatusBarColor;
     private int mAlpha = StatusBarUtil.DEFAULT_STATUS_BAR_ALPHA;
+    TextView accountDisplayName;
+    TextView accountAcct;
+    ImageView accountAvatar;
+    ImageView accountHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +66,18 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         setContentView(R.layout.activity_main);
 
         navigationView = findViewById(R.id.navigation_view);
+        View headerView = navigationView.getHeaderView(0);
+        accountDisplayName = headerView.findViewById(R.id.account_display_name);
+        accountAcct = headerView.findViewById(R.id.account_acct);
+        accountAvatar = headerView.findViewById(R.id.account_avatar);
+        accountHeader = headerView.findViewById(R.id.account_header);
+
         fragmentList.add(FirstTransFragment.newInstance());
         fragmentList.add(FragmentSecond.newInstance());
         fragmentList.add(FirstTransFragment.newInstance());
         fragmentList.add(FirstTransFragment.newInstance());
 
-        getUserAvatar();
+        fetchUserInfo();
 
         mainPager = findViewById(R.id.main_pager);
         mainPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -121,24 +138,61 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void getUserAvatar() {
+    private void fetchUserInfo() {
         preferences = getSharedPreferences(
                 getString(R.string.preferences_file_key), Context.MODE_PRIVATE);
-        Log.i(TAG, preferences.getString("domain", null));
-        Log.i(TAG, preferences.getString("accessToken", null));
+        final String domain = preferences.getString("domain", null);
+        Log.i(TAG, "domain"+preferences.getString("domain", null));
+        Log.i(TAG, "accessToken"+preferences.getString("accessToken", null));
         mastodonApi.accountVerifyCredentials().enqueue(new Callback<Account>() {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
-                Log.i(TAG, response.isSuccessful()+"");
-                Log.i(TAG, response.body().id+"");
-                Log.i(TAG, response.body().username+"");
+                if (response.isSuccessful()){
+                    onFetchUserInfoSuccess(response.body(), domain);
+                }else {
+                    onFetchUserInfoFailure(new Exception(response.message()));
+                }
             }
 
             @Override
             public void onFailure(Call<Account> call, Throwable throwable) {
-                Log.i(TAG, "fail"+throwable);
+                onFetchUserInfoFailure((Exception) throwable);
             }
         });
+    }
+
+    private void onFetchUserInfoSuccess(Account me, String domain) {
+        //loadAvatar
+        RequestOptions avatarOptions = new RequestOptions()
+                .placeholder(R.drawable.avatar_default)
+                .error(R.drawable.avatar_default)
+                .fallback(R.drawable.avatar_default)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .dontAnimate()
+                .transform(new GlideRoundTransform(this, 5));
+        Glide.with(this)
+                .load(me.avatar)
+                .apply(avatarOptions)
+                .transition(GenericTransitionOptions.<Drawable>withNoTransition())
+                .into(accountAvatar);
+
+        //loadHeader
+        RequestOptions headerOptions = new RequestOptions()
+                .placeholder(R.color.colorPrimary)
+                .centerCrop();
+
+        Glide.with(this)
+                .load(me.header)
+                .apply(headerOptions)
+                .into(accountHeader);
+
+        accountDisplayName.setText(me.displayName);
+        accountAcct.setText("@"+me.acct);
+
+    }
+
+    private void onFetchUserInfoFailure(Exception exception) {
+        Log.e(TAG, "Failed to fetch user info. " + exception.getMessage());
     }
 
     public void bringViewPagerToFront(){
