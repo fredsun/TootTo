@@ -1,5 +1,7 @@
 package org.tootto.activity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -236,6 +238,8 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
             case R.id.nav_setting:
                 Intent intent = new Intent(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.activity_stay);
+
                 break;
 
             case R.id.nav_log_out:
@@ -246,8 +250,8 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
 
                 break;
         }
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        drawerLayout.closeDrawer(GravityCompat.START);
+//        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+//        drawerLayout.closeDrawer(GravityCompat.START);
 
         return false;
     }
