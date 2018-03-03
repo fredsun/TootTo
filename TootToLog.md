@@ -140,6 +140,11 @@ xmlns:tools="http://schemas.android.com/tools"
 创建通用可编辑的 DialogFragment 进行确认
 
 
+19. 左侧抽屉栏头像使用前景色(foreground)作为遮罩
+20. kotlin无法进入debug, 关闭instant run 再打开
+
+22. 退出动画使用overridedepending, 不考虑 windowIsTranslucent。因为修改 windowAnimationStyle 为 @android:style/Animation.Translucent 的子类仍然无法显示 Activity 退出动画
+
 
 
 
