@@ -41,7 +41,7 @@ import java.util.Set;
  * Created by fred on 2018/1/4.
  */
 
-public class SettingActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, AdapterView.OnItemClickListener, SettingDetailFragment.FragmentSPChangeListener {
+public class SettingActivity extends BaseActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback, AdapterView.OnItemClickListener, SettingDetailFragment.FragmentSPChangeListener {
     ListView listView;
     SlidingPaneLayout slidingPanel;
     EntriesAdapter mEntriesAdapter;
