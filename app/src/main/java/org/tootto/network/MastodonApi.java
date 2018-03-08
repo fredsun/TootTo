@@ -18,6 +18,9 @@ package org.tootto.network;
 import org.tootto.entity.AccessToken;
 import org.tootto.entity.Account;
 import org.tootto.entity.AppCredentials;
+import org.tootto.entity.Status;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -25,6 +28,7 @@ import retrofit2.http.FormUrlEncoded;
 
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 
 public interface MastodonApi {
@@ -49,5 +53,11 @@ public interface MastodonApi {
 
     @GET("api/v1/accounts/verify_credentials")
     Call<Account> accountVerifyCredentials();
+
+    @GET("api/v1/timelines/home")
+    Call<List<Status>> homeTimeline(
+            @Query("max_id") String maxId,
+            @Query("since_id") String sinceId,
+            @Query("limit") Integer limit);
 
 }
