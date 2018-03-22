@@ -76,8 +76,8 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
 
         fragmentList.add(FirstTransFragment.newInstance());
         fragmentList.add(FragmentSecond.newInstance());
-        fragmentList.add(FirstTransFragment.newInstance());
-        fragmentList.add(FirstTransFragment.newInstance());
+        fragmentList.add(FragmentSecond.newInstance());
+        fragmentList.add(FragmentSecond.newInstance());
 
         fetchUserInfo();
 
