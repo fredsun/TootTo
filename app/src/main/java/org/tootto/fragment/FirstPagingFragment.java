@@ -2,7 +2,6 @@ package org.tootto.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,47 +11,33 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-import com.trello.rxlifecycle2.components.support.RxFragment;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 import org.tootto.R;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
-import org.tootto.api.GetRequest_Interface;
-import org.tootto.api.RetrofitManager;
-import org.tootto.api.Translation;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.backinterface.FragmentBackHandler;
+import org.tootto.entity.Status;
 import org.tootto.listener.RecyclerViewClickListener;
+import org.tootto.network.MastodonApi;
 import org.tootto.ui.view.observablescrollview.FrameInterceptLayout;
 import org.tootto.ui.view.observablescrollview.ObservableRecyclerView;
 import org.tootto.ui.view.observablescrollview.ObservableScrollViewCallbacks;
 import org.tootto.ui.view.observablescrollview.ScrollState;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.operators.flowable.FlowableOnBackpressureDrop;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by fred on 2017/11/13.
  */
 
-public class FirstPagingFragment extends RxFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler {
+public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler {
+    final String TAG = "FirstPagingFragment";
     ObservableRecyclerView recyclerFirstFragment;
     ArrayList<String> mList = new ArrayList<>();
     FirstFragmentAdapter mAdapter;
@@ -74,6 +59,7 @@ public class FirstPagingFragment extends RxFragment implements ObservableScrollV
         for (int i = 0; i < 30; i++){
             mList.add("i");
         }
+
         mAdapter = new FirstFragmentAdapter(mList);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         intercept_layout = view.findViewById(R.id.intercept_layout);
@@ -108,10 +94,42 @@ public class FirstPagingFragment extends RxFragment implements ObservableScrollV
         return view;
     }
 
+    private void getTimeLine() {
+        Callback<List<Status>> callback = new Callback<List<Status>>() {
+            @Override
+            public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                if (response.isSuccessful()){
+                    String linkHeader = response.headers().get("Link");
+                    onFetchTimeLineSuccess(response.body(), linkHeader);
+                }else {
+                    onFetchTimeLineFailure(new Exception(response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Status>> call, Throwable t) {
+                onFetchTimeLineFailure((Exception)t);
+            }
+        };
+        MastodonApi api = mastodonApi;
+        Call<List<Status>> listCall = api.homeTimeline(null, null, 30);
+        callList.add(listCall);
+        listCall.enqueue(callback);
+    }
+
+    private void onFetchTimeLineSuccess(List<Status> body, String linkHeader) {
+
+    }
+
+    private void onFetchTimeLineFailure(Exception exception) {
+        Log.e(TAG, "Fetch Failure: " + exception.getMessage());
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         request();
+        getTimeLine();
     }
 
     public static FirstPagingFragment newInstance(){
@@ -211,17 +229,17 @@ public class FirstPagingFragment extends RxFragment implements ObservableScrollV
 //        });
 
 
-        RetrofitManager.getInstance().getApiService().getCall().enqueue(new Callback<Translation>() {
-            @Override
-            public void onResponse(Call<Translation> call, Response<Translation> response) {
-                response.body().show();
-            }
-
-            @Override
-            public void onFailure(Call<Translation> call, Throwable t) {
-                System.out.println("连接失败");
-            }
-        });
+//        RetrofitManager.getInstance().getApiService().getCall().enqueue(new Callback<Translation>() {
+//            @Override
+//            public void onResponse(Call<Translation> call, Response<Translation> response) {
+//                response.body().show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Translation> call, Throwable t) {
+//                System.out.println("连接失败");
+//            }
+//        });
 
     }
 }
