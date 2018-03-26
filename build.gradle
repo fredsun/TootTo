@@ -8,6 +8,7 @@ buildscript {
     ext.okhttp3 = '3.5.0'
     ext.glide = '4.5.0'
     ext.rxbinding = '2.0.0'
+    ext.room = '1.0.0'
 
     repositories {
         google()
