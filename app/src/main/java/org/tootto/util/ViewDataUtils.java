@@ -24,6 +24,7 @@ import org.tootto.viewdata.StatusViewData;
 
 
 /**
+ * 根据是否显示媒体预览，刷新status
  * Created by charlag on 12/07/2017.
  */
 
