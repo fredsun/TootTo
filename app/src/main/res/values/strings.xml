@@ -16,4 +16,15 @@
     <string name="error_account_log_out">账号退出失败</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
+    <string name="status_username_format">\@%s</string>
+    <string name="abbreviated_in_years">in %dy</string>
+    <string name="abbreviated_in_days">in %dd</string>
+    <string name="abbreviated_in_hours">in %dh</string>
+    <string name="abbreviated_in_minutes">in %dm</string>
+    <string name="abbreviated_in_seconds">in %ds</string>
+    <string name="abbreviated_years_ago">%dy</string>
+    <string name="abbreviated_days_ago">%dd</string>
+    <string name="abbreviated_hours_ago">%dh</string>
+    <string name="abbreviated_minutes_ago">%dm</string>
+    <string name="abbreviated_seconds_ago">%ds</string>
 </resources>
