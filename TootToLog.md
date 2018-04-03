@@ -145,6 +145,14 @@ xmlns:tools="http://schemas.android.com/tools"
 
 22. 退出动画使用overridedepending, 不考虑 windowIsTranslucent。因为修改 windowAnimationStyle 为 @android:style/Animation.Translucent 的子类仍然无法显示 Activity 退出动画
 
+23. 时间线。
+  1. 时间线不存在删除单条item的需求的必要(通过屏蔽即可).
+  2. 对应服务器端的类是 Status (不含getset, 只有gson的注解)
+  3. 对应本地数据端的类是 StatusViewData (含get/set)
+  4. 这个 item 是占位符还是 status, 通过 Either<Placeholder, Status> 存储
+  5. 存储标识位 Either 的 List 和 存储数据 StatusViewData 的 list 通过一个自定义的 PairedList 关联起来.
+  6. 对于时间线页面, 服务器给的数据是一个个 Status, 展示结果为 LoadMore 按钮和 Status 两种, 所以创建结构体 Either<Placeholder, Status>, 用于标志展示结果的类型, 结构体设置为非 Placeholder 即 Status, 并保存 Status 作为其内部参数 value. 最后将 Either 和 处理后的 StatusViewData 用 PairedList 串起来用作整个 adapter 的 list
+
 
 
 
