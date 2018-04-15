@@ -326,6 +326,7 @@ public class MastodonReblogButton extends View {
                 }
                 break;
             case (MotionEvent.ACTION_CANCEL) :
+                animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).setInterpolator(DECELERATE_INTERPOLATOR);
                 if (FLAG_SELECTED){
                     paint.setColor(getResources().getColor(R.color.colorBlue));
                     paintTriangle.setColor(getResources().getColor(R.color.colorBlue));
