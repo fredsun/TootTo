@@ -32,9 +32,10 @@
         android:id="@+id/tv_status_tooter_display_name"
         android:layout_width="0dp"
         android:layout_height="20dp"
+        android:layout_marginStart="8dp"
         android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toTopOf="@+id/iv_status_tooter_avatar"
-        tools:layout_editor_absoluteX="63dp"
         tools:text="tooterDisplayName" />
 
     <TextView
