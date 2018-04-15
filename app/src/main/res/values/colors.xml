@@ -13,4 +13,7 @@
     <color name="background_window_dark">#ff212b30</color>
     <color name="background_window_light">#fff2f4f7</color>
     <color name="foreground_window_light">#80000000</color>
+    <color name="colorBackground">#292c36</color>
+    <color name="colorGray">#616981</color>
+    <color name="colorBlue">#488FD3</color>
 </resources>

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.tootto.R;
+import org.tootto.ui.view.MastodonReblogButton;
 import org.tootto.viewdata.StatusViewData;
 
 import java.util.Date;
@@ -28,7 +29,7 @@ public class AbstractStatusBaseViewHolder extends RecyclerView.ViewHolder {
     private TextView statusContent;
     private ImageView statusAttachment;
     private ImageButton statusReply;
-    private  ImageButton statusReblog;
+    private MastodonReblogButton statusReblog;
     private ImageButton statusFavourite;
 
     AbstractStatusBaseViewHolder(View itemView) {

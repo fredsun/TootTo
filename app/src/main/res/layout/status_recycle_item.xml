@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_status_rebloger_name"
@@ -33,10 +32,9 @@
         android:id="@+id/tv_status_tooter_display_name"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginStart="8dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toTopOf="@+id/iv_status_tooter_avatar"
+        tools:layout_editor_absoluteX="63dp"
         tools:text="tooterDisplayName" />
 
     <TextView
@@ -47,7 +45,7 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/tv_status_tooter_display_name"
         app:layout_constraintTop_toTopOf="@+id/tv_status_tooter_display_name"
-        tools:text="\@tooteruser_name"/>
+        tools:text="\@tooteruser_name" />
 
     <TextView
         android:id="@+id/tv_status_content"
@@ -60,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toBottomOf="@+id/tv_status_tooter_display_name"
-        tools:text="status"/>
+        tools:text="status" />
 
     <TextView
         android:id="@+id/tv_status_time_passed"
@@ -83,49 +81,41 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_status_content"
         app:srcCompat="@drawable/avatar_default" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toBottomOf="@+id/iv_status_attachment">
 
         <ImageButton
             android:id="@+id/ibtn_status_reply"
-            android:layout_width="24dp"
+            android:layout_width="36dp"
             android:layout_height="30dp"
-            android:layout_weight="1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             app:srcCompat="@drawable/avatar_default" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
 
-        <ImageButton
+        <org.tootto.ui.view.MastodonReblogButton
             android:id="@+id/ibtn_status_reblog"
-            android:layout_width="24dp"
+            android:layout_width="36dp"
             android:layout_height="30dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/avatar_default" />
+            android:layout_centerInParent="true" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/ibtn_status_favourite"
-            android:layout_width="24dp"
+            android:layout_width="36dp"
             android:layout_height="30dp"
-            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
             app:srcCompat="@drawable/avatar_default" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
