@@ -110,6 +110,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
         intercept_layout.setDispatchTouchListener(this);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setProgressViewOffset(true, 50, 250);
+        swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorGrassGreen));
         swipeRefreshLayout.setOnRefreshListener(this);
 //        intercept_layout.setScrollInterceptionListener(this);
         recyclerFirstFragment = view.findViewById(R.id.recyclerview_first_fragment);
