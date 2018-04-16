@@ -3,6 +3,7 @@ package org.tootto.fragment;
 import android.arch.core.util.Function;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,7 +46,7 @@ import retrofit2.Response;
  * Created by fred on 2017/11/13.
  */
 
-public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler {
+public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener {
     final String TAG = "FirstPagingFragment";
     ObservableRecyclerView recyclerFirstFragment;
     LinearLayoutManager mLinearLayoutManager;
@@ -64,6 +65,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
     private String bottomId;
     @Nullable
     private String topId;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     private boolean alwaysShowSensitiveMedia;
     private PairedList<Either<Placeholder, Status>, StatusViewData> statuses =
@@ -78,6 +80,12 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
                     }
                 }
             });
+
+    @Override
+    public void onRefresh() {
+        getTimeLine();
+
+    }
 
     private static final class Placeholder {
         private final static Placeholder INSTANCE = new Placeholder();
@@ -100,6 +108,9 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         intercept_layout = view.findViewById(R.id.intercept_layout);
         intercept_layout.setDispatchTouchListener(this);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setProgressViewOffset(true, 50, 250);
+        swipeRefreshLayout.setOnRefreshListener(this);
 //        intercept_layout.setScrollInterceptionListener(this);
         recyclerFirstFragment = view.findViewById(R.id.recyclerview_first_fragment);
 //        recyclerFirstFragment.setTouchInterceptionViewGroup((ViewGroup) parentFragment.getView().findViewById(R.id.content));
@@ -134,6 +145,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
         Callback<List<Status>> callback = new Callback<List<Status>>() {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
+                swipeRefreshLayout.setRefreshing(false);
                 if (response.isSuccessful()){
                     String linkHeader = response.headers().get("Link");
                     onFetchTimeLineSuccess(response.body(), linkHeader);
@@ -144,6 +156,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
 
             @Override
             public void onFailure(Call<List<Status>> call, Throwable t) {
+                swipeRefreshLayout.setRefreshing(false);
                 onFetchTimeLineFailure((Exception)t);
             }
         };

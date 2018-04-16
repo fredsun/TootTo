@@ -8,11 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/intercept_layout">
-
-        <org.tootto.ui.view.observablescrollview.ObservableRecyclerView
-            android:id="@+id/recyclerview_first_fragment"
+        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/swipeRefreshLayout"
+            >
+
+            <org.tootto.ui.view.observablescrollview.ObservableRecyclerView
+                android:id="@+id/recyclerview_first_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 
     </org.tootto.ui.view.observablescrollview.FrameInterceptLayout>
