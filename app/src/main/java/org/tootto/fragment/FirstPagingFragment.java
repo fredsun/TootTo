@@ -15,6 +15,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
 import org.tootto.R;
+import org.tootto.activity.MainActivity;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.adapter.TimeLineAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
@@ -22,6 +23,7 @@ import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.backinterface.FragmentBackHandler;
 import org.tootto.entity.Status;
 import org.tootto.listener.RecyclerViewClickListener;
+import org.tootto.listener.TabLayoutReSelectListener;
 import org.tootto.network.MastodonApi;
 import org.tootto.ui.view.EndlessOnScrollListener;
 import org.tootto.ui.view.observablescrollview.FrameInterceptLayout;
@@ -48,7 +50,7 @@ import retrofit2.Response;
  * Created by fred on 2017/11/13.
  */
 
-public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener {
+public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener, TabLayoutReSelectListener {
     final String TAG = "FirstPagingFragment";
     ObservableRecyclerView recyclerFirstFragment;
     LinearLayoutManager mLinearLayoutManager;
@@ -88,6 +90,21 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
     public void onRefresh() {
         getTimeLine();
 
+    }
+
+    @Override
+    public void onReselected(int position) {
+        if (position == 0){
+            jumpToTop();
+        }
+    }
+
+    private void jumpToTop() {
+        mLinearLayoutManager.scrollToPosition(0);
+        endlessOnScrollListener.reset();
+        //TODO 仿知乎控件的bug导致此处需多做一次判断
+        mTitleAnim.show();
+        isTitleHide = false;
     }
 
     private static final class Placeholder {
@@ -251,6 +268,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
             }
         };
         recyclerFirstFragment.addOnScrollListener(endlessOnScrollListener);
+        ((MainActivity)getActivity()).setTabLayoutReSelectListener(this);
     }
 
     public static FirstPagingFragment newInstance(){

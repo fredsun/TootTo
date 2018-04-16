@@ -37,6 +37,7 @@ import org.tootto.entity.Account;
 import org.tootto.fragment.EditDialogFragment;
 import org.tootto.fragment.FragmentSecond;
 import org.tootto.fragment.FirstTransFragment;
+import org.tootto.listener.TabLayoutReSelectListener;
 import org.tootto.ui.view.GlideRoundTransform;
 import org.tootto.ui.view.NonSwipeableViewPager;
 
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
     TextView accountAcct;
     ImageView accountAvatar;
     ImageView accountHeader;
+    TabLayoutReSelectListener tabLayoutReSelectListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +133,10 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                Log.i("activity", "position"+tab.getPosition());
+                if (tab.getPosition() == 0){
+                    tabLayoutReSelectListener.onReselected(tab.getPosition());
+                }
             }
         });
         mainPager.setOffscreenPageLimit(4);
@@ -281,5 +286,9 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         mStatusBarColor = getResources().getColor(R.color.colorGrassGreen);
         StatusBarUtil.setColorForDrawerLayout(this, (DrawerLayout) findViewById(R.id.drawer_layout), mStatusBarColor, 0);
 
+    }
+
+    public void setTabLayoutReSelectListener(TabLayoutReSelectListener tabLayoutReSelectListener) {
+        this.tabLayoutReSelectListener = tabLayoutReSelectListener;
     }
 }
