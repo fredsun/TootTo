@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorShineWhite">
 
     <TextView
         android:id="@+id/tv_status_rebloger_name"
@@ -93,26 +94,30 @@
 
         <ImageButton
             android:id="@+id/ibtn_status_reply"
-            android:layout_width="36dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            app:srcCompat="@drawable/avatar_default" />
+            android:src="@drawable/ic_reply_black_24dp"
+            android:background="@color/colorShineWhite"/>
 
 
         <org.tootto.ui.view.MastodonReblogButton
             android:id="@+id/ibtn_status_reblog"
-            android:layout_width="36dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true" />
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorShineWhite"/>
 
 
         <ImageButton
             android:id="@+id/ibtn_status_favourite"
-            android:layout_width="36dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentEnd="true"
-            app:srcCompat="@drawable/avatar_default" />
+            android:src="@drawable/ic_favorite_black_24dp"
+            android:background="@color/colorShineWhite"
+            />
 
     </RelativeLayout>
 
