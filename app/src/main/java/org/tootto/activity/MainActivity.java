@@ -278,7 +278,8 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
 
     @Override
     protected void setStatusBar() {
-        mStatusBarColor = getResources().getColor(R.color.colorPrimary);
-        StatusBarUtil.setColorForDrawerLayout(this, (DrawerLayout) findViewById(R.id.drawer_layout), mStatusBarColor, mAlpha);
+        mStatusBarColor = getResources().getColor(R.color.colorGrassGreen);
+        StatusBarUtil.setColorForDrawerLayout(this, (DrawerLayout) findViewById(R.id.drawer_layout), mStatusBarColor, 0);
+
     }
 }
