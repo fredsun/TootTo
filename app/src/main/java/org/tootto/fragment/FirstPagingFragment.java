@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import org.tootto.backinterface.FragmentBackHandler;
 import org.tootto.entity.Status;
 import org.tootto.listener.RecyclerViewClickListener;
 import org.tootto.network.MastodonApi;
+import org.tootto.ui.view.EndlessOnScrollListener;
 import org.tootto.ui.view.observablescrollview.FrameInterceptLayout;
 import org.tootto.ui.view.observablescrollview.ObservableRecyclerView;
 import org.tootto.ui.view.observablescrollview.ObservableScrollViewCallbacks;
@@ -66,6 +68,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
     @Nullable
     private String topId;
     SwipeRefreshLayout swipeRefreshLayout;
+    EndlessOnScrollListener endlessOnScrollListener;
 
     private boolean alwaysShowSensitiveMedia;
     private PairedList<Either<Placeholder, Status>, StatusViewData> statuses =
@@ -241,6 +244,13 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
         super.onActivityCreated(savedInstanceState);
         request();
         getTimeLine();
+        endlessOnScrollListener = new EndlessOnScrollListener(mLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i("fragment", "onLoadMore");
+            }
+        };
+        recyclerFirstFragment.addOnScrollListener(endlessOnScrollListener);
     }
 
     public static FirstPagingFragment newInstance(){
