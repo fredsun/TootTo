@@ -173,7 +173,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
             fromId = next.uri.getQueryParameter("max_id");
         }
         //区分下拉刷新还是第一次
-        if (timeLineAdapter.getItemCount() > 1){
+        if (timeLineAdapter.getItemCount() > 2){
             addItems(statuses, fromId);
         }else {
             HttpHeaderLink prev = HttpHeaderLink.findByRelationType(links, "prev");
