@@ -48,7 +48,6 @@ import retrofit2.Response;
 public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler {
     final String TAG = "FirstPagingFragment";
     ObservableRecyclerView recyclerFirstFragment;
-    ArrayList<String> mList = new ArrayList<>();
     LinearLayoutManager mLinearLayoutManager;
 
     TitleBehaviorAnim mTitleAnim;
@@ -95,9 +94,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_first, container, false);
-        for (int i = 0; i < 30; i++){
-            mList.add("i");
-        }
+
 
         timeLineAdapter = new TimeLineAdapter();
         mLinearLayoutManager = new LinearLayoutManager(getContext());
