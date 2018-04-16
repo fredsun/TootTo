@@ -1,6 +1,7 @@
 package org.tootto.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,8 @@ import java.util.List;
 
 public class TimeLineAdapter extends RecyclerView.Adapter {
     private List<StatusViewData> statuses;
-
+    public static final int TYPE_HEADER = 0;
+    public static final int TYPE_NORMAL = 1;
 
     public TimeLineAdapter() {
         super();
@@ -25,14 +27,31 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0){
+            return TYPE_HEADER;
+        }
+        return TYPE_NORMAL;
+
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.status_recycle_item, parent, false);
-        return new StatusViewHolder(view);
+        switch (viewType){
+            default:
+            case TYPE_NORMAL:
+                View normal = LayoutInflater.from(parent.getContext()).inflate(R.layout.status_recycle_item, parent, false);
+                return new StatusViewHolder(normal);
+            case TYPE_HEADER:
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.status_header_item, parent, false);
+                return new StatusHeaderViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position < statuses.size()){
+        if (position != 0 && position < statuses.size()){
+
             StatusViewData statusViewData = statuses.get(position);
             if (statusViewData instanceof StatusViewData.Placeholder){
 
@@ -45,6 +64,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
         }
     }
 
+    //TODO might need + 2
     @Override
     public int getItemCount() {
         return statuses.size()+1;
@@ -57,7 +77,5 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
         statuses.clear();
         statuses.addAll(newStatuses);
         notifyDataSetChanged();
-
-
     }
 }
