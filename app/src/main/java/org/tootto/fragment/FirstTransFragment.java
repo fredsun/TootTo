@@ -27,7 +27,7 @@ public class FirstTransFragment extends Fragment implements FragmentBackHandler 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_trans_first, container, false);
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        firstPagingFragment = FirstPagingFragment.newInstance();
+        firstPagingFragment = FirstPagingFragment.newInstance(FirstPagingFragment.Kind.HOME);
         firstDetailFragment = FirstDetailFragment.newInstance();
         fragmentTransaction.add(R.id.content, firstPagingFragment,"firstPagingFragment" );
         fragmentTransaction.add(R.id.content, firstDetailFragment,"firstDetailFragment" );

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
+import org.tootto.BuildConfig;
 import org.tootto.R;
 import org.tootto.activity.MainActivity;
 import org.tootto.adapter.FirstFragmentAdapter;
@@ -40,6 +41,7 @@ import org.tootto.viewdata.StatusViewData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -52,9 +54,12 @@ import retrofit2.Response;
 
 public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener, TabLayoutReSelectListener {
     final String TAG = "FirstPagingFragment";
+    private static final String KIND_ARG = "kind";
+    private static final String HASHTAG_OR_ID_ARG = "hashtag_or_id";
     ObservableRecyclerView recyclerFirstFragment;
     LinearLayoutManager mLinearLayoutManager;
-
+    private Kind kind;
+    private String hashtagOrId;
     TitleBehaviorAnim mTitleAnim;
     boolean isAnimInit = false;
     boolean isTitleHide = false;
@@ -72,6 +77,21 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
     SwipeRefreshLayout swipeRefreshLayout;
     EndlessOnScrollListener endlessOnScrollListener;
 
+    public enum Kind {
+        HOME,
+        PUBLIC_LOCAL,
+        PUBLIC_FEDERATED,
+        TAG,
+        USER,
+        FAVOURITES
+    }
+
+    private enum FetchType{
+        TOP,//第一次刷新
+        MIDDLE,//通过 onLoadMore 按钮刷新
+        BOTTOM
+    }
+
     private boolean alwaysShowSensitiveMedia;
     private PairedList<Either<Placeholder, Status>, StatusViewData> statuses =
             new PairedList<>(new Function<Either<Placeholder, Status>, StatusViewData>() {
@@ -88,8 +108,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
 
     @Override
     public void onRefresh() {
-        getTimeLine();
-
+        sendFetchTimelineRequest(null, topId, FetchType.TOP, -1);
     }
 
     @Override
@@ -121,6 +140,8 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Bundle arguments = getArguments();
+        kind = Kind.valueOf(arguments.getString(KIND_ARG));
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
 
@@ -158,18 +179,20 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
         toolbarTitle = view.findViewById(R.id.detail_toolbar);
         ViewConfiguration vc = ViewConfiguration.get(getContext());
         mSlop = vc.getScaledTouchSlop();
+        topId = null;
+        bottomId = null;
 
         return view;
     }
 
-    private void getTimeLine() {
+    private void sendFetchTimelineRequest(@Nullable String fromId, @Nullable String upToId, FetchType fetchType, int position) {
         Callback<List<Status>> callback = new Callback<List<Status>>() {
             @Override
             public void onResponse(Call<List<Status>> call, Response<List<Status>> response) {
                 swipeRefreshLayout.setRefreshing(false);
                 if (response.isSuccessful()){
                     String linkHeader = response.headers().get("Link");
-                    onFetchTimeLineSuccess(response.body(), linkHeader);
+                    onFetchTimeLineSuccess(response.body(), linkHeader, fetchType, position);
                 }else {
                     onFetchTimeLineFailure(new Exception(response.message()));
                 }
@@ -181,39 +204,75 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
                 onFetchTimeLineFailure((Exception)t);
             }
         };
-        MastodonApi api = mastodonApi;
-        Call<List<Status>> listCall = api.homeTimeline(null, null, 30);
+
+
+        Call<List<Status>> listCall = getFetchCallByRequestTimelineType(kind, hashtagOrId, fromId, upToId);
         callList.add(listCall);
         listCall.enqueue(callback);
     }
+
+    private Call<List<Status>> getFetchCallByRequestTimelineType(Kind kind, String hashtagOrId, String fromId, String upToId) {
+        MastodonApi api = mastodonApi;
+        switch (kind){
+            default:
+            case HOME:
+                return api.homeTimeline(fromId, upToId, 30);
+
+        }
+    }
+
 
     /**
      * 解析timeline/home的返回值
      * 请求头中存放有两组值 next 和 max_id(较小值), prev 和 since_id(较大值)
      * 第一次时直接放进adapter, 第二次时更新本地记录的timeline最大最小id值
      * max_id = fromId, since_id = upToId .
+     * 即fromId在底部, 对应bottomId
+     *   upToId在顶部, 对应topId
      * @param statuses
      * @param linkHeader
+     * @param fetchType
+     * @param position
      */
-    private void onFetchTimeLineSuccess(List<Status> statuses, String linkHeader) {
+    private void onFetchTimeLineSuccess(List<Status> statuses, String linkHeader, FetchType fetchType, int position) {
         List<HttpHeaderLink> links = HttpHeaderLink.parse(linkHeader);
         boolean fullFetch = statuses.size() >= LOAD_AT_ONCE;
-        HttpHeaderLink next = HttpHeaderLink.findByRelationType(links, "next");
-        String fromId = null;
-        if (next != null){
-            fromId = next.uri.getQueryParameter("max_id");
-        }
-        //区分下拉刷新还是第一次
-        if (timeLineAdapter.getItemCount() > 2){
-            addItems(statuses, fromId);
-        }else {
-            HttpHeaderLink prev = HttpHeaderLink.findByRelationType(links, "prev");
-            String upToId = null;
-            if (prev != null){
-                upToId = prev.uri.getQueryParameter("since_id");
-                updateStatus(statuses, fromId, upToId, fullFetch);
+        switch (fetchType){
+            case TOP: {
+                HttpHeaderLink previous = HttpHeaderLink.findByRelationType(links, "prev");
+                String upToId = null;
+                if (previous != null) {
+                    upToId = previous.uri.getQueryParameter("since_id");
+                }
+                updateStatus(statuses, null, upToId, fullFetch);
+
+                break;
+            }
+            case MIDDLE: {
+                Log.i(TAG, "MIDDLE SUCCESS");
+                break;
+            }
+            case BOTTOM: {
+                HttpHeaderLink next = HttpHeaderLink.findByRelationType(links, "next");
+                String fromId = null;
+                if (next != null) {
+                    fromId = next.uri.getQueryParameter("max_id");
+                }
+                //区分下拉刷新还是第一次
+                if (timeLineAdapter.getItemCount() > 2) {
+                    addItems(statuses, fromId);
+                } else {
+                    HttpHeaderLink prev = HttpHeaderLink.findByRelationType(links, "prev");
+                    String upToId = null;
+                    if (prev != null) {
+                        upToId = prev.uri.getQueryParameter("since_id");
+                        updateStatus(statuses, fromId, upToId, fullFetch);
+                    }
+                }
+                break;
             }
         }
+
     }
 
     private void updateStatus(List<Status> newStatuses, String fromId, String upToId, boolean fullFetch) {
@@ -248,8 +307,37 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
         timeLineAdapter.update(statuses.getPairedCopy());
     }
 
-    private void addItems(List<Status> statusList, String fromId) {
+    private void addItems(List<Status> newStatuses, String fromId) {
+        if (ListUtils.isEmpty(newStatuses)){
+            return;
+        }
+        int end = statuses.size();
+        Status last = statuses.get(end -1).getAsRightOrNull();
+        if (last != null && !findStatus(newStatuses, last.id)){
+            statuses.addAll(listStatusList(newStatuses));
+            List<StatusViewData> newViewDatas = statuses.getPairedCopy().subList(statuses.size() - newStatuses.size(), statuses.size());
+            if (BuildConfig.DEBUG && newStatuses.size() != newViewDatas.size()) {
+                String error = String.format(Locale.getDefault(),
+                        "Incorrectly got statusViewData sublist." +
+                                " newStatuses.size == %d newViewDatas.size == %d, statuses.size == %d",
+                        newStatuses.size(), newViewDatas.size(), statuses.size());
+                throw new AssertionError(error);
+            }
+            if (fromId != null) {
+                bottomId = fromId;
+            }
+            timeLineAdapter.addItems(newViewDatas);
+        }
 
+    }
+
+    private static boolean findStatus(List<Status> statuses, String id) {
+        for (Status status : statuses) {
+            if (status.id.equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void onFetchTimeLineFailure(Exception exception) {
@@ -260,20 +348,22 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         request();
-        getTimeLine();
         endlessOnScrollListener = new EndlessOnScrollListener(mLinearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.i("fragment", "onLoadMore");
+                FirstPagingFragment.this.onLoadMore();
             }
         };
         recyclerFirstFragment.addOnScrollListener(endlessOnScrollListener);
         ((MainActivity)getActivity()).setTabLayoutReSelectListener(this);
     }
 
-    public static FirstPagingFragment newInstance(){
-        FirstPagingFragment FirstPagingFragment = new FirstPagingFragment();
-        return FirstPagingFragment;
+    public static FirstPagingFragment newInstance(Kind kind){
+        FirstPagingFragment fragment = new FirstPagingFragment();
+        Bundle argument = new Bundle();
+        argument.putString(KIND_ARG, kind.name());
+        fragment.setArguments(argument);
+        return fragment;
     }
 
     @Override
@@ -342,6 +432,10 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
 
     private List<Either<Placeholder, Status>> listStatusList(List<Status> list) {
         return CollectionUtil.map(list, statusLifter);
+    }
+
+    private void onLoadMore(){
+        sendFetchTimelineRequest(bottomId, null, FetchType.BOTTOM, -1);
     }
 
     public void request() {
