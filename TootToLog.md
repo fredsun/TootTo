@@ -39,7 +39,7 @@
     * client_id
     * client_secret
 
-* 第2次请求: 验证账号 - github账号授权猫站[参考文档](https://github.com/tootsuite/documentation/blob/master/Using-the-API/OAuth-details.md)
+* 第2次请求: 验证账号 - github 账号授权猫站[参考文档](https://github.com/tootsuite/documentation/blob/master/Using-the-API/OAuth-details.md)
 https://mao.daizhige.org/oauth/authorize
   * 参数
     * scope read%20write%20follow
@@ -49,7 +49,7 @@ https://mao.daizhige.org/oauth/authorize
   * 返回
     授权成功的回调是一个Intent, 通过Intent-filter过滤拿到
 
-* 第3次请求: 获取token
+* 第3次请求: 获取 token
   https://mao.daizhige.org/oauth/token
   * field
     * client_id
@@ -62,10 +62,10 @@ https://mao.daizhige.org/oauth/authorize
 * 第4和之后的请求: 把 access_token 塞进请求header, Authorization: Bearer <access_token>
 
 
-11. 添加OAuthWebView页面
+11. 添加 OAuthWebView 页面
 设计: 仿Tusky
 原因: 完善OAuth需要打开url的需求,
-    1. 有 Chrome 的用户, 使用CUstomTabs打开url.
+    1. 有 Chrome 的用户, 使用 CustomTabs 打开 url.
     2. 没有安装 Chrome 的用户用 webview 取代系统浏览器(系统浏览器无法有效控制关闭, 且无法控制cookie的残留, 导致重复登陆)
 细节:
     1. webview添加加载条. 继承 WebChromeClient[参考](http://blog.csdn.net/qq_20785431/article/details/51599073)
@@ -146,12 +146,29 @@ xmlns:tools="http://schemas.android.com/tools"
 22. 退出动画使用overridedepending, 不考虑 windowIsTranslucent。因为修改 windowAnimationStyle 为 @android:style/Animation.Translucent 的子类仍然无法显示 Activity 退出动画
 
 23. 时间线。
-  1. 时间线不存在删除单条item的需求的必要(通过屏蔽即可).
-  2. 对应服务器端的类是 Status (不含getset, 只有gson的注解)
-  3. 对应本地数据端的类是 StatusViewData (含get/set)
-  4. 这个 item 是占位符还是 status, 通过 Either<Placeholder, Status> 存储
-  5. 存储标识位 Either 的 List 和 存储数据 StatusViewData 的 list 通过一个自定义的 PairedList 关联起来.
-  6. 对于时间线页面, 服务器给的数据是一个个 Status, 展示结果为 LoadMore 按钮和 Status 两种, 所以创建结构体 Either<Placeholder, Status>, 用于标志展示结果的类型, 结构体设置为非 Placeholder 即 Status, 并保存 Status 作为其内部参数 value. 最后将 Either 和 处理后的 StatusViewData 用 PairedList 串起来用作整个 adapter 的 list
+    1. 时间线不存在删除单条item的需求的必要(通过屏蔽即可).
+    2. 对应服务器端的类是 Status (不含getset, 只有gson的注解)
+    3. 对应本地数据端的类是 StatusViewData (含get/set)
+    4. 这个 item 是占位符还是 status, 通过 Either<Placeholder, Status> 存储
+    5. 存储标识位 Either 的 List 和 存储数据 StatusViewData 的 list 通过一个自定义的 PairedList 关联起来.
+    6. 对于时间线页面, 服务器给的数据是一个个 Status, 展示结果为 LoadMore 按钮和 Status 两种, 所以创建结构体 Either<Placeholder, Status>, 用于标志展示结果的类型, 结构体设置为非 Placeholder 即 Status, 并保存 Status 作为其内部参数 value. 最后将 Either 和 处理后的 StatusViewData 用 PairedList 串起来用作整个 adapter 的 list
+    7. 点击事件通过两次回调
+        * View 通过 SparkEventListener 把 view 里判断出的点击事件传递给 findViewById 了的 ViewHolder.
+        * ViewHolder 通过 StatusActionListener 把事件传递给 Fragment.
+    8. RecyclerView 添加 header 通过itemType(待优化装饰者模式)
+        * Adapter 关联 layout 和 ViewHolder, 数据,
+        * ViewHolder 关联具体  view 和数据
+        * 继承 RecyclerView.OnScrollListener 实现剩余 15 条未显示时去拉接口(默认一次拉 30 条 status)
+    9. 三种拉取时间线的位置
+        * TOP
+          * 下拉刷新
+          * SharedPreference 更新设置不显示图片时
+        * MIDDLE
+          * 其余 Fragment 切换时
+        * BOTTOM
+          * 上拉加载
+          * 第一次进入
+    10. 
 
 
 
