@@ -78,4 +78,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
         statuses.addAll(newStatuses);
         notifyDataSetChanged();
     }
+
+    public void addItems(List<StatusViewData> newStatuses) {
+        statuses.addAll(newStatuses);
+        notifyItemRangeInserted(statuses.size(), newStatuses.size());
+    }
 }
