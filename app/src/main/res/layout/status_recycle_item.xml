@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toBottomOf="@+id/tv_status_tooter_display_name"
-        tools:text="status" />
+        tools:text="content" />
 
     <TextView
         android:id="@+id/tv_status_time_passed"
