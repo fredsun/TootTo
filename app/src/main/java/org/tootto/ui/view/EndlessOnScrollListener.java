@@ -40,12 +40,6 @@ public abstract class EndlessOnScrollListener extends RecyclerView.OnScrollListe
     public void onScrolled(RecyclerView view, int dx, int dy) {
         int totalItemCount = layoutManager.getItemCount();
         int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-        Log.i("scrollListener", "totalItemCount"+totalItemCount);
-        Log.i("scrollListener", "previousTotalItemCount"+previousTotalItemCount);
-        Log.i("scrollListener", "lastVisibleItemPosition"+lastVisibleItemPosition);
-        Log.i("scrollListener", "startingPageIndex"+startingPageIndex);
-        Log.i("scrollListener", "currentPage"+currentPage);
-        Log.i("scrollListener", "loading"+loading);
         if (totalItemCount < previousTotalItemCount) {
             currentPage = startingPageIndex;
             previousTotalItemCount = totalItemCount;
@@ -53,7 +47,7 @@ public abstract class EndlessOnScrollListener extends RecyclerView.OnScrollListe
                 loading = true;
             }
         }
-        //数据刚请求完毕
+        //数据刚请求完毕 || 第一次打开时 1 > 0
         if (loading && totalItemCount > previousTotalItemCount) {
             loading = false;
             previousTotalItemCount = totalItemCount;
