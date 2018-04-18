@@ -22,8 +22,10 @@ import org.tootto.adapter.TimeLineAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.backinterface.FragmentBackHandler;
+import org.tootto.entity.Attachment;
 import org.tootto.entity.Status;
 import org.tootto.listener.RecyclerViewClickListener;
+import org.tootto.listener.StatusActionListener;
 import org.tootto.listener.TabLayoutReSelectListener;
 import org.tootto.network.MastodonApi;
 import org.tootto.ui.view.EndlessOnScrollListener;
@@ -52,7 +54,7 @@ import retrofit2.Response;
  * Created by fred on 2017/11/13.
  */
 
-public class FirstPagingFragment extends BaseFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener, TabLayoutReSelectListener {
+public class FirstPagingFragment extends HubFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener, TabLayoutReSelectListener, StatusActionListener {
     final String TAG = "FirstPagingFragment";
     private static final String KIND_ARG = "kind";
     private static final String HASHTAG_OR_ID_ARG = "hashtag_or_id";
@@ -145,7 +147,7 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
 
-        timeLineAdapter = new TimeLineAdapter();
+        timeLineAdapter = new TimeLineAdapter(this);
         mLinearLayoutManager = new LinearLayoutManager(getContext());
         intercept_layout = view.findViewById(R.id.intercept_layout);
         intercept_layout.setDispatchTouchListener(this);
@@ -481,5 +483,70 @@ public class FirstPagingFragment extends BaseFragment implements ObservableScrol
 //            }
 //        });
 
+    }
+
+    @Override
+    public void onReply(int position) {
+
+    }
+
+    @Override
+    public void onReblog(boolean reblog, int position) {
+
+    }
+
+    @Override
+    public void onFavourite(boolean favourite, int position) {
+
+    }
+
+    @Override
+    public void onMore(View view, int position) {
+
+    }
+
+    @Override
+    public void onViewMedia(String[] urls, int index, Attachment.Type type, View view) {
+
+    }
+
+    @Override
+    public void onViewThread(int position) {
+
+    }
+
+    @Override
+    public void onOpenReblog(int position) {
+
+    }
+
+    @Override
+    public void onExpandedChange(boolean expanded, int position) {
+
+    }
+
+    @Override
+    public void onContentHiddenChange(boolean isShowing, int position) {
+
+    }
+
+    @Override
+    public void onLoadMore(int position) {
+
+    }
+
+    @Override
+    public void onViewTag(String tag) {
+
+    }
+
+    @Override
+    public void onViewAccount(String id) {
+        if (kind == Kind.USER && hashtagOrId.equals(id)) {
+            /* If already viewing an account page, then any requests to view that account page
+             * should be ignored. */
+            return;
+        }
+        super.viewAccount(id);
     }
 }

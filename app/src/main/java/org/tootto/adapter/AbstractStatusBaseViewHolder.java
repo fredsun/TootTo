@@ -2,6 +2,8 @@ package org.tootto.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,16 +14,21 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.tootto.R;
+import org.tootto.entity.Status;
+import org.tootto.listener.StatusActionListener;
+import org.tootto.ui.view.LinkHelper;
 import org.tootto.ui.view.MastodonReblogButton;
+import org.tootto.util.CustomEmojiHelper;
 import org.tootto.viewdata.StatusViewData;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by fred on 2018/3/31.
  */
 
-public class AbstractStatusBaseViewHolder extends RecyclerView.ViewHolder {
+public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHolder {
     private TextView statusDisplayName;
     private TextView statusUserName;
     private TextView statusTimePassed;
@@ -83,11 +90,31 @@ public class AbstractStatusBaseViewHolder extends RecyclerView.ViewHolder {
                 .into(statusTooterAvatar);
     }
 
-    public void setUpWithStatus(StatusViewData.Concrete statusViewData) {
+    private void setStatusContent(Spanned content, Status.Mention[] mentions, List<Status.Emoji> emojis, StatusActionListener listener) {
+        Spanned emojifyText = CustomEmojiHelper.emojifyText(content, emojis, this.statusContent);
+        LinkHelper.setClickableText(this.statusContent, emojifyText, mentions, listener);
+    }
+
+    private void setUpClickViews(StatusActionListener listener, String senderId) {
+        View.OnClickListener viewThreadListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION){
+                    listener.onViewThread(position);
+                }
+            }
+        };
+        statusContent.setOnClickListener(viewThreadListener);
+    }
+
+    public void setUpWithStatus(StatusViewData.Concrete statusViewData, StatusActionListener listener, boolean mediaPreviewEnabled) {
         setStatusDisplayName(statusViewData.getUserFullName());
         setStatusUserName(statusViewData.getNickname());
         setStatusTimePassed(statusViewData.getCreatedAt());
         setStatusTooterAvatar(statusViewData.getAvatar());
+        setStatusContent(statusViewData.getContent(), statusViewData.getMentions(), statusViewData.getEmojis(), listener);
+        setUpClickViews(listener, statusViewData.getSenderId());
 
     }
 }

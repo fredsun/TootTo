@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.tootto.R;
+import org.tootto.listener.StatusActionListener;
 import org.tootto.viewdata.StatusViewData;
 
 import java.util.ArrayList;
@@ -20,10 +21,14 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
     private List<StatusViewData> statuses;
     public static final int TYPE_HEADER = 0;
     public static final int TYPE_NORMAL = 1;
+    private StatusActionListener statusActionListener;
+    boolean mediaPreviewEnabled;
 
-    public TimeLineAdapter() {
+    public TimeLineAdapter(StatusActionListener statusActionListener) {
         super();
         this.statuses = new ArrayList<>();
+        this.statusActionListener = statusActionListener;
+        mediaPreviewEnabled = true;
     }
 
     @Override
@@ -57,7 +62,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
 
             }else {
                 StatusViewHolder statusViewHolder = (StatusViewHolder) holder;
-                statusViewHolder.setUpWithStatus((StatusViewData.Concrete)statusViewData);
+                statusViewHolder.setUpWithStatus((StatusViewData.Concrete)statusViewData, statusActionListener, mediaPreviewEnabled);
             }
         }else {
 
@@ -82,5 +87,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
     public void addItems(List<StatusViewData> newStatuses) {
         statuses.addAll(newStatuses);
         notifyItemRangeInserted(statuses.size(), newStatuses.size());
+    }
+
+    public void setMediaPreviewEnabled(boolean mediaPreviewEnabled) {
+        this.mediaPreviewEnabled = mediaPreviewEnabled;
     }
 }

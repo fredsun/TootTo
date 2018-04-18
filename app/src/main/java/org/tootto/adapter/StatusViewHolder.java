@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.tootto.R;
+import org.tootto.listener.StatusActionListener;
 import org.tootto.viewdata.StatusViewData;
 
 /**
@@ -23,8 +24,8 @@ class StatusViewHolder extends AbstractStatusBaseViewHolder{
         statusReblogerName.setText(name);
     }
 
-    public void setUpWithStatus(StatusViewData.Concrete statusViewData) {
-        super.setUpWithStatus(statusViewData);
-
+    @Override
+    public void setUpWithStatus(StatusViewData.Concrete statusViewData, StatusActionListener listener, boolean mediaPreviewEnabled) {
+        super.setUpWithStatus(statusViewData, listener, mediaPreviewEnabled);
     }
 }
