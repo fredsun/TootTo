@@ -1,6 +1,7 @@
 package org.tootto.adapter;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.Spanned;
@@ -38,6 +39,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
     private ImageButton statusReply;
     private MastodonReblogButton statusReblog;
     private ImageButton statusFavourite;
+    private ConstraintLayout container;
 
     AbstractStatusBaseViewHolder(View itemView) {
         super(itemView);
@@ -50,6 +52,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         statusReply = itemView.findViewById(R.id.ibtn_status_reply);
         statusReblog = itemView.findViewById(R.id.ibtn_status_reblog);
         statusFavourite = itemView.findViewById(R.id.ibtn_status_favourite);
+        container = itemView.findViewById(R.id.layout_status_container);
     }
 
     private void setStatusDisplayName(String name){
@@ -106,9 +109,10 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
             }
         };
         statusContent.setOnClickListener(viewThreadListener);
+        container.setOnClickListener(viewThreadListener);
     }
 
-    public void setUpWithStatus(StatusViewData.Concrete statusViewData, StatusActionListener listener, boolean mediaPreviewEnabled) {
+    public void setUpWithStatus(StatusViewData.Concrete statusViewData, final StatusActionListener listener, boolean mediaPreviewEnabled) {
         setStatusDisplayName(statusViewData.getUserFullName());
         setStatusUserName(statusViewData.getNickname());
         setStatusTimePassed(statusViewData.getCreatedAt());

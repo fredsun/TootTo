@@ -24,7 +24,6 @@ import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.backinterface.FragmentBackHandler;
 import org.tootto.entity.Attachment;
 import org.tootto.entity.Status;
-import org.tootto.listener.RecyclerViewClickListener;
 import org.tootto.listener.StatusActionListener;
 import org.tootto.listener.TabLayoutReSelectListener;
 import org.tootto.network.MastodonApi;
@@ -164,20 +163,6 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
         recyclerFirstFragment.setAdapter(timeLineAdapter);
         recyclerFirstFragment.setLayoutManager(mLinearLayoutManager);
         recyclerFirstFragment.setScrollViewCallbacks(this);
-        recyclerFirstFragment.addOnItemTouchListener(new RecyclerViewClickListener(getContext(), recyclerFirstFragment, new RecyclerViewClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (getParentFragment() instanceof FirstTransFragment){
-                    ((FirstTransFragment) getParentFragment()).showDetailFragment();
-                }
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        }));
-
         toolbarTitle = view.findViewById(R.id.detail_toolbar);
         ViewConfiguration vc = ViewConfiguration.get(getContext());
         mSlop = vc.getScaledTouchSlop();
@@ -512,7 +497,7 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
 
     @Override
     public void onViewThread(int position) {
-
+        super.viewThread(statuses.get(position).getAsRight());
     }
 
     @Override

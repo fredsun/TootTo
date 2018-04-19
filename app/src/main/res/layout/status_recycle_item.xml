@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorShineWhite">
+    android:background="@color/colorShineWhite"
+    android:id="@+id/layout_status_container">
 
     <TextView
         android:id="@+id/tv_status_rebloger_name"
@@ -54,7 +55,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-
+android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toBottomOf="@+id/tv_status_tooter_display_name"
