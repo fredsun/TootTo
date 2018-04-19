@@ -31,6 +31,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.ImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
@@ -43,6 +45,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CustomEmojiHelper {
+
 
     /**
      * replaces emoji shortcodes in a text with EmojiSpans
@@ -62,11 +65,8 @@ public class CustomEmojiHelper {
                 while (matcher.find()) {
                     // We keep a span as a Picasso target, because Picasso keeps weak reference to
                     // the target so an anonymous class would likely be garbage collected.
-                    EmojiSpan span = new EmojiSpan(textView);
+                    EmojiSpan span = new EmojiSpan(textView, emoji);
                     builder.setSpan(span, matcher.start(), matcher.end(), 0);
-                    Glide.with(textView.getContext())
-                            .load(emoji.getUrl())
-                            .into(span);
                 }
             }
 
@@ -81,13 +81,29 @@ public class CustomEmojiHelper {
     }
 
 
-    public static class EmojiSpan extends ReplacementSpan implements Target {
+    public static class EmojiSpan extends ReplacementSpan {
 
+
+        private class MySimpleTarget extends SimpleTarget<Drawable>{
+            @Override
+            public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                TextView textView = textViewWeakReference.get();
+                if(textView != null) {
+                    imageDrawable = resource;
+                    textView.invalidate();
+                }
+            }
+        }
         private @Nullable Drawable imageDrawable;
         private WeakReference<TextView> textViewWeakReference;
 
-        EmojiSpan(TextView textView) {
+        EmojiSpan(TextView textView, Status.Emoji emoji) {
             this.textViewWeakReference = new WeakReference<>(textView);
+
+            MySimpleTarget mySimpleTarget = new MySimpleTarget();
+            Glide.with(textView.getContext())
+                    .load(emoji.getUrl())
+                    .into(mySimpleTarget);
         }
 
         @Override
@@ -121,67 +137,6 @@ public class CustomEmojiHelper {
             canvas.translate(x, transY);
             imageDrawable.draw(canvas);
             canvas.restore();
-        }
-
-        @Override
-        public void onLoadStarted(@Nullable Drawable placeholder) {
-
-        }
-
-        @Override
-        public void onLoadFailed(@Nullable Drawable errorDrawable) {
-
-        }
-
-        @Override
-        public void onResourceReady(@NonNull Object resource, @Nullable Transition transition) {
-            TextView textView = textViewWeakReference.get();
-            if(textView != null) {
-
-                imageDrawable = new BitmapDrawable(textView.getContext().getResources(), (Bitmap) resource);
-                textView.invalidate();
-            }
-        }
-
-        @Override
-        public void onLoadCleared(@Nullable Drawable placeholder) {
-
-        }
-
-        @Override
-        public void getSize(@NonNull SizeReadyCallback cb) {
-
-        }
-
-        @Override
-        public void removeCallback(@NonNull SizeReadyCallback cb) {
-
-        }
-
-        @Override
-        public void setRequest(@Nullable Request request) {
-
-        }
-
-        @Nullable
-        @Override
-        public Request getRequest() {
-            return null;
-        }
-
-        @Override
-        public void onStart() {
-
-        }
-
-        @Override
-        public void onStop() {
-
-        }
-
-        @Override
-        public void onDestroy() {
-
         }
     }
 
