@@ -17,6 +17,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
@@ -31,8 +32,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
+
 import org.tootto.R;
 import org.tootto.fragment.SettingDetailFragment;
+import org.tootto.listener.TabLayoutReSelectListener;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -47,6 +51,7 @@ public class SettingActivity extends BaseActivity implements PreferenceFragmentC
     EntriesAdapter mEntriesAdapter;
     static final String TAG = "SettingActivity";
     boolean mShouldRestart = false;
+    private int mStatusBarColor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -353,6 +358,12 @@ public class SettingActivity extends BaseActivity implements PreferenceFragmentC
                     )
                     .create();
         }
+    }
+    @Override
+    protected void setStatusBar() {
+        mStatusBarColor = getResources().getColor(R.color.colorGrassGreen);
+        StatusBarUtil.setColor(this, mStatusBarColor, 0);
+
     }
 }
 
