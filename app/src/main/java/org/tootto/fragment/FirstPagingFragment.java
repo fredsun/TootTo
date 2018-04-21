@@ -334,6 +334,9 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (!isAnimInit){
+            mTitleAnim = new TitleBehaviorAnim(toolbarTitle);
+        }
         request();
         endlessOnScrollListener = new EndlessOnScrollListener(mLinearLayoutManager) {
             @Override
@@ -364,9 +367,7 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
 
     @Override
     public void onDownMotionEvent() {
-        if (!isAnimInit){
-            mTitleAnim = new TitleBehaviorAnim(toolbarTitle);
-        }
+
     }
 
     @Override
