@@ -11,6 +11,8 @@
         <item name="android:windowNoTitle">true</item>
         <!--<item name="android:windowIsTranslucent">true</item>-->
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="tab_icon_selected_tint">@color/colorGrassGreen</item>
+        <item name="tab_icon_unselected_tint">@color/colorIconUnselected</item>
     </style>
 
 
