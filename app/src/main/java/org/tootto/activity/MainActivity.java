@@ -31,6 +31,7 @@ import org.tootto.R;
 import org.tootto.backinterface.BackHandlerHelper;
 import org.tootto.behavior.BottomBehavior;
 import org.tootto.entity.Account;
+import org.tootto.entity.Notification;
 import org.tootto.fragment.EditDialogFragment;
 import org.tootto.fragment.FragmentSecond;
 import org.tootto.fragment.FirstTransFragment;
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         accountHeader = headerView.findViewById(R.id.account_header);
 
         fragmentList.add(FirstTransFragment.newInstance());
-        fragmentList.add(FragmentSecond.newInstance());
+        fragmentList.add(NotificationFragment.newInstance());
         fragmentList.add(FragmentSecond.newInstance());
         fragmentList.add(FragmentSecond.newInstance());
 
