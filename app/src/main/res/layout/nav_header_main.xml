@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             tools:text="name"
             android:id="@+id/account_display_name"
-            android:textColor="@color/text_white"
+            android:textColor="@color/colorShineWhite"
             android:layout_marginTop="20dp"/>
         <TextView
             android:layout_width="wrap_content"

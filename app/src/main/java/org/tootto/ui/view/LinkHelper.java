@@ -176,7 +176,7 @@ public class LinkHelper {
      */
     public static void openLinkInCustomTab(Uri uri, Context context) {
         boolean lightTheme = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("lightTheme", false);
-        int toolbarColor = ContextCompat.getColor(context, lightTheme ? R.color.custom_tab_toolbar_light : R.color.custom_tab_toolbar_dark);
+        int toolbarColor = ContextCompat.getColor(context, lightTheme ? R.color.colorShineWhite : R.color.custom_tab_toolbar_dark);
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(toolbarColor);
         CustomTabsIntent customTabsIntent = builder.build();

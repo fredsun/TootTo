@@ -1,6 +1,5 @@
 package org.tootto.activity;
 
-import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -301,7 +300,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 .getBoolean("lightTheme", false);
         int toolbarColorRes;
         if (lightTheme) {
-            toolbarColorRes = R.color.custom_tab_toolbar_light;
+            toolbarColorRes = R.color.colorShineWhite;
         } else {
             toolbarColorRes = R.color.custom_tab_toolbar_dark;
         }

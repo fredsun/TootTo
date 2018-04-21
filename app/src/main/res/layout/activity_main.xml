@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="center|bottom|end"
-            android:background="@color/navigation_bottom"
+            android:background="@color/colorShineWhite"
             app:layout_behavior="org.tootto.behavior.BottomBehavior"
             app:tabIndicatorColor="@android:color/transparent" />
 
