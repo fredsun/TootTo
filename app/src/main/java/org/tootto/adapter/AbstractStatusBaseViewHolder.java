@@ -3,9 +3,12 @@ package org.tootto.adapter;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.format.DateUtils;
+import android.text.style.ClickableSpan;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import org.tootto.R;
 import org.tootto.entity.Status;
+import org.tootto.listener.LinkMovementMethodOverride;
 import org.tootto.listener.StatusActionListener;
 import org.tootto.ui.view.LinkHelper;
 import org.tootto.ui.view.MastodonReblogButton;
@@ -108,8 +112,12 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
                 }
             }
         };
+
+        statusContent.setOnTouchListener(new LinkMovementMethodOverride());
         statusContent.setOnClickListener(viewThreadListener);
         container.setOnClickListener(viewThreadListener);
+
+//
     }
 
     public void setUpWithStatus(StatusViewData.Concrete statusViewData, final StatusActionListener listener, boolean mediaPreviewEnabled) {
