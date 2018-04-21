@@ -55,17 +55,24 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position != 0 && position < statuses.size()){
+        switch(getItemViewType(position)){
+            case TYPE_HEADER:
+                break;
+            case TYPE_NORMAL:
+                position = position -1;
+                if (position < statuses.size()){
 
-            StatusViewData statusViewData = statuses.get(position);
-            if (statusViewData instanceof StatusViewData.Placeholder){
+                    StatusViewData statusViewData = statuses.get(position);
+                    if (statusViewData instanceof StatusViewData.Placeholder){
 
-            }else {
-                StatusViewHolder statusViewHolder = (StatusViewHolder) holder;
-                statusViewHolder.setUpWithStatus((StatusViewData.Concrete)statusViewData, statusActionListener, mediaPreviewEnabled);
-            }
-        }else {
+                    }else {
+                        StatusViewHolder statusViewHolder = (StatusViewHolder) holder;
+                        statusViewHolder.setUpWithStatus((StatusViewData.Concrete)statusViewData, statusActionListener, mediaPreviewEnabled);
+                    }
+                }else {
 
+                }
+                break;
         }
     }
 
