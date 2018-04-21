@@ -19,15 +19,19 @@ import org.tootto.backinterface.FragmentBackHandler;
  */
 
 public class FirstTransFragment extends Fragment implements FragmentBackHandler {
+    private static final String KIND_ARG = "kind";
     private FirstPagingFragment firstPagingFragment;
     private FirstDetailFragment firstDetailFragment;
+    FirstPagingFragment.Kind kind;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Bundle arguments = getArguments();
+        kind = FirstPagingFragment.Kind.valueOf(arguments.getString(KIND_ARG));
         View view = inflater.inflate(R.layout.fragment_trans_first, container, false);
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-        firstPagingFragment = FirstPagingFragment.newInstance(FirstPagingFragment.Kind.HOME);
+        firstPagingFragment = FirstPagingFragment.newInstance(kind);
         firstDetailFragment = FirstDetailFragment.newInstance();
         fragmentTransaction.add(R.id.content, firstPagingFragment,"firstPagingFragment" );
         fragmentTransaction.add(R.id.content, firstDetailFragment,"firstDetailFragment" );
@@ -36,10 +40,12 @@ public class FirstTransFragment extends Fragment implements FragmentBackHandler 
         return view;
     }
 
-    public static FirstTransFragment newInstance(){
-        FirstTransFragment firstTransFragment = new FirstTransFragment();
-
-        return firstTransFragment;
+    public static FirstTransFragment newInstance(FirstPagingFragment.Kind kind){
+        FirstTransFragment fragment = new FirstTransFragment();
+        Bundle argument = new Bundle();
+        argument.putString(KIND_ARG, kind.name());
+        fragment.setArguments(argument);
+        return fragment;
     }
 
     public void transFragment(){

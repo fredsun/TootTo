@@ -204,6 +204,12 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
             default:
             case HOME:
                 return api.homeTimeline(fromId, upToId, 30);
+            case PUBLIC_LOCAL:
+                return api.publicTimeline(true, fromId, upToId, LOAD_AT_ONCE);
+            case PUBLIC_FEDERATED:
+                return api.publicTimeline(false, fromId, upToId, LOAD_AT_ONCE);
+
+
 
         }
     }

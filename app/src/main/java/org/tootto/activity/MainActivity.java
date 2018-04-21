@@ -33,6 +33,7 @@ import org.tootto.behavior.BottomBehavior;
 import org.tootto.entity.Account;
 import org.tootto.entity.Notification;
 import org.tootto.fragment.EditDialogFragment;
+import org.tootto.fragment.FirstPagingFragment;
 import org.tootto.fragment.FragmentSecond;
 import org.tootto.fragment.FirstTransFragment;
 import org.tootto.listener.TabLayoutReSelectListener;
@@ -75,10 +76,10 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         accountAvatar = headerView.findViewById(R.id.account_avatar);
         accountHeader = headerView.findViewById(R.id.account_header);
 
-        fragmentList.add(FirstTransFragment.newInstance());
+        fragmentList.add(FirstTransFragment.newInstance(FirstPagingFragment.Kind.HOME));
         fragmentList.add(NotificationFragment.newInstance());
-        fragmentList.add(FragmentSecond.newInstance());
-        fragmentList.add(FragmentSecond.newInstance());
+        fragmentList.add(FirstTransFragment.newInstance(FirstPagingFragment.Kind.PUBLIC_LOCAL));
+        fragmentList.add(FirstTransFragment.newInstance(FirstPagingFragment.Kind.PUBLIC_FEDERATED));
 
         fetchUserInfo();
 

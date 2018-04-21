@@ -60,4 +60,11 @@ public interface MastodonApi {
             @Query("since_id") String sinceId,
             @Query("limit") Integer limit);
 
+    @GET("api/v1/timelines/public")
+    Call<List<Status>> publicTimeline(
+            @Query("local") Boolean local,
+            @Query("max_id") String maxId,
+            @Query("since_id") String sinceId,
+            @Query("limit") Integer limit);
+
 }
