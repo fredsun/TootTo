@@ -1,13 +1,10 @@
 package org.tootto.activity;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -40,6 +37,7 @@ import org.tootto.fragment.FirstTransFragment;
 import org.tootto.listener.TabLayoutReSelectListener;
 import org.tootto.ui.view.GlideRoundTransform;
 import org.tootto.ui.view.NonSwipeableViewPager;
+import org.tootto.util.ThemeUtils;
 
 import java.util.ArrayList;
 
@@ -95,27 +93,22 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
                 return fragmentList.size();
             }
 
-            @Nullable
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position){
-                    case 0:
-                        return "0";
-                    case 1:
-                        return "1";
-                    case 2:
-                        return "2";
-                    case 3:
-                        return "3";
-                    default:
-                        return "0";
-
-                }
-            }
         });
+
+        int tabIcons[]={
+                R.drawable.ic_home_black_24dp,
+                R.drawable.ic_notifications_black_24dp,
+                R.drawable.ic_timeline_black_24dp,
+                R.drawable.ic_public_black_24dp
+        };
 
         mainTab = findViewById(R.id.main_tab);
         mainTab.setupWithViewPager(mainPager);
+        for (int i=0; i<4; i++){
+            TabLayout.Tab tab = mainTab.getTabAt(i);
+            tab.setIcon(tabIcons[i]);
+        }
+        tintTab(mainTab.getTabAt(0), true);
         mainTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -124,11 +117,12 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
                 }else {
                     canScroll = false;
                 }
+                tintTab(tab, true);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                tintTab(tab, false);
             }
 
             @Override
@@ -143,6 +137,11 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
         mBottomBehavior = (BottomBehavior)((CoordinatorLayout.LayoutParams) mainTab.getLayoutParams()).getBehavior();
         mBottomBehavior.setOnCanScrollCallback(this);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void tintTab(TabLayout.Tab tab, boolean tint) {
+        int color = (tint) ? R.attr.tab_icon_selected_tint : R.attr.tab_icon_unselected_tint;
+        ThemeUtils.setTabColor(this, tab.getIcon(), color);
     }
 
     private void fetchUserInfo() {
