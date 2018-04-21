@@ -522,7 +522,11 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
 
     @Override
     public void onViewTag(String tag) {
-
+        if (kind == Kind.TAG && hashtagOrId.equals(tag)) {
+            // If already viewing a tag page, then ignore any request to view that tag again.
+            return;
+        }
+        super.viewTag(tag);
     }
 
     @Override

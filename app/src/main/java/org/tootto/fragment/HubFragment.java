@@ -22,4 +22,11 @@ public class HubFragment extends BaseFragment{
 //        intent.putExtra("url", status.getActionableStatus().url);
 //        startActivity(intent);
     }
+
+    protected void viewTag(String tag) {
+        Log.i("HubFragment", "tag"+tag);
+//        Intent intent = new Intent(getContext(), ViewTagActivity.class);
+//        intent.putExtra("hashtag", tag);
+//        startActivity(intent);
+    }
 }
