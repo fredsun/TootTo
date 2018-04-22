@@ -3,6 +3,7 @@ package org.tootto.fragment;
 import android.arch.core.util.Function;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,7 +65,7 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
     TitleBehaviorAnim mTitleAnim;
     boolean isAnimInit = false;
     boolean isTitleHide = false;
-    Toolbar toolbarTitle;
+    ConstraintLayout titleView;
     String tag = "FirstPagingFragment";
     private int mSlop;
     FrameInterceptLayout intercept_layout;
@@ -163,12 +164,14 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
         recyclerFirstFragment.setAdapter(timeLineAdapter);
         recyclerFirstFragment.setLayoutManager(mLinearLayoutManager);
         recyclerFirstFragment.setScrollViewCallbacks(this);
-        toolbarTitle = view.findViewById(R.id.detail_toolbar);
+        titleView = view.findViewById(R.id.title_view);
         ViewConfiguration vc = ViewConfiguration.get(getContext());
         mSlop = vc.getScaledTouchSlop();
         topId = null;
         bottomId = null;
-
+        if (!isAnimInit){
+            mTitleAnim = new TitleBehaviorAnim(titleView);
+        }
         return view;
     }
 
@@ -340,9 +343,7 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (!isAnimInit){
-            mTitleAnim = new TitleBehaviorAnim(toolbarTitle);
-        }
+
         request();
         endlessOnScrollListener = new EndlessOnScrollListener(mLinearLayoutManager) {
             @Override

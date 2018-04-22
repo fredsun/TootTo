@@ -23,6 +23,6 @@
 
     </org.tootto.ui.view.observablescrollview.FrameInterceptLayout>
     <include
-        android:id="@+id/detail_toolbar"
+        android:id="@+id/title_view"
         layout="@layout/toolbar_fragment" />
 </FrameLayout>
