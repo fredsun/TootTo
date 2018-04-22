@@ -15,4 +15,5 @@
     <color name="colorBlue">#488FD3</color>
     <color name="colorGrassGreen">#6CB8A9</color>
     <color name="colorIconUnselected">#D4D4D4</color>
+    <color name="colorActionBarForeground">#40FFFFFF</color>
 </resources>
