@@ -161,6 +161,7 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
 //        if (parentFragment instanceof ObservableScrollViewCallbacks) {
 //            recyclerFirstFragment.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentFragment);
 //        }
+        recyclerFirstFragment.setHasFixedSize(true);
         recyclerFirstFragment.setAdapter(timeLineAdapter);
         recyclerFirstFragment.setLayoutManager(mLinearLayoutManager);
         recyclerFirstFragment.setScrollViewCallbacks(this);
