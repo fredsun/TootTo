@@ -4,6 +4,7 @@ import android.arch.core.util.Function;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import org.tootto.BuildConfig;
 import org.tootto.R;
 import org.tootto.activity.MainActivity;
+import org.tootto.activity.SettingActivity;
 import org.tootto.adapter.FirstFragmentAdapter;
 import org.tootto.adapter.TimeLineAdapter;
 import org.tootto.anim.TitleBehaviorAnim;
@@ -166,6 +168,13 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
         recyclerFirstFragment.setLayoutManager(mLinearLayoutManager);
         recyclerFirstFragment.setScrollViewCallbacks(this);
         titleView = view.findViewById(R.id.title_view);
+        titleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialogFragment = SearchHistoryFragment.newInstance(R.string.restart_confirm_title);
+                dialogFragment.show(getActivity().getSupportFragmentManager(), "restartConfirmDialog");
+            }
+        });
         ViewConfiguration vc = ViewConfiguration.get(getContext());
         mSlop = vc.getScaledTouchSlop();
         topId = null;

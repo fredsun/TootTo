@@ -168,7 +168,51 @@ xmlns:tools="http://schemas.android.com/tools"
         * BOTTOM
           * 上拉加载
           * 第一次进入
-    10. 
+    10. content 的读取[参考](https://www.jianshu.com/p/d3bef8449960)
+          * 原字段为
+          ```xmlns
+            "content": "<p><a href=\"https://mao.daizhige.org/tags/%E8%AF%BB%E4%B9%A6\" class=\"mention hashtag\" rel=\"tag\">#<span>读书</span></a> 以前学《茅屋为秋风所破歌》感觉诗人挺惨的，现在读到&quot;南村群童欺我老无力，忍能对面为盗贼，公然抱茅入竹去，唇焦口燥呼不得&quot;突然感觉还蛮好玩的，南村的穷小子看到这位老爷爷，嘴一咧:&quot;欸~老头，追不上，哈哈，溜了溜了&quot;，很有趣。</p>",       
+          ```
+          * android 自带 android:autoLink="xxx", 但下划线, 超链接字体颜色, 特殊超链接跳转@的识别和打开方式, 默认的都无法被控制
+          * autoLink 的原理是在
+          * setText 时
+              * 通过 Linkify 的正则表达式将 text 根据 autoLink 类型再按照自己的规则生成
+                  * 新的 URLSpan,
+                      * URLSpan 的 onClick方法控制 Intent 跳转
+                  * URLSpan 的父类 ClickSpan 的 updateDrawState 控制下划线和颜色
+          * 另外, 不用 autoLink 通过 setMovementMethod 实现超链接的点击
+          * @ 和 #的跳转交给 BaseFragment
+          * emoji 鉴于可能提供 4.4 KitKat 之前版本的支持, 采用 glide 外部加载而不是 textview 默认自带的解析(其实默认的已经很棒了).
+          * 切记 view.setMovementMethod
+          * 总体逻辑
+          * setText中
+              * LinkHelper -> 替代 Linkify, 区分@,#,网址.三类特殊 text(伪正则)
+                  * CustomURLSpan -> 取代 URLSpan
+                      *  onClick 中跳给 LinkHelper处理(再接口转给上级View)
+                  * 重写 updateDrawState, 覆盖掉 setUnderlineText(false).不用下划线
+                  feat: FirstPagingFragment 实现了 StatusActionListener, 并将listener里具体的操作交给新的父类 HubFragment.
+          * 坑:
+          TextView 中:
+            1. 默认情况下，点击 ClickableSpan 的文本时会同时触发绑定在 TextView 的监听事件；
+            2. 默认情况下，点击 ClickableSpan 的文本之外的文本时，TextView 会消费该事件，而不会传递给父 View；
+
+          * 解决:
+            1. 重写 textview 的 onTouchListener, 将原 LinkMovementMethod 中的onTouchEvent 代码移过来
+            2. textview 注册和外部一样的点击事件
+            3. 后期优化参考
+            4. https://stackoverflow.com/questions/14579785/can-i-disable-the-scrolling-in-textview-when-using-linkmovementmethod
+            5. https://stackoverflow.com/questions/16792963/android-clickablespan-intercepts-the-click-event
+            6. https://blog.csdn.net/zhaizu/article/details/51038113
+            7. https://www.jianshu.com/p/413184996fc8
+            8. http://blog.cgsdream.org/2017/03/22/textview-highlight-clickablespan/
+            9. https://stackoverflow.com/questions/8558732/listview-textview-with-linkmovementmethod-makes-list-item-unclickable
+            10. https://www.jianshu.com/p/d3bef8449960
+      11. recyclverView 添加 setHasFixedSize(true), 确保itemInsert时调用的layoutchildren(), 而不是requestLayout()去重新计算layout.
+
+24. 搜索页面
+  * <主页面>点击搜索框 -> 打开透明的<DialogFragment>输入搜索内容 -> 打开<搜索结果>页面
+  * 即搜索 editText 和搜索历史是分开的
+  * 搜索历史页面用DialogFragment通过```getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);```使 alertDialog 里的 editText 能打开软键盘[参考](https://blog.csdn.net/asdfasfasfs/article/details/77503158)
 
 
 
