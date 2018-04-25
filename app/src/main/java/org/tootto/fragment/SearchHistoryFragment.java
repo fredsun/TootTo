@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +26,9 @@ import org.tootto.R;
 import org.tootto.adapter.SearchHistoryAdapter;
 import org.tootto.dao.SearchHistory;
 import org.tootto.dao.SearchHistoryDao;
+import org.tootto.listener.ItemTouchHelperListener;
 import org.tootto.listener.SearchActionListener;
+import org.tootto.listener.SimpleItemTouchHelperCallback;
 import org.tootto.util.ListUtils;
 
 import java.util.List;
@@ -37,7 +40,7 @@ import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class SearchHistoryFragment extends DialogFragment implements SearchActionListener {
+public class SearchHistoryFragment extends DialogFragment implements SearchActionListener, ItemTouchHelperListener {
     RecyclerView recycler_viewSearchHistory;
     SearchHistoryAdapter searchHistoryAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -105,6 +108,9 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
 
             }
         });
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(this);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recycler_viewSearchHistory);
         return inflate;
     }
 
@@ -195,6 +201,11 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
 
     @Override
     public void onItemClick(int position) {
+
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
         deleteData(position);
     }
 }

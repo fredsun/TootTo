@@ -1,12 +1,14 @@
 package org.tootto.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.tootto.R;
 import org.tootto.dao.SearchHistory;
+import org.tootto.listener.ItemTouchHelperListener;
 import org.tootto.listener.SearchActionListener;
 
 import java.util.ArrayList;
