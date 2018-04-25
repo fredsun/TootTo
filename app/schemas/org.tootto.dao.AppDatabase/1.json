@@ -1,0 +1,39 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "feb13e21322e826106e5897893c211d4",
+    "entities": [
+      {
+        "tableName": "search_history",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`historyid` TEXT NOT NULL, `historytext` TEXT, PRIMARY KEY(`historyid`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "historyid",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "historytext",
+            "columnName": "historytext",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "historyid"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"feb13e21322e826106e5897893c211d4\")"
+    ]
+  }
+}
