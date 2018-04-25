@@ -1,10 +1,10 @@
 package org.tootto.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -23,6 +23,8 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import org.tootto.App;
 import org.tootto.R;
+import org.tootto.activity.MainActivity;
+import org.tootto.activity.SearchResultActivity;
 import org.tootto.adapter.SearchHistoryAdapter;
 import org.tootto.dao.SearchHistory;
 import org.tootto.dao.SearchHistoryDao;
@@ -200,8 +202,13 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
     }
 
     @Override
-    public void onItemClick(int position) {
-
+    public void onItemClick(String selectedText, int position) {
+        Intent intent = new Intent(getActivity(), SearchResultActivity.class);
+        Bundle argument = new Bundle();
+        argument.putString("search_text", selectedText);
+        intent.putExtras(argument);
+        startActivity(intent);
+        Log.i("fragment","click");
     }
 
     @Override

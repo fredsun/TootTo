@@ -38,6 +38,7 @@
         </activity>
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.OauthWebViewActivity"/>
+        <activity android:name=".activity.SearchResultActivity"/>
 
     </application>
 
