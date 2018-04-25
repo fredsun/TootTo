@@ -18,7 +18,6 @@ public class SearchHistoryAdapter extends RecyclerView.Adapter {
 
     public void insertData(int position, SearchHistory searchHistory){
         data.add(position, searchHistory);
-        notifyItemInserted(position);
     }
 
     public void removeData(int position){

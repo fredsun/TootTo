@@ -82,88 +82,13 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
 
         searchHistoryAdapter = new SearchHistoryAdapter(this);
         linearLayoutManager = new LinearLayoutManager(getContext());
+        //RecyclerView 倒序
         linearLayoutManager.setStackFromEnd(true);
         linearLayoutManager.setReverseLayout(true);
         recycler_viewSearchHistory.setAdapter(searchHistoryAdapter);
         recycler_viewSearchHistory.setLayoutManager(linearLayoutManager);
         recycler_viewSearchHistory.setHasFixedSize(true);
-//        ArrayList<SearchHistory> searchHistories = new ArrayList<SearchHistory>();
-//        SearchHistory searchHistory = new SearchHistory();
-//        searchHistory.searchHistoryText="aaa";
-//        searchHistory.id=111;
-//        searchHistories.add(searchHistory);
-//        searchHistories.add(searchHistory);
-//        searchHistories.add(searchHistory);
-//        searchHistoryAdapter.setSearchHistoryData(searchHistories);
-//        searchHistoryAdapter.notifyDataSetChanged();
-
-//        searchHistoryDao.queryAll()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(searchHistories ->{
-//                    if (!ListUtils.isEmpty(searchHistories)){
-//                        searchHistoryAdapter.setData(searchHistories);
-//                    }
-//                }, error ->{
-//                    Log.i("fragment","queryError");
-//                },()->{}
-//                );
-        searchHistoryDao.queryAll()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<SearchHistory>>() {
-                    @Override
-                    public void onSubscribe(Subscription s) {
-                        s.request(Long.MAX_VALUE);
-                    }
-
-                    @Override
-                    public void onNext(List<SearchHistory> searchHistories) {
-                        if (!ListUtils.isEmpty(searchHistories)){
-                        searchHistoryAdapter.setData(searchHistories);
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.i("fragment","queryError");
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-
-
-//        Flowable.create(new FlowableOnSubscribe<List>(){
-//            @Override
-//            public void subscribe(FlowableEmitter<List> e) throws Exception {
-//                List<SearchHistory> searchHistories;
-//                searchHistories = searchHistoryDao.queryAll();
-//                e.onNext(searchHistories);
-//                e.onComplete();
-//            }
-//        }, BackpressureStrategy.BUFFER)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List>() {
-//            @Override
-//            public void onSubscribe(Subscription s) {
-//                s.request(Long.MAX_VALUE);
-//                //subscription = s;
-//            }
-//            @Override
-//            public void onNext(List list) {
-//                if (!ListUtils.isEmpty(list)){
-//                    searchHistoryAdapter.setData(list);
-//                }
-//            }
-//            @Override
-//            public void onError(Throwable t) {
-//            }
-//            @Override
-//            public void onComplete() {}
-//        });
+        refreshData();
         recycler_viewSearchHistory.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -180,48 +105,23 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
 
             }
         });
-        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
-        defaultItemAnimator.setAddDuration(1000);
-        defaultItemAnimator.setRemoveDuration(1000);
-        recycler_viewSearchHistory.setItemAnimator(defaultItemAnimator);
-
-
         return inflate;
     }
 
-//    private void insertData(String s) {
-//        SearchHistory searchHistory = new SearchHistory();
-//        searchHistory.searchHistoryText = s;
-//        Flowable.create(new FlowableOnSubscribe<List>(){
-//            @Override
-//            public void subscribe(FlowableEmitter<List> e) throws Exception {
-//                searchHistoryDao.insertSearchHistory(searchHistory);
-//                List list = searchHistoryDao.queryAll();
-//                e.onNext(list);
-//                e.onComplete();
-//            }
-//        }, BackpressureStrategy.BUFFER)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<List>() {
-//            @Override
-//            public void onSubscribe(Subscription s) {
-//                s.request(Long.MAX_VALUE);
-//                //subscription = s;
-//            }
-//            @Override
-//            public void onNext(List list) {
-//                if (!ListUtils.isEmpty(list)){
-//                    searchHistoryAdapter.setData(list);
-//                }
-//            }
-//            @Override
-//            public void onError(Throwable t) {
-//            }
-//            @Override
-//            public void onComplete() {}
-//        });
-//
-//    }
+    // Room 在数据改变时自动发出Flowable 进入 onNext 方法
+    private void refreshData() {
+        searchHistoryDao.queryAll()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(searchHistories ->{
+            if (!ListUtils.isEmpty(searchHistories)){
+                searchHistoryAdapter.setData(searchHistories);
+            }
+        }, error ->{
+            Log.i("fragment","queryError");
+        },()->{}
+        );
+    }
 
     private void insertData(String s) {
 
@@ -244,7 +144,8 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
             }
         }, BackpressureStrategy.BUFFER)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<SearchHistory>() {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SearchHistory>() {
             @Override
             public void onSubscribe(Subscription s) {
                 s.request(Long.MAX_VALUE);
@@ -267,10 +168,7 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
         Flowable.create(new FlowableOnSubscribe<Integer>(){
             @Override
             public void subscribe(FlowableEmitter<Integer> e) throws Exception {
-
                 int i = searchHistoryDao.deleteHistory(searchHistoryAdapter.getData().get(position));
-                Log.i("delete", "id"+i);
-//                List list = searchHistoryDao.queryAllList();
                 e.onNext(i);
                 e.onComplete();
             }
@@ -280,7 +178,6 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
             @Override
             public void onSubscribe(Subscription s) {
                 s.request(Long.MAX_VALUE);
-                //subscription = s;
             }
             @Override
             public void onNext(Integer i) {
