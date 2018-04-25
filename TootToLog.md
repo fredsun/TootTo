@@ -213,6 +213,9 @@ xmlns:tools="http://schemas.android.com/tools"
   * <主页面>点击搜索框 -> 打开透明的<DialogFragment>输入搜索内容 -> 打开<搜索结果>页面
   * 即搜索 editText 和搜索历史是分开的
   * 搜索历史页面用DialogFragment通过```getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);```使 alertDialog 里的 editText 能打开软键盘[参考](https://blog.csdn.net/asdfasfasfs/article/details/77503158)
+  * 搜索历史用 Room 存储, 数据库的操作使用 rxjava2
+  * 通过 ItemTouchHelper, 添加 RecyclerView 对侧滑删除的支持.TODO 侧滑事件的监听到底由 activity 还是 adapter 还是viewholder 执行?
+  * 点击软键盘确认和顶部搜索按钮, 对 editText 的内容判空后存入数据库和打开新的 Activity
 
 
 
