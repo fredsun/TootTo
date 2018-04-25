@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize">
         <EditText
-            android:id="@+id/textView2"
+            android:id="@+id/et_searchHistory"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="6dp"
@@ -25,11 +25,12 @@
             android:background="@color/colorShineWhite"
             android:hint="@string/search"
             android:textColorHint="@color/text_gray"
-
+            android:inputType="text"
+            android:imeOptions="actionSearch"
              />
 
         <ImageView
-            android:id="@+id/arrow_back"
+            android:id="@+id/iv_arrow_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -39,7 +40,7 @@
             app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp" />
 
         <ImageView
-            android:id="@+id/search_confirm"
+            android:id="@+id/iv_search_confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
