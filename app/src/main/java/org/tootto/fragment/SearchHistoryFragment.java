@@ -8,16 +8,20 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -69,8 +73,17 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
         iv_search_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = et_searchHistory.getText().toString().trim();
-                insertData(s);
+                insertData(et_searchHistory.getText().toString().trim());
+            }
+        });
+        et_searchHistory.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_UNSPECIFIED){
+                    insertData(et_searchHistory.getText().toString().trim());
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -132,7 +145,9 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
     }
 
     private void insertData(String s) {
-
+        if (TextUtils.isEmpty(s)){
+            return;
+        }
 
         Flowable.create(new FlowableOnSubscribe<SearchHistory>(){
             @Override
@@ -208,6 +223,7 @@ public class SearchHistoryFragment extends DialogFragment implements SearchActio
         argument.putString("search_text", selectedText);
         intent.putExtras(argument);
         startActivity(intent);
+        dismiss();
         Log.i("fragment","click");
     }
 
