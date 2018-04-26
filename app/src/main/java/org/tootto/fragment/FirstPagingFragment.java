@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -167,6 +169,9 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
         recyclerFirstFragment.setAdapter(timeLineAdapter);
         recyclerFirstFragment.setLayoutManager(mLinearLayoutManager);
         recyclerFirstFragment.setScrollViewCallbacks(this);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.custom_divider));
+        recyclerFirstFragment.addItemDecoration(dividerItemDecoration);
         titleView = view.findViewById(R.id.title_view);
         titleView.setOnClickListener(new View.OnClickListener() {
             @Override
