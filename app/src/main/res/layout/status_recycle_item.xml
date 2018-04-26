@@ -2,20 +2,19 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_status_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorShineWhite"
-    android:id="@+id/layout_status_container">
+    android:background="@color/colorShineWhite">
 
     <TextView
         android:id="@+id/tv_status_rebloger_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="13dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="XXX转发了" />
 
@@ -34,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
-
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toTopOf="@+id/iv_status_tooter_avatar"
         tools:text="tooterDisplayName" />
@@ -43,7 +42,6 @@
         android:id="@+id/tv_status_tooter_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         app:layout_constraintStart_toEndOf="@+id/tv_status_tooter_display_name"
         app:layout_constraintTop_toTopOf="@+id/tv_status_tooter_display_name"
         tools:text="\@tooteruser_name" />
@@ -55,7 +53,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-android:focusable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toBottomOf="@+id/tv_status_tooter_display_name"
@@ -88,6 +86,7 @@ android:focusable="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:paddingBottom="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
@@ -98,8 +97,9 @@ android:focusable="true"
             android:layout_width="24dp"
             android:layout_height="24dp"
 
-            android:src="@drawable/ic_reply_black_24dp"
-            android:background="@color/colorShineWhite"/>
+            android:background="@color/colorShineWhite"
+            android:src="@drawable/ic_reply_black_24dp" />
+
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -109,7 +109,8 @@ android:focusable="true"
             android:id="@+id/ibtn_status_reblog"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@color/colorShineWhite"/>
+            android:background="@color/colorShineWhite" />
+
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -119,9 +120,9 @@ android:focusable="true"
             android:id="@+id/ibtn_status_favourite"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_favorite_black_24dp"
             android:background="@color/colorShineWhite"
-            />
+            android:src="@drawable/ic_favorite_black_24dp" />
+
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -131,10 +132,20 @@ android:focusable="true"
             android:id="@+id/ibtn_status_more"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_more_horiz_black_24dp"
             android:background="@color/colorShineWhite"
-            />
+            android:src="@drawable/ic_more_horiz_black_24dp" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivReblogIcon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_status_rebloger_name"
+        app:layout_constraintEnd_toStartOf="@+id/tv_status_rebloger_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_status_rebloger_name"
+        app:srcCompat="@drawable/ic_action_reblog" />
 
 </android.support.constraint.ConstraintLayout>
