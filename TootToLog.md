@@ -216,6 +216,10 @@ xmlns:tools="http://schemas.android.com/tools"
   * 搜索历史用 Room 存储, 数据库的操作使用 rxjava2
   * 通过 ItemTouchHelper, 添加 RecyclerView 对侧滑删除的支持.TODO 侧滑事件的监听到底由 activity 还是 adapter 还是viewholder 执行?
   * 点击软键盘确认和顶部搜索按钮, 对 editText 的内容判空后存入数据库和打开新的 Activity
+  * 搜索结果分为
+    * account
+    * tag
+  * SearchResultActivity 页面只会被带着搜索文本的 intent 打开. 且因为 DialogFragment 的 SearchHistory 的缘故, s所以 SearchResultActyivity 使用 singletop模式启动.
 
 
 
