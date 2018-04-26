@@ -18,6 +18,7 @@ package org.tootto.network;
 import org.tootto.entity.AccessToken;
 import org.tootto.entity.Account;
 import org.tootto.entity.AppCredentials;
+import org.tootto.entity.SearchResults;
 import org.tootto.entity.Status;
 
 import java.util.List;
@@ -67,4 +68,6 @@ public interface MastodonApi {
             @Query("since_id") String sinceId,
             @Query("limit") Integer limit);
 
+    @GET("api/v1/search")
+    Call<SearchResults> search(@Query("q") String q, @Query("resolve") Boolean resolve);
 }
