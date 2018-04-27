@@ -14,6 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textSize="13dp"
+        android:textColor="@color/text_gray"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="XXX转发了" />
@@ -67,17 +68,6 @@
         app:layout_constraintTop_toTopOf="@+id/tv_status_tooter_user_name"
         tools:text="12:34" />
 
-    <ImageView
-        android:id="@+id/iv_status_attachment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_status_content"
-        app:srcCompat="@drawable/avatar_default" />
 
     <LinearLayout
         android:id="@+id/relativeLayout"
@@ -86,11 +76,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:paddingBottom="16dp"
         android:orientation="horizontal"
+        android:paddingBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_status_tooter_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/iv_status_attachment">
+        app:layout_constraintTop_toBottomOf="@+id/status_media_preview_container">
 
         <ImageButton
             android:id="@+id/ibtn_status_reply"
@@ -147,5 +137,150 @@
         app:layout_constraintEnd_toStartOf="@+id/tv_status_rebloger_name"
         app:layout_constraintTop_toTopOf="@+id/tv_status_rebloger_name"
         app:srcCompat="@drawable/ic_action_reblog" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/status_media_preview_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_status_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_status_content">
+
+        <ImageView
+            android:id="@+id/status_media_preview_0"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/status_media_preview_height"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@+id/status_media_preview_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/status_media_preview_1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/status_media_preview_height"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/status_media_preview_0"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+
+        <ImageView
+            android:id="@+id/status_media_preview_2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/status_media_preview_height"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toStartOf="@+id/status_media_preview_3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/status_media_preview_0"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/status_media_preview_3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/status_media_preview_height"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/status_media_preview_2"
+            app:layout_constraintTop_toBottomOf="@+id/status_media_preview_1"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/status_media_overlay_0"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_0"
+            app:layout_constraintEnd_toEndOf="@+id/status_media_preview_0"
+            app:layout_constraintStart_toStartOf="@+id/status_media_preview_0"
+            app:layout_constraintTop_toTopOf="@+id/status_media_preview_0"
+            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/status_media_overlay_1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_1"
+            app:layout_constraintEnd_toEndOf="@+id/status_media_preview_1"
+            app:layout_constraintStart_toStartOf="@+id/status_media_preview_1"
+            app:layout_constraintTop_toTopOf="@+id/status_media_preview_1"
+            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/status_media_overlay_2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_2"
+            app:layout_constraintEnd_toEndOf="@+id/status_media_preview_2"
+            app:layout_constraintStart_toStartOf="@+id/status_media_preview_2"
+            app:layout_constraintTop_toTopOf="@+id/status_media_preview_2"
+            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/status_media_overlay_3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="@+id/status_media_preview_3"
+            app:layout_constraintEnd_toEndOf="@+id/status_media_preview_3"
+            app:layout_constraintStart_toStartOf="@+id/status_media_preview_3"
+            app:layout_constraintTop_toTopOf="@+id/status_media_preview_3"
+            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/status_sensitive_media_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:contentDescription="@null"
+            android:padding="5dp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/status_media_preview_container"
+            app:layout_constraintTop_toTopOf="@+id/status_media_preview_container"
+            app:srcCompat="@drawable/ic_remove_red_eye_24dp" />
+
+        <TextView
+            android:id="@+id/status_sensitive_media_warning"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/background_window_dark"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/status_media_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:textSize="16dp"
+            android:visibility="gone" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
