@@ -26,6 +26,11 @@ class StatusViewHolder extends AbstractStatusBaseViewHolder{
         ivReblogIcon = itemView.findViewById(R.id.ivReblogIcon);
     }
 
+    @Override
+    protected int getMediaPreviewHeight(Context context) {
+        return context.getResources().getDimensionPixelSize(R.dimen.status_media_preview_height);
+    }
+
     private void setReblogerName(String name){
 
         Context context = statusReblogerName.getContext();
@@ -42,6 +47,7 @@ class StatusViewHolder extends AbstractStatusBaseViewHolder{
     private void hideReblogerName(){
         if (statusReblogerName != null){
             statusReblogerName.setVisibility(View.GONE);
+            ivReblogIcon.setVisibility(View.GONE);
         }
     }
 
