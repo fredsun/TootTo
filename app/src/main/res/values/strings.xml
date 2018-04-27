@@ -20,6 +20,10 @@
     <string name="no_search_result">暂无搜索结果</string>
     <string name="status_boosted_format">%s 转发了</string>
     <string name="status_username_format">\@%s</string>
+    <string name="status_sensitive_media_template" translatable="false">&lt;b>%1$s&lt;/b>&lt;br>%2$s</string>
+    <string name="status_sensitive_media_title">Sensitive content</string>
+    <string name="status_media_hidden_title">Media hidden</string>
+    <string name="status_sensitive_media_directions">Click to view</string>
     <string name="abbreviated_in_years">in %dy</string>
     <string name="abbreviated_in_days">in %dd</string>
     <string name="abbreviated_in_hours">in %dh</string>
