@@ -6,8 +6,11 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.widget.ImageView;
+
+import org.tootto.R;
 
 public class ThemeUtils {
     public static @ColorInt
@@ -22,5 +25,9 @@ public class ThemeUtils {
 
     public static void setTabColor(Context context, Drawable drawable, @AttrRes int attribute) {
         drawable.setColorFilter(getColor(context, attribute), PorterDuff.Mode.SRC_IN);
+    }
+
+    public static void setTintColor(Context context, Drawable drawable,   int color) {
+        drawable.setColorFilter(ContextCompat.getColor(context, color), PorterDuff.Mode.SRC_IN);
     }
 }
