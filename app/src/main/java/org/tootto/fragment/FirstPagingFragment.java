@@ -514,8 +514,8 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
     }
 
     @Override
-    public void onViewMedia(String[] urls, int index, Attachment.Type type, View view) {
-
+    public void onViewMedia(String[] urls, int urlIndex, Attachment.Type type, View view) {
+        super.viewMedia(urls, urlIndex, type, view);
     }
 
     @Override
