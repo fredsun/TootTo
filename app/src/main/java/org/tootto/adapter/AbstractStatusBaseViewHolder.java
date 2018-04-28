@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.varunest.sparkbutton.SparkButton;
+import com.varunest.sparkbutton.SparkEventListener;
 
 import org.tootto.R;
 import org.tootto.entity.Attachment;
@@ -52,7 +54,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
     private TextView statusContent;
     private ImageButton statusReply;
     private MastodonReblogButton statusReblog;
-    private ImageButton statusFavourite;
+    private SparkButton statusFavourite;
     private ConstraintLayout container;
     private ImageView mediaPreview0;
     private ImageView mediaPreview1;
@@ -66,6 +68,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
     private ImageView sensitiveMediaShow;
     private TextView mediaLabel;
     private boolean reblogged;
+    private boolean favourited;
 
     AbstractStatusBaseViewHolder(View itemView) {
         super(itemView);
@@ -77,6 +80,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         statusReply = itemView.findViewById(R.id.ibtn_status_reply);
         statusReblog = itemView.findViewById(R.id.ibtn_status_reblog);
         reblogged = false;
+        favourited = false;
         statusFavourite = itemView.findViewById(R.id.ibtn_status_favourite);
         container = itemView.findViewById(R.id.layout_status_container);
         mediaPreview0 = itemView.findViewById(R.id.status_media_preview_0);
@@ -139,6 +143,11 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         statusReblog.setFlag(reblogged);
     }
 
+    private void setFavourited(boolean favourited) {
+        this.favourited = favourited;
+        statusFavourite.setChecked(favourited);
+    }
+
     private void setUpClickViews(StatusActionListener listener, String accountId) {
         statusTooterAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,23 +175,23 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         });
 
 
-//        favouriteButton.setEventListener(new SparkEventListener() {
-//            @Override
-//            public void onEvent(ImageView button, boolean buttonState) {
-//                int position = getAdapterPosition();
-//                if (position != RecyclerView.NO_POSITION) {
-//                    listener.onFavourite(!favourited, position);
-//                }
-//            }
-//
-//            @Override
-//            public void onEventAnimationEnd(ImageView button, boolean buttonState) {
-//            }
-//
-//            @Override
-//            public void onEventAnimationStart(ImageView button, boolean buttonState) {
-//            }
-//        });
+        statusFavourite.setEventListener(new SparkEventListener() {
+            @Override
+            public void onEvent(ImageView button, boolean buttonState) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onFavourite(!favourited, position);
+                }
+            }
+
+            @Override
+            public void onEventAnimationEnd(ImageView button, boolean buttonState) {
+            }
+
+            @Override
+            public void onEventAnimationStart(ImageView button, boolean buttonState) {
+            }
+        });
 //        moreButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -404,6 +413,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         setStatusTooterAvatar(statusViewData.getAvatar());
         setStatusContent(statusViewData.getContent(), statusViewData.getMentions(), statusViewData.getEmojis(), listener);
         setReblogged(statusViewData.isReblogged());
+        setFavourited(statusViewData.isFavourited());
         setUpClickViews(listener, statusViewData.getSenderId());
         Attachment[] attachments = statusViewData.getAttachments();
         boolean sensitive = statusViewData.isSensitive();

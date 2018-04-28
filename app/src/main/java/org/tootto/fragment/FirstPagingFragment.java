@@ -597,7 +597,37 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
 
     @Override
     public void onFavourite(boolean favourite, int position) {
+        final Status status = statuses.get(position).getAsRight();
 
+        super.favouriteWithCallback(status, favourite, new Callback<Status>() {
+            @Override
+            public void onResponse(@NonNull Call<Status> call, @NonNull Response<Status> response) {
+
+                if (response.isSuccessful()) {
+                    status.favourited = favourite;
+
+                    if (status.reblog != null) {
+                        status.reblog.favourited = favourite;
+                    }
+
+                    Pair<StatusViewData.Concrete, Integer> actual =
+                            findStatusAndPosition(position, status);
+                    if (actual == null) return;
+
+                    StatusViewData newViewData = new StatusViewData
+                            .Builder(actual.first)
+                            .setFavourited(favourite)
+                            .createStatusViewData();
+                    statuses.setPairedItem(actual.second, newViewData);
+                    timeLineAdapter.changeItem(actual.second, newViewData, false);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Status> call, @NonNull Throwable t) {
+                Log.d(TAG, "Failed to favourite status " + status.id, t);
+            }
+        });
     }
 
     @Override
