@@ -15,6 +15,18 @@
         <item name="tab_icon_unselected_tint">@color/colorIconUnselected</item>
     </style>
 
+    <style name="AppTheme.Account.AppBarLayout" parent="ThemeOverlay.AppCompat">
+        <item name="android:textColorPrimary">@color/colorShineWhite</item>
+        <item name="android:textColorSecondary">@color/foreground_window_light</item>
+        <item name="android:textColorTertiary">@color/colorBackground</item>
+    </style>
+
+    <style name="AppTheme.Account.ToolbarPopupTheme.Dark" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@color/colorShineWhite</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
 
 
 </resources>

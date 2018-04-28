@@ -24,6 +24,9 @@
     <string name="status_sensitive_media_title">Sensitive content</string>
     <string name="status_media_hidden_title">Media hidden</string>
     <string name="status_sensitive_media_directions">Click to view</string>
+    <string name="error_media_download_permission">请给予媒体访问权限</string>
+    <string name="action_retry">重试</string>
+    <string name="download_image">Downloading %1$s</string>
     <string name="abbreviated_in_years">in %dy</string>
     <string name="abbreviated_in_days">in %dd</string>
     <string name="abbreviated_in_hours">in %dh</string>
