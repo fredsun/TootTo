@@ -11,6 +11,9 @@ import org.tootto.activity.ViewVideoActivity;
 import org.tootto.entity.Attachment;
 import org.tootto.entity.Status;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 public class HubFragment extends BaseFragment{
     protected void viewAccount(String id) {
         Log.i("HubFragment", "id"+id);
@@ -68,5 +71,17 @@ public class HubFragment extends BaseFragment{
                 break;
             }
         }
+    }
+
+    public void reblogWithCallback(Status status, boolean reblog, Callback<Status> callback) {
+        String id = status.getActionableId();
+
+        Call<Status> call;
+        if (reblog) {
+            call = mastodonApi.reblogStatus(id);
+        } else {
+            call = mastodonApi.unreblogStatus(id);
+        }
+        call.enqueue(callback);
     }
 }

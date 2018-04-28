@@ -2,10 +2,12 @@ package org.tootto.fragment;
 
 import android.arch.core.util.Function;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -444,6 +446,29 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
         return CollectionUtil.map(list, statusLifter);
     }
 
+    private @Nullable
+    Pair<StatusViewData.Concrete, Integer>
+    findStatusAndPosition(int position, Status status) {
+        StatusViewData.Concrete statusToUpdate;
+        int positionToUpdate;
+        StatusViewData someOldViewData = statuses.getPairedItem(position);
+
+        // Unlikely, but data could change between the request and response
+        if ((someOldViewData instanceof StatusViewData.Placeholder) ||
+                !((StatusViewData.Concrete) someOldViewData).getId().equals(status.id)) {
+            // try to find the status we need to update
+            int foundPos = statuses.indexOf(Either.<Placeholder, Status>right(status));
+            if (foundPos < 0) return null; // okay, it's hopeless, give up
+            statusToUpdate = ((StatusViewData.Concrete)
+                    statuses.getPairedItem(foundPos));
+            positionToUpdate = position;
+        } else {
+            statusToUpdate = (StatusViewData.Concrete) someOldViewData;
+            positionToUpdate = position;
+        }
+        return new Pair<>(statusToUpdate, positionToUpdate);
+    }
+
     private void onLoadMore(){
         sendFetchTimelineRequest(bottomId, null, FetchType.BOTTOM, -1);
     }
@@ -500,7 +525,36 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
 
     @Override
     public void onReblog(boolean reblog, int position) {
+        final Status status = statuses.get(position).getAsRight();
+        super.reblogWithCallback(status, reblog, new Callback<Status>() {
+            @Override
+            public void onResponse(@NonNull Call<Status> call, @NonNull Response<Status> response) {
 
+                if (response.isSuccessful()) {
+                    status.reblogged = reblog;
+
+                    if (status.reblog != null) {
+                        status.reblog.reblogged = reblog;
+                    }
+
+                    Pair<StatusViewData.Concrete, Integer> actual =
+                            findStatusAndPosition(position, status);
+                    if (actual == null) return;
+
+                    StatusViewData newViewData =
+                            new StatusViewData.Builder(actual.first)
+                                    .setReblogged(reblog)
+                                    .createStatusViewData();
+                    statuses.setPairedItem(actual.second, newViewData);
+                    timeLineAdapter.changeItem(actual.second, newViewData, false);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Status> call, @NonNull Throwable t) {
+                Log.d(TAG, "Failed to reblog status " + status.id, t);
+            }
+        });
     }
 
     @Override

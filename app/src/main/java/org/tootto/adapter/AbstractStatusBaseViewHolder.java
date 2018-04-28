@@ -65,6 +65,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
     private TextView sensitiveMediaWarning;
     private ImageView sensitiveMediaShow;
     private TextView mediaLabel;
+    private boolean reblogged;
 
     AbstractStatusBaseViewHolder(View itemView) {
         super(itemView);
@@ -75,6 +76,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         statusTooterAvatar = itemView.findViewById(R.id.iv_status_tooter_avatar);
         statusReply = itemView.findViewById(R.id.ibtn_status_reply);
         statusReblog = itemView.findViewById(R.id.ibtn_status_reblog);
+        reblogged = false;
         statusFavourite = itemView.findViewById(R.id.ibtn_status_favourite);
         container = itemView.findViewById(R.id.layout_status_container);
         mediaPreview0 = itemView.findViewById(R.id.status_media_preview_0);
@@ -132,8 +134,64 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         Spanned emojifyText = CustomEmojiHelper.emojifyText(content, emojis, this.statusContent);
         LinkHelper.setClickableText(this.statusContent, emojifyText, mentions, listener);
     }
+    private void setReblogged(boolean reblogged) {
+        this.reblogged = reblogged;
+        statusReblog.setFlag(reblogged);
+    }
 
-    private void setUpClickViews(StatusActionListener listener, String senderId) {
+    private void setUpClickViews(StatusActionListener listener, String accountId) {
+        statusTooterAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onViewAccount(accountId);
+            }
+        });
+        statusReply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onReply(position);
+                }
+            }
+        });
+        statusReblog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    listener.onReblog(!reblogged, position);
+                }
+            }
+        });
+
+
+//        favouriteButton.setEventListener(new SparkEventListener() {
+//            @Override
+//            public void onEvent(ImageView button, boolean buttonState) {
+//                int position = getAdapterPosition();
+//                if (position != RecyclerView.NO_POSITION) {
+//                    listener.onFavourite(!favourited, position);
+//                }
+//            }
+//
+//            @Override
+//            public void onEventAnimationEnd(ImageView button, boolean buttonState) {
+//            }
+//
+//            @Override
+//            public void onEventAnimationStart(ImageView button, boolean buttonState) {
+//            }
+//        });
+//        moreButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int position = getAdapterPosition();
+//                if (position != RecyclerView.NO_POSITION) {
+//                    listener.onMore(v, position);
+//                }
+//            }
+//        });
         View.OnClickListener viewThreadListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -345,6 +403,7 @@ public abstract class AbstractStatusBaseViewHolder extends RecyclerView.ViewHold
         setStatusTimePassed(statusViewData.getCreatedAt());
         setStatusTooterAvatar(statusViewData.getAvatar());
         setStatusContent(statusViewData.getContent(), statusViewData.getMentions(), statusViewData.getEmojis(), listener);
+        setReblogged(statusViewData.isReblogged());
         setUpClickViews(listener, statusViewData.getSenderId());
         Attachment[] attachments = statusViewData.getAttachments();
         boolean sensitive = statusViewData.isSensitive();

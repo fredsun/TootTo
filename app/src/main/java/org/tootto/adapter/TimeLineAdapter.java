@@ -99,4 +99,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
     public void setMediaPreviewEnabled(boolean mediaPreviewEnabled) {
         this.mediaPreviewEnabled = mediaPreviewEnabled;
     }
+
+    public void changeItem(int position, StatusViewData newData, boolean notifyAdapter) {
+        statuses.set(position, newData);
+        if (notifyAdapter) notifyItemChanged(position);
+    }
 }
