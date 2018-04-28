@@ -29,6 +29,7 @@ import retrofit2.http.FormUrlEncoded;
 
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
@@ -70,4 +71,9 @@ public interface MastodonApi {
 
     @GET("api/v1/search")
     Call<SearchResults> search(@Query("q") String q, @Query("resolve") Boolean resolve);
+
+    @POST("api/v1/statuses/{id}/reblog")
+    Call<Status> reblogStatus(@Path("id") String statusId);
+    @POST("api/v1/statuses/{id}/unreblog")
+    Call<Status> unreblogStatus(@Path("id") String statusId);
 }
