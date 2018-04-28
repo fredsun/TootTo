@@ -198,7 +198,7 @@
             app:layout_constraintEnd_toEndOf="@+id/status_media_preview_0"
             app:layout_constraintStart_toStartOf="@+id/status_media_preview_0"
             app:layout_constraintTop_toTopOf="@+id/status_media_preview_0"
-            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -210,7 +210,7 @@
             app:layout_constraintEnd_toEndOf="@+id/status_media_preview_1"
             app:layout_constraintStart_toStartOf="@+id/status_media_preview_1"
             app:layout_constraintTop_toTopOf="@+id/status_media_preview_1"
-            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -222,7 +222,7 @@
             app:layout_constraintEnd_toEndOf="@+id/status_media_preview_2"
             app:layout_constraintStart_toStartOf="@+id/status_media_preview_2"
             app:layout_constraintTop_toTopOf="@+id/status_media_preview_2"
-            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -234,7 +234,7 @@
             app:layout_constraintEnd_toEndOf="@+id/status_media_preview_3"
             app:layout_constraintStart_toStartOf="@+id/status_media_preview_3"
             app:layout_constraintTop_toTopOf="@+id/status_media_preview_3"
-            app:srcCompat="@drawable/ic_play_circle_filled_black_24dp"
+            app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
             tools:ignore="ContentDescription" />
 
         <ImageView
