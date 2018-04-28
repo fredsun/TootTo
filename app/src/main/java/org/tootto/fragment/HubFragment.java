@@ -25,7 +25,7 @@ public class HubFragment extends BaseFragment{
 
     protected void viewThread(Status status) {
         Log.i("HubFragment", "status"+status.id);
-        ((FirstTransFragment) getParentFragment()).showDetailFragment();
+//        ((FirstTransFragment) getParentFragment()).showDetailFragment();
 //        Intent intent = new Intent(getContext(), ViewThreadActivity.class);
 //        intent.putExtra("id", status.getActionableId());
 //        intent.putExtra("url", status.getActionableStatus().url);
