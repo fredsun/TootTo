@@ -1,7 +1,9 @@
 package org.tootto.fragment;
 
 import android.arch.core.util.Function;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -60,7 +62,7 @@ import retrofit2.Response;
  * Created by fred on 2017/11/13.
  */
 
-public class FirstPagingFragment extends HubFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener, TabLayoutReSelectListener, StatusActionListener {
+public class FirstPagingFragment extends HubFragment implements ObservableScrollViewCallbacks, FrameInterceptLayout.DispatchTouchListener, FragmentBackHandler, SwipeRefreshLayout.OnRefreshListener, TabLayoutReSelectListener, StatusActionListener, SharedPreferences.OnSharedPreferenceChangeListener {
     final String TAG = "FirstPagingFragment";
     private static final String KIND_ARG = "kind";
     private static final String HASHTAG_OR_ID_ARG = "hashtag_or_id";
@@ -84,6 +86,28 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
     private String topId;
     SwipeRefreshLayout swipeRefreshLayout;
     EndlessOnScrollListener endlessOnScrollListener;
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key){
+            case "allow_preview": {
+                boolean enabled = sharedPreferences.getBoolean("allow_preview", true);
+                timeLineAdapter.setMediaPreviewEnabled(enabled);
+                fullyRefresh();
+                break;
+            }
+            case "load_sensitive": {
+                //it is ok if only newly loaded statuses are affected, no need to fully refresh
+                alwaysShowSensitiveMedia = sharedPreferences.getBoolean("load_sensitive", false);
+            }
+
+        }
+    }
+
+    private void fullyRefresh() {
+        timeLineAdapter.clear();
+        sendFetchTimelineRequest(null, null, FetchType.TOP, -1);
+    }
 
     public enum Kind {
         HOME,
@@ -189,6 +213,13 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
         if (!isAnimInit){
             mTitleAnim = new TitleBehaviorAnim(titleView);
         }
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(
+                getActivity());
+        preferences.registerOnSharedPreferenceChangeListener(this);
+        alwaysShowSensitiveMedia = preferences.getBoolean("load_sensitive", false);
+        boolean mediaPreviewEnabled = preferences.getBoolean("allow_preview", true);
+        timeLineAdapter.setMediaPreviewEnabled(mediaPreviewEnabled);
+        recyclerFirstFragment.setAdapter(timeLineAdapter);
         return view;
     }
 

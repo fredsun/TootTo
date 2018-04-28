@@ -104,4 +104,9 @@ public class TimeLineAdapter extends RecyclerView.Adapter {
         statuses.set(position, newData);
         if (notifyAdapter) notifyItemChanged(position);
     }
+
+    public void clear() {
+        statuses.clear();
+        notifyDataSetChanged();
+    }
 }

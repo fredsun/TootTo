@@ -122,10 +122,10 @@ public class SettingActivity extends BaseActivity implements PreferenceFragmentC
 
     private void initEntries() {
         mEntriesAdapter.addHeader("功能");
-        mEntriesAdapter.addPreference("network", R.drawable.ic_wifi_black_24dp, "网络", R.xml.pref_network);
-        mEntriesAdapter.addPreference("theme", R.drawable.ic_color_lens_black_24dp, "主题", R.xml.pref_theme);
+        mEntriesAdapter.addPreference("network", R.drawable.item_wifi_selector, "网络", R.xml.pref_network);
+        mEntriesAdapter.addPreference("theme", R.drawable.item_color_lens_selector, "主题", R.xml.pref_theme);
         mEntriesAdapter.addHeader("关于");
-        mEntriesAdapter.addPreference("me", R.drawable.ic_info_black_24dp, "关于", R.xml.pref_me);
+        mEntriesAdapter.addPreference("me", R.drawable.item_info_selector, "关于", R.xml.pref_me);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class SettingActivity extends BaseActivity implements PreferenceFragmentC
             if (mShouldRestart){
                 DialogFragment dialogFragment = RestartConfirmFragment.newInstance(R.string.restart_confirm_title);
                 dialogFragment.show(getSupportFragmentManager(), "restartConfirmDialog");
-                SharedPreferences preference = getSharedPreferences("preference", Context.MODE_PRIVATE);
+//                SharedPreferences preference = getSharedPreferences("preference", Context.MODE_PRIVATE);
 //            Log.i(TAG, "test_key1"+preference.getString("test_key", ""));
 //            Log.i(TAG, "save_data1"+preference.getBoolean("save_data", false));
             }else {

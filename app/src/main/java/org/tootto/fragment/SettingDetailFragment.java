@@ -30,7 +30,8 @@ public class SettingDetailFragment extends PreferenceFragmentCompat implements S
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         //设置的sp存为名为"preference"的sp;
-        getPreferenceManager().setSharedPreferencesName("preference");
+//        getPreferenceManager().setSharedPreferencesName("preference");
+//        getPreferenceManager().
         PreferenceScreen defaultPreferenceScreen = getPreferenceScreen();
         PreferenceScreen preferenceScreen;
         if (defaultPreferenceScreen != null){
