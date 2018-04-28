@@ -21,6 +21,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.tootto.BuildConfig;
 import org.tootto.R;
@@ -558,7 +559,7 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
 
     @Override
     public void onReply(int position) {
-
+        Toast.makeText(getContext(), "暂时无法回复", Toast.LENGTH_SHORT).show();
     }
 
     @Override
