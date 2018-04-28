@@ -237,7 +237,7 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
                 startActivity(favouriteIntent);
                 break;
             case R.id.nav_my_draft:
-                Toast.makeText(MainActivity.this, "click draft", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "暂无草稿", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_my_filter:
                 Toast.makeText(MainActivity.this, "click filter", Toast.LENGTH_SHORT).show();

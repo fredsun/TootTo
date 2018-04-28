@@ -16,6 +16,7 @@
         <item
             android:id="@+id/nav_my_filter"
             android:icon="@drawable/ic_filter"
+            android:visible="false"
             android:title="过滤"/>
     </group>
     <group android:id="@+id/nav_group_setting">
