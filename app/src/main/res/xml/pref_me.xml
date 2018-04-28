@@ -6,6 +6,8 @@
     <Preference android:title="开发者"
         android:summary="FredSun"/>
     <PreferenceCategory android:title="特别感谢"/>
-    <Preference android:title="TODO name"
-        android:summary="TODO duty"/>
+    <Preference android:title="殆知阁喵站"
+        android:summary="daizhige" android:icon="@drawable/ic_daishu_round"/>
+    <Preference android:title="Logo授权"
+        android:summary="sipayall" android:icon="@drawable/ic_papa_round"/>
 </PreferenceScreen>
