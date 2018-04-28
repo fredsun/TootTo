@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="@color/background_window_light">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +58,7 @@
             android:id="@+id/login_loading_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorShineWhite"
+            android:background="@color/background_window_light"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:visibility="gone"
