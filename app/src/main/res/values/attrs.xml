@@ -5,5 +5,14 @@
         <attr name="android:verticalSpacing"/>
         <attr name="tab_icon_unselected_tint" format="reference|color" />
         <attr name="tab_icon_selected_tint" format="reference|color" />
+        <attr name="sparkbutton_iconSize" format="dimension|reference" />
+        <attr name="sparkbutton_activeImage" format="reference" />
+        <attr name="sparkbutton_disabledImage" format="reference" />
+        <attr name="sparkbutton_primaryColor" format="reference" />
+        <attr name="sparkbutton_secondaryColor" format="reference" />
+        <attr name="sparkbutton_pressOnTouch" format="boolean" />
+        <attr name="sparkbutton_animationSpeed" format="float" />
+        <attr name="status_favourite_active_drawable" format="reference" />
+        <attr name="status_favourite_inactive_drawable" format="reference" />
     </declare-styleable>
 </resources>

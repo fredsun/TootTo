@@ -13,6 +13,8 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="tab_icon_selected_tint">@color/colorGrassGreen</item>
         <item name="tab_icon_unselected_tint">@color/colorIconUnselected</item>
+        <item name="status_favourite_active_drawable">@drawable/ic_favorite_pink_24dp</item>
+        <item name="status_favourite_inactive_drawable">@drawable/ic_favorite_border_black_24dp</item>
     </style>
 
     <style name="AppTheme.Account.AppBarLayout" parent="ThemeOverlay.AppCompat">

@@ -16,4 +16,6 @@
     <color name="colorGrassGreen">#6CB8A9</color>
     <color name="colorIconUnselected">#D4D4D4</color>
     <color name="colorActionBarForeground">#40FFFFFF</color>
+    <color name="status_favourite_button_marked_dark">#FF4081</color>
+    <color name="status_favourite_button_marked_light">#616981</color>
 </resources>

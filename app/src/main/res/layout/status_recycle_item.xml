@@ -106,24 +106,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
-        <ImageButton
+        <com.varunest.sparkbutton.SparkButton
             android:id="@+id/ibtn_status_favourite"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@color/colorShineWhite"
-            android:src="@drawable/ic_favorite_black_24dp" />
+            app:sparkbutton_activeImage="?attr/status_favourite_active_drawable"
+            app:sparkbutton_iconSize="24dp"
+            app:sparkbutton_inActiveImage="?attr/status_favourite_inactive_drawable"
+            app:sparkbutton_primaryColor="@color/status_favourite_button_marked_dark"
+            app:sparkbutton_secondaryColor="@color/status_favourite_button_marked_light"/>
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
 
-        <ImageButton
-            android:id="@+id/ibtn_status_more"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@color/colorShineWhite"
-            android:src="@drawable/ic_more_horiz_black_24dp" />
+
+
 
     </LinearLayout>
 
