@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="network">
-    <SwitchPreference android:title="节省流量"
-        android:key="save_data"
+    <SwitchPreference android:title="加载预览图"
+        android:key="allow_preview"
         android:summary="在使用收费网络时，禁用媒体预览"
+        android:defaultValue="true"
+        />
+    <SwitchPreference android:title="加载NSFW图"
+        android:key="load_sensitive"
+        android:summary="允许加载Not Safe For Work图"
         android:defaultValue="false"
         />
-    <EditTextPreference android:title="testtitle"
-        android:key="test_key"
-        android:summary="testsummary"
-        />
-    <Preference android:title="testP"
-        android:key="testKey"
-        android:fragment="org.tootto.fragment.PrefInnerFragment"/>
 
 
 </PreferenceScreen>
