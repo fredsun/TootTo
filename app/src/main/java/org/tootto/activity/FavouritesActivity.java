@@ -23,11 +23,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.jaeger.library.StatusBarUtil;
+
 import org.tootto.R;
 import org.tootto.fragment.FirstPagingFragment;
 
 
 public class FavouritesActivity extends BaseActivity {
+    private int mStatusBarColor;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,5 +60,11 @@ public class FavouritesActivity extends BaseActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void setStatusBar() {
+        mStatusBarColor = getResources().getColor(R.color.colorGrassGreen);
+        StatusBarUtil.setColor(this, mStatusBarColor, 0);
     }
 }
