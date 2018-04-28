@@ -76,4 +76,10 @@ public interface MastodonApi {
     Call<Status> reblogStatus(@Path("id") String statusId);
     @POST("api/v1/statuses/{id}/unreblog")
     Call<Status> unreblogStatus(@Path("id") String statusId);
+
+    @GET("api/v1/favourites")
+    Call<List<Status>> favourites(
+            @Query("max_id") String maxId,
+            @Query("since_id") String sinceId,
+            @Query("limit") Integer limit);
 }
