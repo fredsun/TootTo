@@ -3,6 +3,7 @@
     package="org.tootto">
 
     <uses-permission android:name="android.permission.INTERNET"/>//网络权限
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -40,6 +41,10 @@
         <activity android:name=".activity.OauthWebViewActivity"/>
         <activity android:name=".activity.SearchResultActivity"
             android:launchMode="singleTop"/>
+        <activity android:name=".activity.ViewMediaActivity"/>
+        <activity android:name=".activity.ViewVideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
+
 
     </application>
 
