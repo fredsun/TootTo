@@ -44,6 +44,7 @@
         <activity android:name=".activity.ViewMediaActivity"/>
         <activity android:name=".activity.ViewVideoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <activity android:name=".activity.FavouritesActivity" />
 
 
     </application>

@@ -233,7 +233,8 @@ public class MainActivity extends BaseActivity implements BottomBehavior.onCanSc
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.nav_my_favourite:
-                Toast.makeText(MainActivity.this, "click favourite", Toast.LENGTH_SHORT).show();
+                Intent favouriteIntent = new Intent(MainActivity.this, FavouritesActivity.class);
+                startActivity(favouriteIntent);
                 break;
             case R.id.nav_my_draft:
                 Toast.makeText(MainActivity.this, "click draft", Toast.LENGTH_SHORT).show();

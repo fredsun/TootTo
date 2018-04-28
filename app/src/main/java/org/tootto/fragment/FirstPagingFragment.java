@@ -206,6 +206,9 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "restartConfirmDialog");
             }
         });
+        if (!(getActivity() instanceof  MainActivity)){
+            titleView.setVisibility(View.GONE);
+        }
         ViewConfiguration vc = ViewConfiguration.get(getContext());
         mSlop = vc.getScaledTouchSlop();
         topId = null;
@@ -259,6 +262,8 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
                 return api.publicTimeline(true, fromId, upToId, LOAD_AT_ONCE);
             case PUBLIC_FEDERATED:
                 return api.publicTimeline(false, fromId, upToId, LOAD_AT_ONCE);
+            case FAVOURITES:
+                return api.favourites(fromId, upToId, LOAD_AT_ONCE);
 
 
 
@@ -400,7 +405,9 @@ public class FirstPagingFragment extends HubFragment implements ObservableScroll
             }
         };
         recyclerFirstFragment.addOnScrollListener(endlessOnScrollListener);
-        ((MainActivity)getActivity()).setTabLayoutReSelectListener(this);
+        if (getActivity() instanceof  MainActivity){
+            ((MainActivity)getActivity()).setTabLayoutReSelectListener(this);
+        }
     }
 
     public static FirstPagingFragment newInstance(Kind kind){
