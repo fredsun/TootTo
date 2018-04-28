@@ -84,4 +84,18 @@ public class HubFragment extends BaseFragment{
         }
         call.enqueue(callback);
     }
+
+    protected void favouriteWithCallback(final Status status, final boolean favourite,
+                                         final Callback<Status> callback) {
+        String id = status.getActionableId();
+
+        Call<Status> call;
+        if (favourite) {
+            call = mastodonApi.favouriteStatus(id);
+        } else {
+            call = mastodonApi.unfavouriteStatus(id);
+        }
+        call.enqueue(callback);
+        callList.add(call);
+    }
 }

@@ -82,4 +82,9 @@ public interface MastodonApi {
             @Query("max_id") String maxId,
             @Query("since_id") String sinceId,
             @Query("limit") Integer limit);
+
+    @POST("api/v1/statuses/{id}/favourite")
+    Call<Status> favouriteStatus(@Path("id") String statusId);
+    @POST("api/v1/statuses/{id}/unfavourite")
+    Call<Status> unfavouriteStatus(@Path("id") String statusId);
 }
