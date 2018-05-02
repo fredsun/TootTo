@@ -220,6 +220,23 @@ xmlns:tools="http://schemas.android.com/tools"
     * account
     * tag
   * SearchResultActivity 页面只会被带着搜索文本的 intent 打开. 且因为 DialogFragment 的 SearchHistory 的缘故, s所以 SearchResultActyivity 使用 singletop模式启动.
+25. timeline完善
+  * 转发人添加icon, tintdrawable 染色转发 icon 的 png.
+  * 添加间距
+  * 媒体预览图
+    * 最后还是用一个 ConstraintLayout 包裹了 Imageview 等, 因为用于遮挡的 view 的宽高需要可能 GONE 的 imageview 来固定.
+    * 布局上使用四个图 + 媒体隐藏 + 覆盖图 + 敏感内容, 其中四个图利用 ConstraintLayout 的startOf等功能让每个图上都有个图覆盖.
+    * 根据flag敏感内容text被点击后
+    * 敏感内容eye点击可以用覆盖图盖住预览图们
+    * 图片预览的toolbar中, theme 在3.0前只能应用到自己, 3.0以后可以应用到 view 和子 view,适配3.0前的话, 需要每个 view 加一次 theme,  poptheme 适配之后的
+    * 保存图片需要write_extranal权限, 运行时获取
+    * 图片预览-> activity + ViewPager + Fragment, 其中 Fragment 内为 PhotoView.
+    * 媒体预览-> VideoView.
+    * TODO 主题暂时为app,后期找到对应toolbar左箭头属性后改成android:(即从系统级改为自身)
+26. 处理点赞和转发的请求
+    * 只发出请求, 不关注回调
+
+27. toolbar 白底黑字 theme + poptheme 共同作用
 
 
 
