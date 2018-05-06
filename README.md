@@ -11,14 +11,6 @@
 * 实时隐藏图片
 * 播放器打开 GIF
 
-
-
-## Display
-<img src = "https://raw.githubusercontent.com/sunxlfred/RES/master/Screenshot_tootto0.png" height="300"/>
-<img src = "https://raw.githubusercontent.com/sunxlfred/RES/master/Screenshot_tootto1.png" height="300"/>
-<img src = "https://raw.githubusercontent.com/sunxlfred/RES/master/Screenshot_tootto2.png" height="300"/>
-<img src = "https://raw.githubusercontent.com/sunxlfred/RES/master/Screenshot_tootto3.png" height="300"/>
-
 ## Download
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=org.tootto)
 
@@ -28,5 +20,4 @@
 * [Tusky](https://github.com/tuskyapp/Tusky)
 
 ## Support
-如果有任何 bug 或者问题, 请发送邮件至 fredsun.me
-@gmail.com
+如果有任何 bug 或者问题, 请发送邮件至 fredsun.me@gmail.com
