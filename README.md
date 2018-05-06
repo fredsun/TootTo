@@ -1,4 +1,7 @@
-# TootTo for Android
+# TootTo for Android #
+
+[![Travis status](https://travis-ci.com/sunxlfred/TootTo.svg)](https://travis-ci.com/sunxlfred/TootTo)
+
 是一个开源的, 基于 Mastodon 的 app
 你可以和所选站点以及其他使用 Mastodon 站点的世界各地的用户交流
 ## Features
