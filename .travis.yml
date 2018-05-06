@@ -4,6 +4,9 @@ android:
     - tools
     - build-tools-27.0.2
     - android-27
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-android-support
 
 before_install:
   - yes | sdkmanager "platforms;android-27"
