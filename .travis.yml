@@ -8,6 +8,12 @@ android:
 before_install:
   - chmod +x gradlew
 
+licenses:
+    - 'android-sdk-license-.+'
+
+jdk:
+    - oraclejdk8
+    
 script:
   - ./gradlew assembleRelease
 
