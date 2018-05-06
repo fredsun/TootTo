@@ -2,8 +2,8 @@ language: android
 android:
   components:
     - tools
-    - build-tools-27.0.2
-    - android-27
+    - build-tools-26.0.2
+    - android-26
 
 before_install:
   - chmod +x gradlew
@@ -13,7 +13,7 @@ licenses:
 
 jdk:
     - oraclejdk8
-    
+
 script:
   - ./gradlew assembleRelease
 
