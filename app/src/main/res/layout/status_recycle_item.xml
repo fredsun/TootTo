@@ -64,6 +64,7 @@
         android:id="@+id/tv_status_time_passed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_status_tooter_user_name"
         tools:text="12:34" />
