@@ -64,6 +64,8 @@ public class ViewMediaActivity extends BaseActivity implements ViewMediaFragment
     private boolean isToolbarVisible = true;
     private int mStatusBarColor;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
