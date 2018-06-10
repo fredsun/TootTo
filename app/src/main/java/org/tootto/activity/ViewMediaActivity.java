@@ -81,6 +81,7 @@ public class ViewMediaActivity extends BaseActivity implements ViewMediaFragment
         imageUrls = intent.getStringArrayExtra("urls");
         int initialPosition = intent.getIntExtra("urlIndex", 0);
 
+
         // Setup the view pager.
         final ImagePagerAdapter adapter = new ImagePagerAdapter(getSupportFragmentManager(),
                 imageUrls, initialPosition);
