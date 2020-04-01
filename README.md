@@ -5,7 +5,7 @@
 是一个开源的, 基于 Mastodon 的 app
 你可以和所选站点以及其他使用 Mastodon 站点的世界各地的用户交流
 ## Features
-* 仿知乎的 Fragment 间滑动联动 OvservableView
+* 仿知乎的 Fragment 间滑动联动 ObservableView
 * 免费, 开源, 永久没广告
 * 预览图加载
 * 点赞动画
